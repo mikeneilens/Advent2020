@@ -8,7 +8,7 @@ class MainTest {
 
     @Test
     fun `when two numners add to 2020 the result is true`() {
-        assertTrue(Pair(1000,1020).sumIs2020())
+        assertTrue(sumIs2020(Pair(1000,1020)))
     }
 
     @Test
@@ -31,7 +31,7 @@ class MainTest {
 
     @Test
     fun `when three numners add to 2020 the result is true`() {
-        assertTrue(Triple(1000,1010,10).sumIs2020())
+        assertTrue(sumIs2020(Triple(1000,1010,10)))
     }
 
     @Test
