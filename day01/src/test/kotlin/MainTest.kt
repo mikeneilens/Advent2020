@@ -37,7 +37,7 @@ class MainTest {
     @Test
     fun `simple permutation3 for list of (1,2,3) is (1,2,3), (1,3,2), (2,1,3), (2,3,1), (3,1,2), (3,2,1)`() {
         val data = listOf(1,2,3)
-        val expectedResult = listOf(Pair(1,2),Pair(1,3),Pair(2,1),Pair(2,3),Pair(3,1),Pair(3,2))
+        val expectedResult = listOf(Triple(1,2,3), Triple(1,3,2), Triple(2,1,3), Triple(2,3,1), Triple(3,1,2), Triple(3,2,1))
         assertEquals(expectedResult, simplePermutation3(data))
     }
 
