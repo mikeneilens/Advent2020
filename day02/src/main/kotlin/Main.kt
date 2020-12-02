@@ -4,9 +4,9 @@ data class Rule(val v1:Int, val v2:Int, val characther:Char)
 data class Line(val rule:Rule, val password:String) {
     val occurencesOfCharacter = password.filter{it == rule.characther}.length
 
-    fun isValid():Boolean =(occurencesOfCharacter >= rule.v1 && occurencesOfCharacter <= rule.v2)
+    val isValid = (occurencesOfCharacter >= rule.v1 && occurencesOfCharacter <= rule.v2)
 
-    fun isValid2():Boolean =
+    val isValid2 =
             rule.v1 <= password.length && rule.v2 <= password.length
                 && ((password[rule.v1 - 1] == rule.characther) xor (password[rule.v2 - 1] == rule.characther))
 }
@@ -19,6 +19,6 @@ fun parseDataIntoLine(data: String): Line {
     return Line(Rule(numbers[0],numbers[1],characther),password)
 }
 
-fun List<Line>.validRules():List<Line> = filter {it.isValid()}
+fun List<Line>.validRules():List<Line> = filter {it.isValid}
 
-fun List<Line>.validRules2():List<Line> = filter {it.isValid2()}
+fun List<Line>.validRules2():List<Line> = filter {it.isValid2}

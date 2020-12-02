@@ -31,17 +31,17 @@ class MainTest {
     @Test
     fun `line is not valid when occurences of a letter is less than the minimum`() {
         val rule = Line(Rule(1,3,'z'),"abcaade")
-        assertFalse(rule.isValid())
+        assertFalse(rule.isValid)
     }
     @Test
     fun `line is not valid when occurences of a letter is more than the maximum`() {
         val rule = Line(Rule(1,2,'a'),"abcaade")
-        assertFalse(rule.isValid())
+        assertFalse(rule.isValid)
     }
     @Test
     fun `line is valid when occurences of a letter is between min and max`() {
         val rule = Line(Rule(1,3,'a'),"abcaade")
-        assertTrue(rule.isValid())
+        assertTrue(rule.isValid)
     }
     @Test
     fun `only valid lines are returned by validRules from the sample data`() {
@@ -56,27 +56,27 @@ class MainTest {
     @Test
     fun `isValid2 returns false when rule v1 is larger than password length`() {
         val rule = Line(Rule(6,3,'c'),"abcde")
-        assertFalse(rule.isValid2())
+        assertFalse(rule.isValid2)
     }
     @Test
     fun `isValid2 returns false when rule v2 is larger than password length`() {
         val rule = Line(Rule(1,6,'c'),"abcde")
-        assertFalse(rule.isValid2())
+        assertFalse(rule.isValid2)
     }
     @Test
     fun `isValid2 returns true when character in password at position of rule v1 matches rule character`() {
         val rule = Line(Rule(1,3,'a'),"abcde")
-        assertTrue(rule.isValid2())
+        assertTrue(rule.isValid2)
     }
     @Test
     fun `isValid2 returns true when character in password at position of rule v2 matches rule character`() {
         val rule = Line(Rule(1,3,'c'),"abcde")
-        assertTrue(rule.isValid2())
+        assertTrue(rule.isValid2)
     }
     @Test
     fun `isValid2 returns false when characters in password at position of rule v1 and v2 matches rule character`() {
         val rule = Line(Rule(1,3,'c'),"abade")
-        assertFalse(rule.isValid2())
+        assertFalse(rule.isValid2)
     }
     @Test
     fun `only valid lines are returned by validRules2 from the sample data`() {

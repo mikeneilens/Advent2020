@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-02T09:02:49" hostname="MacBook-Pro-2" time="0.031">
+<testsuite name="MainTest" tests="16" skipped="0" failures="0" errors="0" timestamp="2020-12-02T09:15:34" hostname="MacBook-Pro-2" time="0.054">
   <properties/>
-  <testcase name="day02 part 2()" classname="MainTest" time="0.031"/>
-  <system-out><![CDATA[no of valid passwords is 251
+  <testcase name="isValid2 returns false when rule v1 is larger than password length()" classname="MainTest" time="0.014"/>
+  <testcase name="line is valid when occurences of a letter is between min and max()" classname="MainTest" time="0.001"/>
+  <testcase name="only valid lines are returned by validRules2 from the sample data()" classname="MainTest" time="0.014"/>
+  <testcase name="line is not valid when occurences of a letter is more than the maximum()" classname="MainTest" time="0.001"/>
+  <testcase name="occurencesOfCharacter is calculated correctly for a line containing3 characters in the rule()" classname="MainTest" time="0.001"/>
+  <testcase name="occurencesOfCharacter is calculated correctly for a line containing 1 characters in the rule()" classname="MainTest" time="0.001"/>
+  <testcase name="occurencesOfCharacter is calculated correctly for a line containing 0 characters in the rule()" classname="MainTest" time="0.0"/>
+  <testcase name="only valid lines are returned by validRules from the sample data()" classname="MainTest" time="0.0"/>
+  <testcase name="isValid2 returns false when rule v2 is larger than password length()" classname="MainTest" time="0.0"/>
+  <testcase name="isValid2 returns false when characters in password at position of rule v1 and v2 matches rule character()" classname="MainTest" time="0.0"/>
+  <testcase name="parse data containing a rule and password into a Line()" classname="MainTest" time="0.001"/>
+  <testcase name="line is not valid when occurences of a letter is less than the minimum()" classname="MainTest" time="0.001"/>
+  <testcase name="day02 part 1()" classname="MainTest" time="0.01"/>
+  <testcase name="day02 part 2()" classname="MainTest" time="0.003"/>
+  <testcase name="isValid2 returns true when character in password at position of rule v2 matches rule character()" classname="MainTest" time="0.001"/>
+  <testcase name="isValid2 returns true when character in password at position of rule v1 matches rule character()" classname="MainTest" time="0.0"/>
+  <system-out><![CDATA[no of valid passwords is 460
+no of valid passwords is 251
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
