@@ -13,3 +13,40 @@ fun simplePermutation3(list:List<Int>)
 
 fun partTwo(list:List<Int>) = simplePermutation3(list).first(::sumIs2020)
 
+
+//======== below are the fastest versions I could make ======================//
+
+fun optimisedPartOne(list:List<Int>):Pair<Int,Int> {
+    val sortedList = list.sorted()
+    var v1 = 0
+    while (v1 < sortedList.size) {
+        var v2 = 0
+        while (v2 < sortedList.size) {
+            if ((sortedList[v1] + sortedList[v2]) == 2020) {
+                return Pair(sortedList[v1], sortedList[v2])
+            }
+            v2++
+        }
+        v1++
+    }
+    return Pair(0, 0)
+}
+fun optimisedPartTwo(list:List<Int>):Triple<Int,Int, Int> {
+    val sortedList = list.sorted()
+    var v1 = 0
+    while (v1 < sortedList.size) {
+        var v2 = 0
+        while (v2 < sortedList.size && (sortedList[v1] + sortedList[v2]) < 2020 ) {
+            var v3 = 0
+            while (v3 < sortedList.size) {
+                if ((sortedList[v1] + sortedList[v2] + sortedList[v3]) == 2020) {
+                    return Triple(sortedList[v1], sortedList[v2], sortedList[v3])
+                }
+                v3++
+            }
+            v2++
+        }
+        v1++
+    }
+    return Triple(0,0,0)
+}

@@ -50,9 +50,20 @@ class MainTest {
         assertEquals(43,result.second)
         assertEquals(527,result.third)
         println("Result is ${result.first * result.second * result.third}")
+    }
 
-        println( day1Data.filter{it <= 1010}.size)
-        println( day1Data.filter{it > 1010}.size)
+    @Test
+    fun `optimised part one`() {
+        val result = optimisedPartOne(day1Data)
+        println("Result is ${result.first * result.second}")
+    }
 
+    @Test
+    fun `optimised part two`() {
+        val result = optimisedPartTwo(day1Data)
+        assertEquals(43,result.first)
+        assertEquals(527,result.second)
+        assertEquals(1450,result.third)
+        println("Result is ${result.first * result.second * result.third}")
     }
 }
