@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-11-28T17:14:58" hostname="MacBook-Pro-2" time="0.014">
+<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-02T09:02:49" hostname="MacBook-Pro-2" time="0.031">
   <properties/>
-  <testcase name="a test()" classname="MainTest" time="0.014"/>
-  <system-out><![CDATA[]]></system-out>
+  <testcase name="day02 part 2()" classname="MainTest" time="0.031"/>
+  <system-out><![CDATA[no of valid passwords is 251
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

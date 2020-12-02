@@ -50,5 +50,9 @@ class MainTest {
         assertEquals(43,result.second)
         assertEquals(527,result.third)
         println("Result is ${result.first * result.second * result.third}")
+
+        println( day1Data.filter{it <= 1010}.size)
+        println( day1Data.filter{it > 1010}.size)
+
     }
 }
