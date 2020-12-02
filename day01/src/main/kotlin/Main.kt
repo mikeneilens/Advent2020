@@ -13,7 +13,6 @@ fun simplePermutation3(list:List<Int>)
 
 fun partTwo(list:List<Int>) = simplePermutation3(list).first(::sumIs2020)
 
-
 //======== below are the fastest versions I could make ======================//
 
 fun optimisedPartOne(list:List<Int>):Pair<Int,Int> {
@@ -55,4 +54,14 @@ fun optimisedPartTwo(list:List<Int>):Triple<Int,Int, Int> {
         v1++
     }
     return Triple(0,0,0)
+}
+
+// === using a sequence ===//
+fun partOneSequence(list:List<Int>):Pair<Int,Int>{
+    val sequence = list.sorted().asSequence()
+    return sequence.flatMap{v1 -> sequence.map{v2 -> Pair(v1,v2)} }.first {  (it.first + it.second) == 2020  }
+}
+fun partTwoSequence(list:List<Int>):Triple<Int,Int, Int>{
+    val sequence = list.sorted().asSequence()
+    return   sequence.flatMap{ v1 -> sequence.takeWhile { it + v1 <= 2020 }.flatMap{ v2 -> sequence.map{v3 -> Triple(v1,v2,v3) }} }.first{(it.first + it.second + it.third) == 2020}
 }

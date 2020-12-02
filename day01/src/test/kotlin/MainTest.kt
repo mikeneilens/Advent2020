@@ -66,4 +66,19 @@ class MainTest {
         assertEquals(1450,result.third)
         println("Result is ${result.first * result.second * result.third}")
     }
+
+    @Test
+    fun `optimised part one using sequence`() {
+        val result = partOneSequence(day1Data)
+        println("Result is ${result.first * result.second}")
+    }
+
+    @Test
+    fun `optimised part two using sequence`() {
+        val result = partTwoSequence(day1Data)
+        assertEquals(43,result.first)
+        assertEquals(527,result.second)
+        assertEquals(1450,result.third)
+        println("Result is ${result.first * result.second * result.third}")
+    }
 }
