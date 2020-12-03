@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2020-12-03T09:39:31" hostname="MacBook-Pro-2" time="0.071">
+<testsuite name="MainTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-12-03T10:00:13" hostname="MacBook-Pro-2" time="0.067">
   <properties/>
-  <testcase name="finding the contents of a position where the position is the length of a string()" classname="MainTest" time="0.017"/>
-  <testcase name="position 3 1 is a space in the test data()" classname="MainTest" time="0.01"/>
+  <testcase name="finding the contents of a position where the position is the length of a string()" classname="MainTest" time="0.02"/>
   <testcase name="finding the contents of a position where the position is longer than the length of a string()" classname="MainTest" time="0.001"/>
-  <testcase name="finding the contents of a position in a string array()" classname="MainTest" time="0.019"/>
-  <testcase name="trees encountered in the sample data for different slopes()" classname="MainTest" time="0.005"/>
-  <testcase name="position 6 2 is a space in the test data()" classname="MainTest" time="0.001"/>
+  <testcase name="trees encountered in the sample data for different slopes()" classname="MainTest" time="0.03"/>
   <testcase name="part one()" classname="MainTest" time="0.004"/>
-  <testcase name="part two()" classname="MainTest" time="0.009"/>
+  <testcase name="part two()" classname="MainTest" time="0.008"/>
   <testcase name="finding the contents of a position where the position is shorter than the length of a string()" classname="MainTest" time="0.001"/>
-  <testcase name="trees encountered in the sample data is 7()" classname="MainTest" time="0.001"/>
+  <testcase name="trees encountered in the sample data is 7()" classname="MainTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

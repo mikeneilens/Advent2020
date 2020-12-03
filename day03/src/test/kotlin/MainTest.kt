@@ -34,22 +34,7 @@ class MainTest {
         val result = data.dataAt(25)
         assertEquals('5', result)
     }
-    @Test
-    fun `finding the contents of a position in a string array`() {
-        val data = listOf("1234567"
-                                     ,"8901234"
-                                     ,"5678901")
-        val result = data.dataAt(4,1)
-        assertEquals('2', result)
-    }
-    @Test
-    fun `position 3 1 is a space in the test data`() {
-        assertTrue(sampleData.split("\n").dataAt(3,1).isSpace())
-    }
-    @Test
-    fun `position 6 2 is a space in the test data`() {
-        assertTrue(sampleData.split("\n").dataAt(6,2).isTree())
-    }
+
     @Test
     fun `trees encountered in the sample data is 7`() {
         assertEquals(7, sampleData.split("\n").treesEncountered(3,1))
@@ -67,27 +52,23 @@ class MainTest {
         //        Right 7, down 1. 4
         //        Right 1, down 2. 2
 
-        val result1 = sampleData.split("\n").treesEncountered(1,1)
-        val result2 = sampleData.split("\n").treesEncountered(3,1)
-        val result3 = sampleData.split("\n").treesEncountered(5,1)
-        val result4 = sampleData.split("\n").treesEncountered(7,1)
-        val result5 = sampleData.split("\n").treesEncountered(1,2)
-        assertEquals(2, result1)
-        assertEquals(7, result2)
-        assertEquals(3, result3)
-        assertEquals(4, result4)
-        assertEquals(2, result5)
-        assertEquals(336, result1 * result2 * result3 * result4 * result5)
+        val routes = listOf(Pair(1,1), Pair(3,1), Pair(5,1), Pair(7,1), Pair(1,2))
+        val results = sampleData.split("\n").treesEncountered(routes)
+        assertEquals(2, results[0])
+        assertEquals(7, results[1])
+        assertEquals(3, results[2])
+        assertEquals(4, results[3])
+        assertEquals(2, results[4])
+        val product:Long = results.reduce{a, v -> a * v}
+        assertEquals(336, product)
     }
 
     @Test
     fun `part two`() {
-        val result1 = dayThreeData.split("\n").treesEncountered(1,1)
-        val result2 = dayThreeData.split("\n").treesEncountered(3,1)
-        val result3 = dayThreeData.split("\n").treesEncountered(5,1)
-        val result4 = dayThreeData.split("\n").treesEncountered(7,1)
-        val result5 = dayThreeData.split("\n").treesEncountered(1,2)
-        assertEquals(9709761600, result1 * result2 * result3 * result4 * result5)
+        val routes = listOf(Pair(1,1), Pair(3,1), Pair(5,1), Pair(7,1), Pair(1,2))
+        val results = dayThreeData.split("\n").treesEncountered(routes)
+        val product:Long = results.reduce{a, v -> a * v}
+        assertEquals(9709761600, product)
     }
 }
 
