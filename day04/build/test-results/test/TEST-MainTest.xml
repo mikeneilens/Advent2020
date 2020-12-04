@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-04T17:11:54" hostname="MacBook-Pro-2" time="0.038">
+  <properties/>
+  <testcase name="spliting data into separate passports creates 4 potential passports()" classname="MainTest" time="0.038"/>
+  <system-out><![CDATA[xx
+[, ]
+2
+xxxx
+[, , ]
+3
+xxhello
+[, hello]
+2
+helloxx
+[hello, ]
+2
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
