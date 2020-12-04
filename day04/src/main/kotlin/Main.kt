@@ -1,12 +1,12 @@
 val passportFields = mapOf(
-    "byr" to validByr,
-    "iyr" to validIyr,
-    "eyr" to validEyr,
-    "hgt" to validHgt,
-    "hcl" to validHcl,
-    "ecl" to validEcl,
-    "pid" to validPid,
-    "cid" to validCid,
+    "byr" to byrRule,
+    "iyr" to iyrRule,
+    "eyr" to eyrRule,
+    "hgt" to hgtRule,
+    "hcl" to hclRule,
+    "ecl" to eclRule,
+    "pid" to pidRule,
+    "cid" to cidRule,
 )
 val northPoleCredentialFields = passportFields.filter{it.key != "cid"}
 

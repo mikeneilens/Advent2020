@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="RulesTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2020-12-04T13:50:18" hostname="MacBook-Pro-2" time="0.054">
+  <properties/>
+  <testcase name="valid byr()" classname="RulesTest" time="0.022"/>
+  <testcase name="valid eyr()" classname="RulesTest" time="0.0"/>
+  <testcase name="valid iyr()" classname="RulesTest" time="0.0"/>
+  <testcase name="valid pid()" classname="RulesTest" time="0.001"/>
+  <testcase name="string 2010 and 2020 is in range 2010 to 2020()" classname="RulesTest" time="0.001"/>
+  <testcase name="string xyz is not in range 2010 to 2020()" classname="RulesTest" time="0.0"/>
+  <testcase name="string 2009 and 2021 is not in range 2010 to 2020()" classname="RulesTest" time="0.0"/>
+  <testcase name="valid hair colours()" classname="RulesTest" time="0.005"/>
+  <testcase name="string 2015 is in range 2010 to 2020()" classname="RulesTest" time="0.0"/>
+  <testcase name="valid eye colors()" classname="RulesTest" time="0.02"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

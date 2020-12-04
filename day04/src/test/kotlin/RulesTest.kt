@@ -24,45 +24,45 @@ class RulesTest {
 
     @Test
     fun `valid byr`() {
-        assertTrue(validByr("1920"))
-        assertTrue(validByr("2002"))
-        assertFalse(validByr("1919"))
+        assertTrue(byrRule("1920"))
+        assertTrue(byrRule("2002"))
+        assertFalse(byrRule("1919"))
     }
     @Test
     fun `valid iyr`() {
-        assertTrue(validIyr("2010"))
-        assertTrue(validIyr("2020"))
-        assertFalse(validIyr("2021"))
+        assertTrue(iyrRule("2010"))
+        assertTrue(iyrRule("2020"))
+        assertFalse(iyrRule("2021"))
     }
     @Test
     fun `valid eyr`() {
-        assertTrue(validEyr("2020"))
-        assertTrue(validEyr("2030"))
-        assertFalse(validEyr("2031"))
+        assertTrue(eyrRule("2020"))
+        assertTrue(eyrRule("2030"))
+        assertFalse(eyrRule("2031"))
     }
     @Test
     fun `valid hair colours`() {
-        assertTrue(validHcl("#123456"))
-        assertTrue(validHcl("#456789"))
-        assertTrue(validHcl("#abcdef"))
-        assertTrue(validHcl("#6b5442"))
-        assertFalse(validHcl("##bcdef"))
-        assertFalse(validHcl("#Abcdef"))
+        assertTrue(hclRule("#123456"))
+        assertTrue(hclRule("#456789"))
+        assertTrue(hclRule("#abcdef"))
+        assertTrue(hclRule("#6b5442"))
+        assertFalse(hclRule("##bcdef"))
+        assertFalse(hclRule("#Abcdef"))
     }
     @Test
     fun `valid eye colors`() {
         val validColors = listOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
         for (validColor in validColors) {
-            assertTrue(validEcl(validColor))
+            assertTrue(eclRule(validColor))
         }
-        assertFalse(validEcl("xyz"))
+        assertFalse(eclRule("xyz"))
     }
     @Test
     fun `valid pid`() {
-        assertTrue(validPid("012345678"))
-        assertFalse(validPid("01234567"))
-        assertFalse(validPid("0123x5679"))
-        assertFalse(validPid("0123.5679"))
-        assertFalse(validPid("-12345679"))
+        assertTrue(pidRule("012345678"))
+        assertFalse(pidRule("01234567"))
+        assertFalse(pidRule("0123x5679"))
+        assertFalse(pidRule("0123.5679"))
+        assertFalse(pidRule("-12345679"))
     }
 }
