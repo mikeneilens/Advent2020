@@ -16,7 +16,7 @@ val northPoleCredentialFields = passportFields.filter{it.key != "cid"}
 typealias Passport = String
 typealias Credentials = Map<String, String>
 
-fun String.toPassports(passportSeparator:String = "\n\n") = split(passportSeparator)
+fun String.toPassports() = split("\n\n")
 
 fun Passport.toCredentials() =  replace("\n"," ").split(" ").map{ it.toKeyValuePair() }.toMap()
 
