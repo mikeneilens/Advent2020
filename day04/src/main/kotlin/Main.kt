@@ -1,6 +1,3 @@
-
-fun String.inRange(min:Int, max:Int):Boolean = toIntOrNull()?.let{ it in min..max } ?: false
-
 val passportFields = mapOf(
     "byr" to validByr,
     "iyr" to validIyr,

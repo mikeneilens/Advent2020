@@ -1,3 +1,5 @@
+fun String.inRange(min:Int, max:Int):Boolean = toIntOrNull()?.let{ it in min..max } ?: false
+
 // byr (Birth Year) - four digits; at least 1920 and at most 2002.
 val validByr = {credential:String -> credential.inRange(1920,2002)    }
 //iyr (Issue Year) - four digits; at least 2010 and at most 2020.
