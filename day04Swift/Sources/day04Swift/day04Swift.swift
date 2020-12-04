@@ -1,12 +1,3 @@
-//needed for later
-let byrRule:((String,String)) -> (Bool) = {credential in return true }
-let iyrRule:((String,String)) -> (Bool) = {credential in return true }
-let eyrRule:((String,String)) -> (Bool) = {credential in return true }
-let hgtRule:((String,String)) -> (Bool) = {credential in return true }
-let hclRule:((String,String)) -> (Bool) = {credential in return true }
-let eclRule:((String,String)) -> (Bool) = {credential in return true }
-let pidRule:((String,String)) -> (Bool) = {credential in return true }
-let cidRule:((String,String)) -> (Bool) = {credential in return true }
 
 let passportFields = ["byr":byrRule,
                     "iyr":iyrRule,
@@ -41,6 +32,10 @@ extension String {
     func passportsContainingRequiredFields() -> Array<Credentials> {
         toPassports().map{$0.toCredentials()}.filter{$0.passportFieldsArePresent() || $0.northPoleCredentialsFieldsArePresent()}
     }
+    
+    func validPassports() -> Array<Credentials> {
+        passportsContainingRequiredFields().filter{credentials in credentials.allValid()}
+    }
 }
 
 extension Credentials {
@@ -49,6 +44,14 @@ extension Credentials {
     }
     func northPoleCredentialsFieldsArePresent() -> Bool {
         Set(keys).isSuperset(of: Set(northPoleCredentialFields.keys))
+    }
+    
+    func allValid() -> Bool {
+        allSatisfy{ credential  in
+            if let rule = passportFields[credential.key] {
+                return rule(credential.value)
+            } else {return false }
+        }
     }
 }
 
