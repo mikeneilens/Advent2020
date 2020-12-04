@@ -19,22 +19,6 @@ class MainTest {
     """.trimIndent()
     @Test
     fun `spliting data into separate passports creates 4 potential passports`() {
-
-        println("xx")
-        println("xx".split("xx"))
-        println("xx".split("xx").size)
-        println("xxxx")
-        println("xxxx".split("xx"))
-        println("xxxx".split("xx").size)
-        println("xxhello")
-        println("xxhello".split("xx"))
-        println("xxhello".split("xx").size)
-        println("helloxx")
-        println("helloxx".split("xx"))
-        println("helloxx".split("xx").size)
-
-
-        assertEquals(4, sampleData.toPassports().size)
         val expectedPassport0 = """
             ecl:gry pid:860033327 eyr:2020 hcl:#fffffd
             byr:1937 iyr:2017 cid:147 hgt:183cm

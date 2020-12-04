@@ -8,7 +8,7 @@ import Foundation
 
 extension String {
     func inRange(_ range:ClosedRange<Int>) -> Bool {
-        guard let value =  Int(self) else { return false}
+        guard let value = Int(self) else { return false}
         return range.contains(value)
     }
 }
@@ -23,9 +23,9 @@ func hgtRule(_ credential:String) -> Bool  {
 }
 
 func hclRule(_ credential:String) -> Bool  {
-    return credential.count == 7 && credential.hasPrefix("#") && !credential.map{ "0123456789abcdef".contains($0)}.dropFirst().contains(false)
+    return credential.count == 7 && credential.hasPrefix("#") && credential.dropFirst().allSatisfy{ "0123456789abcdef".contains($0)}
 }
 
 func eclRule(_ credential:String) -> Bool  {["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(credential)}
-func pidRule(_ credential:String) -> Bool  {credential.count == 9 && !credential.map{ "0123456789".contains($0)}.contains(false) }
+func pidRule(_ credential:String) -> Bool  {credential.count == 9 && credential.allSatisfy{ "0123456789".contains($0)}}
 func cidRule(_ credential:String) -> Bool  {true}
