@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2020-12-04T13:05:59" hostname="MacBook-Pro-2" time="0.108">
+<testsuite name="MainTest" tests="14" skipped="0" failures="0" errors="0" timestamp="2020-12-04T13:20:37" hostname="MacBook-Pro-2" time="0.1">
   <properties/>
-  <testcase name="credentials are valid north pole credentials if they contain all of the passport credentials except cid()" classname="MainTest" time="0.025"/>
+  <testcase name="credentials are valid north pole credentials if they contain all of the passport credentials except cid()" classname="MainTest" time="0.026"/>
   <testcase name="credentials are a valid passport if they contain all of the keys needed()" classname="MainTest" time="0.001"/>
-  <testcase name="sample data should contain 2 valid passports()" classname="MainTest" time="0.043"/>
+  <testcase name="sample data should contain 2 valid passports()" classname="MainTest" time="0.041"/>
   <testcase name="a map containing correct key valeus is created with a passport when credentials are separated by spaces and new lines()" classname="MainTest" time="0.001"/>
   <testcase name="passports that pass rules()" classname="MainTest" time="0.004"/>
-  <testcase name="passports that dont pass rules()" classname="MainTest" time="0.001"/>
+  <testcase name="passports that dont pass rules()" classname="MainTest" time="0.002"/>
   <testcase name="credentials are not a valid passport if they miss one of the keys needed()" classname="MainTest" time="0.0"/>
   <testcase name="passports that are valid and pass the rules()" classname="MainTest" time="0.001"/>
   <testcase name="credentials are not valid north pole credentials if they dont contain all of the passport credentials()" classname="MainTest" time="0.001"/>
-  <testcase name="a Pair is created correcty when a string contains key and value separated by a colon()" classname="MainTest" time="0.001"/>
-  <testcase name="part one()" classname="MainTest" time="0.011"/>
-  <testcase name="part two()" classname="MainTest" time="0.01"/>
+  <testcase name="a Pair is created correcty when a string contains key and value separated by a colon()" classname="MainTest" time="0.0"/>
+  <testcase name="part one()" classname="MainTest" time="0.009"/>
+  <testcase name="part two()" classname="MainTest" time="0.009"/>
   <testcase name="a map containing correct key valeus is created with a passport when credentials are separated by spaces()" classname="MainTest" time="0.001"/>
-  <testcase name="spliting data into separate passports creates 4 potential passports()" classname="MainTest" time="0.001"/>
+  <testcase name="spliting data into separate passports creates 4 potential passports()" classname="MainTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

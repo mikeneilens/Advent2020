@@ -34,6 +34,6 @@ fun Credentials.northPoleCredentialsFieldsArePresent() = keys.containsAll(northP
 fun String.passportsContainingRequiredFields():List<Credentials> = toPassports().map{it.toCredentials()}.filter{it.passportFieldsArePresent() || it.northPoleCredentialsFieldsArePresent()}
 
 fun Credentials.allValid() =
-    map { credential -> passportFields[credential.key]?.let { rule -> rule(credential.value) } }.none { it == false }
+    map { credential -> passportFields[credential.key]?.let { rule -> rule(credential.value) } }.all { it == true }
 
-fun String.validPassports() = passportsContainingRequiredFields().map{it.allValid()}.filter{it}
+fun String.validPassports() = passportsContainingRequiredFields().map{it.allValid()}.filter{ it }
