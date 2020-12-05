@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-12-05T11:52:24" hostname="MacBook-Pro-2" time="0.066">
+<testsuite name="MainTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-12-05T14:30:29" hostname="MacBook-Pro-2" time="0.053">
   <properties/>
-  <testcase name="finding the seatId of a boarding pass()" classname="MainTest" time="0.036"/>
-  <testcase name="finding the column of a boarding pass()" classname="MainTest" time="0.001"/>
-  <testcase name="find missing seat()" classname="MainTest" time="0.014"/>
+  <testcase name="binary conversion works when string is Fs ()" classname="MainTest" time="0.028"/>
+  <testcase name="finding the seatId of a boarding pass()" classname="MainTest" time="0.0"/>
+  <testcase name="find missing seat()" classname="MainTest" time="0.011"/>
   <testcase name="binary conversion works when string is 1s and 0s()" classname="MainTest" time="0.001"/>
-  <testcase name="part one()" classname="MainTest" time="0.007"/>
-  <testcase name="part two()" classname="MainTest" time="0.003"/>
+  <testcase name="part one()" classname="MainTest" time="0.006"/>
+  <testcase name="part two()" classname="MainTest" time="0.002"/>
   <testcase name="binary conversion works when string is Fs and Rs()" classname="MainTest" time="0.001"/>
-  <testcase name="finding the  max seatId of boarding passes()" classname="MainTest" time="0.0"/>
-  <testcase name="finding the row of a boarding pass()" classname="MainTest" time="0.0"/>
+  <testcase name="finding the  max seatId of boarding passes()" classname="MainTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

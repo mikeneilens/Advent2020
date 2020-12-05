@@ -9,25 +9,20 @@ class MainTest {
         assertEquals(2,"10".binaryToInteger())
         assertEquals(3,"11".binaryToInteger())
         assertEquals(4,"100".binaryToInteger())
-
+    }
+    @Test
+    fun `binary conversion works when string is Fs `() {
+        assertEquals(44,"FBFBBFF".binaryToInteger("B"))
     }
     @Test
     fun `binary conversion works when string is Fs and Rs`() {
-        assertEquals(44,"FBFBBFF".binaryToInteger('B' ))
-    }
-    @Test
-    fun `finding the row of a boarding pass`() {
-        assertEquals(44,"FBFBBFFLRL".toRow())
-    }
-    @Test
-    fun `finding the column of a boarding pass`() {
-        assertEquals(5,"FBFBBFFRLR".toColumn())
+        assertEquals(567,"BFFFBBFRRR".binaryToInteger("BR"))
     }
     @Test
     fun `finding the seatId of a boarding pass`() {
-        assertEquals(567,"BFFFBBFRRR".toSeatId())
-        assertEquals(119,"FFFBBBFRRR".toSeatId())
-        assertEquals(820,"BBFFBBFRLL".toSeatId())
+        assertEquals(567,toSeatId("BFFFBBFRRR"))
+        assertEquals(119,toSeatId("FFFBBBFRRR"))
+        assertEquals(820,toSeatId("BBFFBBFRLL"))
     }
     @Test
     fun `finding the  max seatId of boarding passes`() {
@@ -44,11 +39,11 @@ class MainTest {
     @Test
     fun `find missing seat`() {
         val data =  listOf(2,3,5,6,7,8)
-        assertEquals(4,data.findMissingSeat())
+        assertEquals(4,data.theMissingSeat())
     }
     @Test
     fun `part two`() {
-        assertEquals(625,day05Data.findMissingSeat())
+        assertEquals(625,day05Data.theMissingSeat())
     }
 
 }
