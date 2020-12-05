@@ -11,8 +11,6 @@ fun String.toSeatId() = toRow() * 8 +  toColumn()
 fun String.allSeats() = split("\n").map{it.toSeatId()}.sorted()
 fun String.maxSeatId() = allSeats().last()
 
-fun List<Int>.findMissingSeat() = windowed(2,1).first{ seatIsMissing(it)}.first() + 1
-
-fun seatIsMissing(seats:List<Int>) = (seats[0] + 1) != seats[1]
+fun List<Int>.findMissingSeat() = zip(drop(1)).first{ it.first + 1 != it.second}.first + 1
 
 fun String.findMissingSeat() = allSeats().findMissingSeat()
