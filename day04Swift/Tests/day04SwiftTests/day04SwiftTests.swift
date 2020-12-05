@@ -33,13 +33,13 @@ final class day04SwiftTests: XCTestCase {
     }
     
     func testAPairIsCreatedCorrectyWhenAStringContainsKeyAndValueSeparatedByAColon(){
-        XCTAssertEqual("key123", "key123:abcd".toKeyValuePair().0)
-        XCTAssertEqual("abcd", "key123:abcd".toKeyValuePair().1)
+        XCTAssertEqual("key123", toCredential("key123:abcd").0)
+        XCTAssertEqual("abcd", toCredential("key123:abcd").1)
     }
     
     func testAMapContainingCorrectKeyValeusIsCreatedWithAPassportWhenCredentialsAreSeparatedBySpaces(){
         let passport = "iyr:2013 ecl:amb cid:350 eyr:2023"
-        let credentials = passport.toCredentials()
+        let credentials = toCredentials(passport)
         XCTAssertEqual(4,credentials.count)
         XCTAssertEqual("2013", credentials["iyr"])
         XCTAssertEqual("amb", credentials["ecl"])
@@ -67,8 +67,8 @@ final class day04SwiftTests: XCTestCase {
     func testSampleDataShouldContain2ValidPassports() {
         XCTAssertEqual(2, sampleData.passportsContainingRequiredFields().count)
 
-        let firstPassportCredentials = sampleData.toPassports()[0].toCredentials()
-        let thirdPassportCredentials = sampleData.toPassports()[2].toCredentials()
+        let firstPassportCredentials = toCredentials(sampleData.toPassports()[0])
+        let thirdPassportCredentials = toCredentials(sampleData.toPassports()[2])
 
         XCTAssertEqual(firstPassportCredentials, sampleData.passportsContainingRequiredFields()[0])
         XCTAssertEqual(thirdPassportCredentials, sampleData.passportsContainingRequiredFields()[1])
@@ -95,9 +95,9 @@ final class day04SwiftTests: XCTestCase {
         pid:3556412378 byr:2007
         """
 
-        let credentialsForEachPassport = validPassports.toPassports().map{$0.toCredentials()}
+        let credentialsForEachPassport = validPassports.toPassports().map(toCredentials)
         for credentials in credentialsForEachPassport {
-            XCTAssertFalse(credentials.allValid())
+            XCTAssertFalse(allCredentialsValid(credentials))
         }
     }
     func  testPassportsThatPassRules() {
@@ -116,9 +116,9 @@ final class day04SwiftTests: XCTestCase {
         iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
         """
 
-        let credentialsForEachPassport = validPassports.toPassports().map{$0.toCredentials()}
+        let credentialsForEachPassport = validPassports.toPassports().map(toCredentials)
         for credentials in credentialsForEachPassport {
-            XCTAssertTrue(credentials.allValid())
+            XCTAssertTrue(allCredentialsValid(credentials))
         }
     }
     func testPassportsThatAreValidAndPassTheRules() {

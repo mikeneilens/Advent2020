@@ -20,21 +20,33 @@ typealias Credentials = Dictionary<String, String>
 extension String {
     func toPassports() -> Array<String> { split(separator: "\n\n") }
     
-    func toCredentials() -> Credentials {
-        replace("\n"," ").split(separator: " ").map{  $0.toKeyValuePair() }.toDictionary()
-    }
-    
-    func toKeyValuePair() -> (String, String) {
-        let parts = split(separator: ":")
-        return (parts[0],parts[1])
-    }
-    
     func passportsContainingRequiredFields() -> Array<Credentials> {
-        toPassports().map{$0.toCredentials()}.filter{$0.passportFieldsArePresent() || $0.northPoleCredentialsFieldsArePresent()}
+        toPassports().map(toCredentials).filter(isvalidPassportOrNorthPoleCredentials)
     }
     
     func validPassports() -> Array<Credentials> {
-        passportsContainingRequiredFields().filter{credentials in  credentials.allValid()}
+        passportsContainingRequiredFields().filter(allCredentialsValid)
+    }
+}
+
+func toCredentials(_ s:String) -> Credentials {
+    s.replace("\n"," ").split(separator: " ").map(toCredential).toDictionary()
+}
+
+func toCredential(_ s:String) -> (String, String) {
+    let parts = s.split(separator: ":")
+    return (parts[0],parts[1])
+}
+
+func isvalidPassportOrNorthPoleCredentials(_ credentials:Credentials) -> Bool {
+    credentials.passportFieldsArePresent() || credentials.northPoleCredentialsFieldsArePresent()
+}
+
+func allCredentialsValid(_ credentials:Credentials) -> Bool {
+    credentials.allSatisfy{ credential  in
+        if let rule = passportFields[credential.key] {
+            return rule(credential.value)
+        } else {return false }
     }
 }
 
@@ -44,14 +56,6 @@ extension Credentials {
     }
     func northPoleCredentialsFieldsArePresent() -> Bool {
         Set(keys).isSuperset(of: Set(northPoleCredentialFields.keys))
-    }
-    
-    func allValid() -> Bool {
-        allSatisfy{ credential  in
-            if let rule = passportFields[credential.key] {
-                return rule(credential.value)
-            } else {return false }
-        }
     }
 }
 
