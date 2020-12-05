@@ -1,7 +1,9 @@
 import java.lang.Math.pow
 
 fun String.binaryToInteger(chars:String = "1") =
-    reversed().mapIndexed{index, digit -> if ( chars.contains(digit)) pow(2.0, index.toDouble()).toInt() else 0 }.sum()
+    reversed().mapIndexed{index, digit -> if ( chars.contains(digit)) pow(2, index) else 0 }.sum()
+
+fun pow(a:Int, b:Int) = pow(a.toDouble(), b.toDouble()).toInt()
 
 fun toSeatId(s:String) = s.binaryToInteger("BR")
 
