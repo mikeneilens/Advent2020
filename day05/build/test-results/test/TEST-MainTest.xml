@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-11-28T17:24:51" hostname="MacBook-Pro-2" time="0.013">
+<testsuite name="MainTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-12-05T11:06:15" hostname="MacBook-Pro-2" time="0.067">
   <properties/>
-  <testcase name="a test()" classname="MainTest" time="0.013"/>
+  <testcase name="finding the seatId of a boarding pass()" classname="MainTest" time="0.036"/>
+  <testcase name="finding the column of a boarding pass()" classname="MainTest" time="0.0"/>
+  <testcase name="find missing seat()" classname="MainTest" time="0.013"/>
+  <testcase name="binary conversion works when string is 1s and 0s()" classname="MainTest" time="0.001"/>
+  <testcase name="part one()" classname="MainTest" time="0.008"/>
+  <testcase name="part two()" classname="MainTest" time="0.004"/>
+  <testcase name="binary conversion works when string is Fs and Rs()" classname="MainTest" time="0.001"/>
+  <testcase name="finding the  max seatId of boarding passes()" classname="MainTest" time="0.001"/>
+  <testcase name="finding the row of a boarding pass()" classname="MainTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

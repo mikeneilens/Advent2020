@@ -34,7 +34,7 @@ extension String {
     }
     
     func validPassports() -> Array<Credentials> {
-        passportsContainingRequiredFields().filter{credentials in credentials.allValid()}
+        passportsContainingRequiredFields().filter{credentials in  credentials.allValid()}
     }
 }
 
