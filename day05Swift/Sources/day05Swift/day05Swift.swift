@@ -2,7 +2,7 @@ import Foundation
 
 extension String {
     func binaryToInteger(_ chars:String) -> Int {
-        reversed().enumerated().map{(index, digit) in (chars.contains(digit)) ? pow(2,index) : 0}.reduce(0){$0 + $1}
+        reversed().enumerated().map{(index, digit) in (chars.contains(digit)) ? pow(2,index).int : 0}.reduce(0){$0 + $1}
     }
     func allSeats() -> Array<Int> { split(separator: "\n").map(toSeatId).sorted() }
     func maxSeat() -> Int? {allSeats().last}

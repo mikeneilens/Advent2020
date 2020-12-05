@@ -7,12 +7,8 @@
 
 import Foundation
 
-func pow(_ x:Int, _ y:Int) -> Int { pow(Decimal(x),y).int}
-
 extension Decimal {
-    var int: Int {
-        return NSDecimalNumber(decimal: self).intValue
-    }
+    var int: Int { NSDecimalNumber(decimal: self).intValue}
 }
 
 
