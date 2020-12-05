@@ -9,7 +9,7 @@ fun String.toColumn() = takeLast(3).binaryToInteger('R')
 fun String.toSeatId() = toRow() * 8 +  toColumn()
 
 fun String.allSeats() = split("\n").map{it.toSeatId()}.sorted()
-fun String.maxSeatId() = allSeats().sorted().last()
+fun String.maxSeatId() = allSeats().last()
 
 fun List<Int>.findMissingSeat() = windowed(2,1).first{ seatIsMissing(it)}.first() + 1
 
