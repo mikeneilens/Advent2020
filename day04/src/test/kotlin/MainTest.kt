@@ -33,12 +33,12 @@ class MainTest {
     }
     @Test
     fun `a Pair is created correcty when a string contains key and value separated by a colon`(){
-        assertEquals(Pair("key123","abcd"), "key123:abcd".toKeyValuePair())
+        assertEquals(Pair("key123","abcd"), toCredential("key123:abcd"))
     }
     @Test
     fun `a map containing correct key valeus is created with a passport when credentials are separated by spaces`(){
         val passport = "iyr:2013 ecl:amb cid:350 eyr:2023"
-        val credentials = passport.toCredentials()
+        val credentials = toCredentials(passport)
         assertEquals(4,credentials.size)
         assertEquals("2013", credentials["iyr"])
         assertEquals("amb", credentials["ecl"])
@@ -52,7 +52,7 @@ class MainTest {
             byr:1937 hgt:183cm
         """.trimIndent()
 
-        val credentials = passport.toCredentials()
+        val credentials = toCredentials(passport)
         assertEquals(4,credentials.size)
         assertEquals("gry", credentials["ecl"])
         assertEquals("#fffffd", credentials["hcl"])
@@ -88,8 +88,8 @@ class MainTest {
     fun `sample data should contain 2 valid passports`() {
         assertEquals(2, sampleData.passportsContainingRequiredFields().size)
 
-        val firstPassportCredentials = sampleData.toPassports()[0].toCredentials()
-        val thirdPassportCredentials = sampleData.toPassports()[2].toCredentials()
+        val firstPassportCredentials = toCredentials(sampleData.toPassports()[0])
+        val thirdPassportCredentials = toCredentials(sampleData.toPassports()[2])
 
         assertEquals(firstPassportCredentials, sampleData.passportsContainingRequiredFields()[0])
         assertEquals(thirdPassportCredentials, sampleData.passportsContainingRequiredFields()[1])
@@ -117,9 +117,9 @@ class MainTest {
             pid:3556412378 byr:2007
         """.trimIndent()
 
-        val credentialsForEachPassport:List<Credentials> = validPassports.toPassports().map{it.toCredentials()}
+        val credentialsForEachPassport:List<Credentials> = validPassports.toPassports().map(::toCredentials)
         for (credentials in credentialsForEachPassport) {
-           assertFalse(credentials.allValid())
+           assertFalse(allValid(credentials))
         }
     }
     @Test
@@ -139,9 +139,9 @@ class MainTest {
             iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719
         """.trimIndent()
 
-        val credentialsForEachPassport:List<Credentials> = validPassports.toPassports().map{it.toCredentials()}
+        val credentialsForEachPassport:List<Credentials> = validPassports.toPassports().map(::toCredentials)
         for (credentials in credentialsForEachPassport) {
-            assertTrue(credentials.allValid())
+            assertTrue(allValid(credentials))
         }
     }
     @Test
