@@ -7,8 +7,7 @@ fun List<String>.concatonated() = joinToString("")
 
 fun String.uniqueAnswers() = parseIntoGroups()
     .map(::answersForGroup)
-    .map(::uniqueAnswersInGroup)
-    .sum()
+    .sumBy(::uniqueAnswersInGroup)
 
 fun questionsEveryOneAnswers(groupAnswers:List<String>) =
     ('a'..'z').filter{ groupAnswers.allPeopleInTheGroupAnswers(it) }
