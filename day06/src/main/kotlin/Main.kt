@@ -18,5 +18,4 @@ fun List<String>.allPeopleInTheGroupAnswers(a:Char) = count{it.contains(a)} == s
 fun String.sumOfQuestionsAnsweredByEachGroup() = parseIntoGroups()
     .map(::answersForGroup)
     .map(::questionsEveryOneAnswers)
-    .map { it.count() }
-    .sum()
+    .sumBy { it.count() }
