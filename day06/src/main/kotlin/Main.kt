@@ -2,8 +2,7 @@
 fun String.parseIntoGroups(): List<String> = split("\n\n")
 fun answersForGroup(group:String): List<String> = group.split("\n")
 
-fun uniqueAnswersInGroup(answers:List<String>):Int = answers.concatenated().toSet().size
-fun List<String>.concatenated() = joinToString("")
+fun uniqueAnswersInGroup(answers:List<String>):Int = answers.joinToString("").toSet().size
 
 fun String.uniqueAnswers() = parseIntoGroups()
     .map(::answersForGroup)
