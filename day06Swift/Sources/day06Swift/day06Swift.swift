@@ -4,25 +4,23 @@ extension String {
     
     func uniqueAnswers() ->Int {
         parseIntoGroups()
-        .map(answersForGroup)
-        .map(uniqueAnswersInGroup)
+        .map{group in uniqueAnswersInGroup(answersFor(group))}
         .reduce(0, +)
     }
     
     func sumOfQuestionsAnsweredByEachGroup() -> Int {
         parseIntoGroups()
-        .map(answersForGroup)
-        .map(questionsEveryOneAnswers)
+        .map{group in questionsEveryOneAnswers(answersFor(group))}
         .map{ $0.count }
         .reduce(0,+)
     }
 }
 
-func answersForGroup(_ group:String) -> Array<String> { group.split(separator: "\n") }
+func answersFor(_ group:String) -> Array<String> { group.split(separator: "\n") }
 
 func uniqueAnswersInGroup(_ answers:Array<String>) -> Int { Set(answers.joined()).count }
 
-func questionsEveryOneAnswers(groupAnswers:Array<String>) -> Array<Character> {
+func questionsEveryOneAnswers(_ groupAnswers:Array<String>) -> Array<Character> {
     "abcdefghijklmnopqrstuvwxyz".filter{ groupAnswers.allPeopleInTheGroupAnswers($0) }
 }
 
