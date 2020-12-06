@@ -10,10 +10,8 @@ fun String.uniqueAnswers() = parseIntoGroups()
     .map(::uniqueAnswersInGroup)
     .sum()
 
-val possibleAnswers = ('a'..'z').toList()
-
 fun questionsEveryAnswers(groupAnswers:List<String>) =
-    possibleAnswers.filter{ groupAnswers.allPeopleInTheGroupAnswers(it) }
+    ('a'..'z').filter{ groupAnswers.allPeopleInTheGroupAnswers(it) }
 
 fun String.sumOfQuestionsAnsweredByEachGroup() = parseIntoGroups()
     .map(::answersForGroup)

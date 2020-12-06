@@ -94,6 +94,6 @@ class MainTest {
     }
     @Test
     fun `part two`() {
-        assertEquals(6, day06Data.sumOfQuestionsAnsweredByEachGroup())
+        assertEquals(3570, day06Data.sumOfQuestionsAnsweredByEachGroup())
     }
 }
