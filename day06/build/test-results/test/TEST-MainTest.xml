@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-12-06T12:26:00" hostname="MacBook-Pro-2" time="0.078">
+<testsuite name="MainTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-12-06T12:27:12" hostname="MacBook-Pro-2" time="0.069">
   <properties/>
-  <testcase name="sum of questions everyone in each group answers()" classname="MainTest" time="0.036"/>
-  <testcase name="questions that everyone in the group answers()" classname="MainTest" time="0.014"/>
+  <testcase name="sum of questions everyone in each group answers()" classname="MainTest" time="0.027"/>
+  <testcase name="questions that everyone in the group answers()" classname="MainTest" time="0.012"/>
   <testcase name="all people in a group answer 'a' group()" classname="MainTest" time="0.001"/>
-  <testcase name="parsing into answers()" classname="MainTest" time="0.001"/>
-  <testcase name="unique answers in an answers for a group()" classname="MainTest" time="0.007"/>
+  <testcase name="parsing into answers()" classname="MainTest" time="0.0"/>
+  <testcase name="unique answers in an answers for a group()" classname="MainTest" time="0.006"/>
   <testcase name="parsing data into groups()" classname="MainTest" time="0.0"/>
-  <testcase name="some of answers for all groups in sample data()" classname="MainTest" time="0.0"/>
-  <testcase name="part one()" classname="MainTest" time="0.006"/>
-  <testcase name="part two()" classname="MainTest" time="0.006"/>
+  <testcase name="some of answers for all groups in sample data()" classname="MainTest" time="0.001"/>
+  <testcase name="part one()" classname="MainTest" time="0.009"/>
+  <testcase name="part two()" classname="MainTest" time="0.007"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

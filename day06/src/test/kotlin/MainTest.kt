@@ -82,11 +82,11 @@ class MainTest {
         val answers3 = listOf("ab","ac")
         val answers4 = listOf("a","a","a","a")
         val answers5 = listOf("a")
-        assertEquals(listOf('a','b','c'), questionsEveryAnswers(answers1))
-        assertEquals(listOf<Char>(), questionsEveryAnswers(answers2))
-        assertEquals(listOf('a'), questionsEveryAnswers(answers3))
-        assertEquals(listOf('a'), questionsEveryAnswers(answers4))
-        assertEquals(listOf('a'), questionsEveryAnswers(answers5))
+        assertEquals(listOf('a','b','c'), questionsEveryOneAnswers(answers1))
+        assertEquals(listOf<Char>(), questionsEveryOneAnswers(answers2))
+        assertEquals(listOf('a'), questionsEveryOneAnswers(answers3))
+        assertEquals(listOf('a'), questionsEveryOneAnswers(answers4))
+        assertEquals(listOf('a'), questionsEveryOneAnswers(answers5))
     }
     @Test
     fun `sum of questions everyone in each group answers`() {

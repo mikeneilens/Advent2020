@@ -10,13 +10,13 @@ fun String.uniqueAnswers() = parseIntoGroups()
     .map(::uniqueAnswersInGroup)
     .sum()
 
-fun questionsEveryAnswers(groupAnswers:List<String>) =
+fun questionsEveryOneAnswers(groupAnswers:List<String>) =
     ('a'..'z').filter{ groupAnswers.allPeopleInTheGroupAnswers(it) }
 
 fun List<String>.allPeopleInTheGroupAnswers(a:Char) = count{it.contains(a)} == size
 
 fun String.sumOfQuestionsAnsweredByEachGroup() = parseIntoGroups()
     .map(::answersForGroup)
-    .map(::questionsEveryAnswers)
+    .map(::questionsEveryOneAnswers)
     .map { it.count() }
     .sum()
