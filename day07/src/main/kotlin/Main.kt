@@ -1,12 +1,9 @@
-import com.sun.deploy.security.ruleset.RuleSetParser
-
 fun main() = 0
 
 typealias Bag=String
 typealias BagAndRelatedBags=List<String>
 
-typealias Rule = Map<Bag, List<RelatedBag>>
-//data class Rule (val bag:Bag, val relatedBags:List<RelatedBag> )
+typealias Rules = Map<Bag, List<RelatedBag>>
 data class RelatedBag (val quantity:Int, val bag:String)
 
 fun toRule(s:String):Pair<Bag,List<RelatedBag>> {
@@ -23,17 +20,21 @@ fun toRelatedBag(s:String) = RelatedBag(s.split(" ")[0].toInt(), s.split(" ").dr
 
 fun String.parseToRules() = split("\n").map(::toRule).toMap()
 
-fun allBagsContaining(bag:Bag, rules:Rule ,bags:List<Bag> = emptyList()):List<Bag> {
+//The actual tricky stuff in day07.
+
+fun allBagsContaining(bag:Bag, rules:Rules, bags:List<Bag> = emptyList()):List<Bag> {
     val parentBags = bagsContaining(bag, rules)
     if (parentBags.isEmpty()) return bags
     else return parentBags + parentBags.flatMap{allBagsContaining(it,rules)}
 }
 
-fun bagsContaining(bag:String, rules:Rule) = rules.toList().filter { it.containsBag(bag)}.map{it.first}
-fun Pair<Bag, List<RelatedBag>>.containsBag(bag:Bag) = second.map{it.bag}.contains(bag)
-fun noOfBagsContaining(bag:Bag, rules:Rule) = allBagsContaining(bag, rules).distinct().size
+fun bagsContaining(bag:String, rules:Rules) = rules.toList().filter(bagContains(bag)).map{it.first}
+fun Pair<Bag,List<RelatedBag>>.bagContains(bag:Bag) = second.map{it.bag}.contains(bag)
+fun bagContains(requiredBag:Bag) = { p:Pair<Bag,List<RelatedBag>> -> p.second.map{it}.contains(requiredBag) }
 
-fun totalBags(bag:Bag, quantity:Int , rules:Rule ):Int {
+fun noOfBagsContaining(bag:Bag, rules:Rules) = allBagsContaining(bag, rules).distinct().size
+
+fun totalBags(bag:Bag, quantity:Int, rules:Rules ):Int {
     val relatedBags = rules[bag]?.let{it } ?: emptyList()
     if (relatedBags.isEmpty()) return quantity
     return quantity + relatedBags.sumBy { relatedBag -> totalBags(relatedBag.bag, quantity * relatedBag.quantity, rules) }
