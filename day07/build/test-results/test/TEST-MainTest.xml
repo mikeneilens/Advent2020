@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-07T20:26:59" hostname="MacBook-Pro-2" time="0.065">
+<testsuite name="MainTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-12-07T20:48:17" hostname="MacBook-Pro-2" time="0.173">
   <properties/>
-  <testcase name="part two()" classname="MainTest" time="0.065"/>
-  <system-out><![CDATA[]]></system-out>
+  <testcase name="test bag contained in one bag()" classname="MainTest" time="0.061"/>
+  <testcase name="test parsing a string into a rule containing related bags()" classname="MainTest" time="0.001"/>
+  <testcase name="test parsing a string into a rule containing no related bags()" classname="MainTest" time="0.0"/>
+  <testcase name="test bags inside of gold bag()" classname="MainTest" time="0.003"/>
+  <testcase name="test parsing sampleData into a list of Rules()" classname="MainTest" time="0.001"/>
+  <testcase name="part one()" classname="MainTest" time="0.097"/>
+  <testcase name="part two()" classname="MainTest" time="0.006"/>
+  <testcase name="test all bag containing the bag using sample data()" classname="MainTest" time="0.001"/>
+  <system-out><![CDATA[ --
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

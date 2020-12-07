@@ -29,12 +29,12 @@ fun allBagsContaining(bag:Bag, rules:Rules, bags:List<Bag> = emptyList()):List<B
 }
 
 fun bagsContaining(bag:String, rules:Rules) = rules.toList().filter(bagContains(bag)).map{it.first}
-fun bagContains(requiredBag:Bag) = { p:Pair<Bag,List<RelatedBag>> -> p.second.map{it}.contains(requiredBag) }
+fun bagContains(requiredBag:Bag) = { p:Pair<Bag,List<RelatedBag>> -> p.second.map{it.bag}.contains(requiredBag) }
 
 fun noOfBagsContaining(bag:Bag, rules:Rules) = allBagsContaining(bag, rules).distinct().size
 
 fun totalBags(bag:Bag, qtyOfThisBag:Int, rules:Rules ):Int {
-    val relatedBags = rules[bag]?.let{it } ?: emptyList()
+    val relatedBags = rules.getValue(bag)
     if (relatedBags.isEmpty()) return qtyOfThisBag
     return qtyOfThisBag + relatedBags.sumBy { relatedBag -> totalBags(relatedBag.bag, qtyOfThisBag * relatedBag.quantity, rules) }
 }
