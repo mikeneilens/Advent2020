@@ -1,5 +1,3 @@
-fun main() = 0
-
 typealias Bag=String
 typealias BagAndRelatedBags=List<String>
 
@@ -24,8 +22,10 @@ fun String.parseToRules() = split("\n").map(::toRule).toMap()
 
 fun allBagsContaining(bag:Bag, rules:Rules, bags:List<Bag> = emptyList()):List<Bag> {
     val parentBags = bagsContaining(bag, rules)
-    if (parentBags.isEmpty()) return bags
-    else return parentBags + parentBags.flatMap{allBagsContaining(it,rules)}
+    return if (parentBags.isEmpty())
+        bags
+    else
+        parentBags + parentBags.flatMap{allBagsContaining(it,rules)}
 }
 
 fun bagsContaining(bag:String, rules:Rules) = rules.toList().filter(bagContains(bag)).map{it.first}
@@ -35,7 +35,9 @@ fun noOfBagsContaining(bag:Bag, rules:Rules) = allBagsContaining(bag, rules).dis
 
 fun totalBags(bag:Bag, qtyOfThisBag:Int, rules:Rules ):Int {
     val relatedBags = rules.getValue(bag)
-    if (relatedBags.isEmpty()) return qtyOfThisBag
-    return qtyOfThisBag + relatedBags.sumBy { relatedBag -> totalBags(relatedBag.bag, qtyOfThisBag * relatedBag.quantity, rules) }
+    return if (relatedBags.isEmpty())
+        qtyOfThisBag
+    else
+        qtyOfThisBag + relatedBags.sumBy { relatedBag -> totalBags(relatedBag.bag, qtyOfThisBag * relatedBag.quantity, rules) }
 }
 
