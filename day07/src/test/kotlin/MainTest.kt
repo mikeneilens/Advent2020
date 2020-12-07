@@ -65,6 +65,6 @@ class MainTest {
     @Test
     fun `part two`() {
         val rules = day07Data.parseToRules()
-        assertEquals(172247, totalBags("shiny gold bag",1, rules))
+        assertEquals(172247, totalBags("shiny gold bag",1, rules)) //need to subtract one from this for the adventOfCode.
     }
 }
