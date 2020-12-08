@@ -1,62 +1,69 @@
 
-var accumulator = 0
+data class ProgramState(val line:Int, val accumulator:Int)
 
-data class ProgState(val ndx:Int, val accumulator:Int)
-
-fun nop(state:ProgState, argument:Int):ProgState = ProgState(state.ndx + 1, state.accumulator )
-fun acc(state:ProgState, argument:Int):ProgState = ProgState(state.ndx + 1, state.accumulator + argument )
-fun jmp(state:ProgState, argument:Int):ProgState = ProgState(state.ndx + argument, state.accumulator)
-
-typealias Rule = (ProgState, Int)->ProgState
-typealias Instruction = (ProgState) -> ProgState
-typealias Program = Map<Int, String>
-
-val ruleMap = mapOf<String, Rule>(
-    "nop" to ::nop,
-    "acc" to ::acc,
-    "jmp" to ::jmp
+val ruleMap = mapOf(
+    "nop" to { state:ProgramState, _:Int -> ProgramState(state.line + 1, state.accumulator )},
+    "acc" to { state:ProgramState, argument:Int -> ProgramState(state.line + 1, state.accumulator + argument)},
+    "jmp" to { state:ProgramState, argument:Int -> ProgramState(state.line + argument, state.accumulator)}
 )
-fun String.parseIntoProgram(): Program = split("\n").mapIndexed{i,v -> Pair(i,v)}.toMap()
 
-fun toInstruction(s:String):Instruction {
-    val parts= s.split(" ")
-    val rule = ruleMap.getValue(parts[0])
-    val argument = parts[1].toInt()
-    return {progState -> rule(progState, argument) }
+data class Instruction (val text:String, var noOfExecutions:Int = 0) {
+
+    private fun ruleToExecute(): (ProgramState) ->ProgramState {
+        val parts = text.split(" ")
+        val rule = ruleMap.getValue(parts[0])
+        val argument = parts[1].toInt()
+        return { prodState -> rule(prodState, argument) }
+    }
+
+    fun execute(programState:ProgramState):ProgramState {
+        noOfExecutions++
+        return ruleToExecute()(programState)
+    }
 }
+typealias Program = Map<Int, Instruction>
+
+fun String.parseIntoProgram(): Program = split("\n").mapIndexed{i,v -> Pair(i,Instruction(v))}.toMap()
 
 fun Program.process( ):Pair<Int, Boolean> {
-    var progState = ProgState(0,0)
-    val indexesVisited = mutableListOf<Int>()
-    while (!indexesVisited.contains(progState.ndx) && get(progState.ndx) != null ) {
-        indexesVisited.add(progState.ndx)
-        val instruction = toInstruction(getValue(progState.ndx))
-        progState = instruction(progState)
+    var programState = ProgramState(0,0)
+    while ( !isComplete(programState) ) {
+        val instruction = getValue(programState.line)
+        programState = instruction.execute(programState)
     }
-    return Pair(progState.accumulator,get(progState.ndx) == null)
+    return Pair(programState.accumulator,get(programState.line) == null)
 }
 
-fun Program.swappables() = toList().sortedBy { it.first }.filter{it.second.contains("jmp") || it.second.contains("nop")}
+fun Program.isComplete(programState:ProgramState) = get(programState.line) == null || getValue(programState.line).noOfExecutions > 0
+fun Program.reset() = forEach { _, v -> v.noOfExecutions = 0 }
+
+fun Program.instructionsToSwap() = toList()
+    .sortedBy(::line)
+    .filter(::containsJmpOrNop)
+
+fun line(lineAndInstruction:Pair<Int, Instruction>) = lineAndInstruction.first
+fun containsJmpOrNop(lineAndInstruction:Pair<Int, Instruction>)= lineAndInstruction.second.text.contains("jmp") || lineAndInstruction.second.text.contains("nop")
 
 fun partTwo(string:String):Pair<Int, Boolean> {
     val program = string.parseIntoProgram()
-    val jmpOrNOPToSwap = program.swappables()
+    val instructionsToSwap = program.instructionsToSwap()
     var oneToSwap = 0
-    while (oneToSwap < jmpOrNOPToSwap.size) {
-        val updatableProgram = program.toMutableMap()
-        replaceJmpOrNop(updatableProgram, jmpOrNOPToSwap, oneToSwap)
-        val (acc, finishedOK) = updatableProgram.process()
-        if (finishedOK) return Pair(acc, finishedOK)
-        oneToSwap++
+    while (oneToSwap < instructionsToSwap.size) {
+        val (accumulator, finishedOK) = program.replaceInstruction(instructionsToSwap, oneToSwap++).process()
+        if (finishedOK) return Pair(accumulator, finishedOK)
+        program.reset()
     }
     return Pair(-1,false)
 }
 
-fun replaceJmpOrNop(program: MutableMap<Int, String>, swappables: List<Pair<Int, String>>, oneToSwap: Int) {
-    val swappableIndex = swappables[oneToSwap].first
-    val swappableInstruction = swappables[oneToSwap].second
-    program[swappableIndex] = if (swappableInstruction.contains("jmp"))
-        swappableInstruction.replace("jmp", "nop")
+fun Program.replaceInstruction(instructionsToSwap: List<Pair<Int, Instruction>>, oneToSwap: Int):Program {
+    val updatableProgram = toMutableMap()
+    val swappableIndex = instructionsToSwap[oneToSwap].first
+    val swappableInstruction = instructionsToSwap[oneToSwap].second
+    val newText = if (swappableInstruction.text.contains("jmp"))
+        swappableInstruction.text.replace("jmp", "nop")
     else
-        swappableInstruction.replace("nop", "jmp")
+        swappableInstruction.text.replace("nop", "jmp")
+    updatableProgram[swappableIndex] = Instruction(newText, swappableInstruction.noOfExecutions)
+    return updatableProgram
 }

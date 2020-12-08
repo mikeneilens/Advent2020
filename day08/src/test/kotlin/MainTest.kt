@@ -37,6 +37,6 @@ class MainTest {
     @Test
     fun `part two`() {
         val (acc, finishedOK) = partTwo(day08Data)
-        assertEquals(8, acc)
+        assertEquals(631, acc)
     }
 }
