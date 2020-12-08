@@ -31,12 +31,12 @@ class MainTest {
     }
     @Test
     fun `swapping jmp or nop using sample data`() {
-        val (acc, finishedOK) = partTwo(sampleData)
+        val (acc, finishedOK) = sampleData.parseIntoProgram().partTwo()
         assertEquals(8, acc)
     }
     @Test
     fun `part two`() {
-        val (acc, finishedOK) = partTwo(day08Data)
+        val (acc, finishedOK) = day08Data.parseIntoProgram().partTwo()
         assertEquals(631, acc)
     }
 }
