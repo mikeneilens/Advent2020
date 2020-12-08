@@ -2,20 +2,22 @@
 data class ProgramState(val line:Int, val accumulator:Int)
 typealias Program = Map<Int, Instruction>
 
-sealed class Operator (val fn:(ProgramState, Int)->ProgramState, var argument:Int) {}
+sealed class Operator (val fn:(ProgramState, Int)->ProgramState, var argument:Int) {
+    fun toNOP() = when (this) {
+        is JMP -> NOP(argument = argument)
+        else -> this
+    }
+    fun toJMP() = when (this) {
+        is NOP -> JMP(argument = argument)
+        else -> this
+    }
+}
 class NOP(
-    fn:(ProgramState, Int)->ProgramState = {state, _ -> ProgramState(state.line + 1, state.accumulator )},
-    argument:Int):Operator(fn,argument) {
-    fun toJMP() = JMP(argument = argument)
-}
+    fn:(ProgramState, Int)->ProgramState = {state, _ -> ProgramState(state.line + 1, state.accumulator )}, argument:Int):Operator(fn,argument)
 class ACC(
-    fn:(ProgramState, Int)->ProgramState = {state, argument -> ProgramState(state.line + 1, state.accumulator + argument)},
-    argument:Int):Operator(fn,argument)
+    fn:(ProgramState, Int)->ProgramState = {state, arg -> ProgramState(state.line + 1, state.accumulator + arg)}, argument:Int):Operator(fn,argument)
 class JMP(
-    fn:(ProgramState, Int)->ProgramState = {state, argument -> ProgramState(state.line + argument, state.accumulator)},
-    argument:Int):Operator(fn,argument) {
-    fun toNOP() =NOP(argument = argument)
-}
+    fn:(ProgramState, Int)->ProgramState = {state, arg -> ProgramState(state.line + arg, state.accumulator)}, argument:Int):Operator(fn,argument)
 
 data class Instruction (val operator:Operator, private var noOfExecutions:Int = 0) {
 
@@ -41,15 +43,15 @@ fun toInstruction(index:Int, parts:List<String>):Pair<Int, Instruction> = when (
 fun Program.process( ):Pair<Int, Boolean> {
     var programState = ProgramState(0,0)
     while ( !(noMoreInstructions(programState) || isInLoop(programState)) ) {
-        val instruction = getValue(programState.line)
-        programState = instruction.execute(programState)
+        programState = executeNextInstruction(programState)
     }
     return Pair(programState.accumulator,noMoreInstructions(programState))
 }
 
+fun Program.executeNextInstruction(programState: ProgramState) = getValue(programState.line).execute(programState)
 fun Program.noMoreInstructions(programState:ProgramState) = get(programState.line) == null
 fun Program.isInLoop(programState:ProgramState) = getValue(programState.line).cannotExecute()
-fun Program.reset() = forEach { _, v -> v.reset()}
+fun Program.reset() = forEach { _, instruction -> instruction.reset()}
 
 fun Program.instructionsToSwap() = toList()
     .sortedBy{it.first}
