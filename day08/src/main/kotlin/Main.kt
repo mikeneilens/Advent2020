@@ -2,22 +2,10 @@
 data class ProgramState(val line:Int, val accumulator:Int)
 typealias Program = Map<Int, Instruction>
 
-sealed class Operator (val fn:(ProgramState, Int)->ProgramState, var argument:Int) {
-    fun toNOP() = when (this) {
-        is JMP -> NOP(argument = argument)
-        else -> this
-    }
-    fun toJMP() = when (this) {
-        is NOP -> JMP(argument = argument)
-        else -> this
-    }
-}
-class NOP(
-    fn:(ProgramState, Int)->ProgramState = {state, _ -> ProgramState(state.line + 1, state.accumulator )}, argument:Int):Operator(fn,argument)
-class ACC(
-    fn:(ProgramState, Int)->ProgramState = {state, arg -> ProgramState(state.line + 1, state.accumulator + arg)}, argument:Int):Operator(fn,argument)
-class JMP(
-    fn:(ProgramState, Int)->ProgramState = {state, arg -> ProgramState(state.line + arg, state.accumulator)}, argument:Int):Operator(fn,argument)
+sealed class Operator (val fn:(ProgramState, Int)->ProgramState, var argument:Int)
+class NOP(fn:(ProgramState, Int)->ProgramState = {state, _ -> ProgramState(state.line + 1, state.accumulator )}, argument:Int):Operator(fn,argument)
+class ACC(fn:(ProgramState, Int)->ProgramState = {state, arg -> ProgramState(state.line + 1, state.accumulator + arg)}, argument:Int):Operator(fn,argument)
+class JMP(fn:(ProgramState, Int)->ProgramState = {state, arg -> ProgramState(state.line + arg, state.accumulator)}, argument:Int):Operator(fn,argument)
 
 data class Instruction (val operator:Operator, private var noOfExecutions:Int = 0) {
 
@@ -25,10 +13,7 @@ data class Instruction (val operator:Operator, private var noOfExecutions:Int = 
 
     fun execute(programState:ProgramState):ProgramState = operation()(programState)
 
-    fun changeToJmp() = Instruction((operator as NOP).toJMP(),noOfExecutions)
-    fun changeToNop() = Instruction((operator as JMP).toNOP(),noOfExecutions)
     fun cannotExecute() = noOfExecutions > 0
-    fun reset(){noOfExecutions = 0}
 }
 
 fun String.parseIntoProgram(): Program = split("\n").map{it.split(" ")}.mapIndexed(::toInstruction).toMap()
@@ -51,30 +36,24 @@ fun Program.process( ):Pair<Int, Boolean> {
 fun Program.executeNextInstruction(programState: ProgramState) = getValue(programState.line).execute(programState)
 fun Program.noMoreInstructions(programState:ProgramState) = get(programState.line) == null
 fun Program.isInLoop(programState:ProgramState) = getValue(programState.line).cannotExecute()
-fun Program.reset() = forEach { _, instruction -> instruction.reset()}
 
-fun Program.instructionsToSwap() = toList()
-    .sortedBy{it.first}
-    .filter{it.second.operator is JMP || it.second.operator is NOP}
-
-fun Program.partTwo():Pair<Int, Boolean> {
-    val instructionsToSwap = instructionsToSwap()
-    var oneToSwap = 0
-    while (oneToSwap < instructionsToSwap.size) {
-        val (accumulator, finishedOK) = replaceInstruction(instructionsToSwap, oneToSwap++).process()
+fun part2b(data:String):Pair<Int, Boolean> {
+    var n = 0
+    while ( n < data.split("\n").size ) {
+        val program = data.replaceNthJmpOrNop(n++).parseIntoProgram()
+        val (accumulator, finishedOK) = program.process()
         if (finishedOK) return Pair(accumulator, finishedOK)
-        reset()
     }
     return Pair(-1,false)
 }
 
-fun Program.replaceInstruction(instructionsToSwap: List<Pair<Int, Instruction>>, oneToSwap: Int):Program {
-    val updatableProgram = toMutableMap()
-    val swappableIndex = instructionsToSwap[oneToSwap].first
-    val swappableInstruction = instructionsToSwap[oneToSwap].second
-    updatableProgram[swappableIndex] = if (swappableInstruction.operator is JMP)
-         updatableProgram.getValue(swappableIndex).changeToNop()
-    else
-         updatableProgram.getValue(swappableIndex).changeToJmp()
-    return updatableProgram
+fun String.replaceNthJmpOrNop(n:Int):String {
+    var count = 0
+    return split("\n").map { s:String ->
+        if ( s.startsWith("jmp") || s.startsWith("nop")) {
+            if (++count == n) {
+                if (s.startsWith("jmp")) "nop${s.drop(3)}" else "jmp${s.drop(3)}"
+                } else  s
+        } else s
+    }.joinToString("\n")
 }

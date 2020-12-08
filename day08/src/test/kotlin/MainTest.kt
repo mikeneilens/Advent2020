@@ -29,14 +29,39 @@ class MainTest {
         assertEquals(1818, acc)
         assertEquals(false, finishedOK)
     }
+
     @Test
-    fun `swapping jmp or nop using sample data`() {
-        val (acc, finishedOK) = sampleData.parseIntoProgram().partTwo()
+    fun `replacing first jmp or nop in the sample data`() {
+        val x = sampleData.replaceNthJmpOrNop(1)
+        assertEquals("jmp +0", sampleData.replaceNthJmpOrNop(1).split("\n")[0])
+    }
+    @Test
+    fun `replacing 2nd jmp or nop in the sample data`() {
+        assertEquals("nop +0", sampleData.replaceNthJmpOrNop(2).split("\n")[0])
+        assertEquals("nop +4", sampleData.replaceNthJmpOrNop(2).split("\n")[2])
+    }
+    @Test
+    fun `replacing 3rd jmp or nop in the sample data`() {
+        assertEquals("nop +0", sampleData.replaceNthJmpOrNop(3).split("\n")[0])
+        assertEquals("jmp +4", sampleData.replaceNthJmpOrNop(3).split("\n")[2])
+        assertEquals("nop -3", sampleData.replaceNthJmpOrNop(3).split("\n")[4])
+
+    }
+    @Test
+    fun `replacing 4th jmp or nop in the sample data`() {
+        assertEquals("nop +0", sampleData.replaceNthJmpOrNop(4).split("\n")[0])
+        assertEquals("jmp +4", sampleData.replaceNthJmpOrNop(4).split("\n")[2])
+        assertEquals("jmp -3", sampleData.replaceNthJmpOrNop(4).split("\n")[4])
+        assertEquals("nop -4", sampleData.replaceNthJmpOrNop(4).split("\n")[7])
+    }
+    @Test
+    fun `swapping jmp or nop and finding result using sample data`() {
+        val (acc, finishedOK) = part2b(sampleData)
         assertEquals(8, acc)
     }
     @Test
-    fun `part two`() {
-        val (acc, finishedOK) = day08Data.parseIntoProgram().partTwo()
+    fun `part2b`() {
+        val (acc, finishedOK) = part2b(day08Data)
         assertEquals(631, acc)
     }
 }
