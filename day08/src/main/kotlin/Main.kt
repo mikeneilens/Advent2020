@@ -40,24 +40,20 @@ fun toInstruction(index:Int, parts:List<String>):Pair<Int, Instruction> = when (
 
 fun Program.process( ):Pair<Int, Boolean> {
     var programState = ProgramState(0,0)
-    while ( !isComplete(programState) ) {
+    while ( !(noMoreInstructions(programState) || isInLoop(programState)) ) {
         val instruction = getValue(programState.line)
         programState = instruction.execute(programState)
     }
     return Pair(programState.accumulator,noMoreInstructions(programState))
 }
 
-fun Program.isComplete(programState:ProgramState) = noMoreInstructions(programState) || isInLoop(programState)
 fun Program.noMoreInstructions(programState:ProgramState) = get(programState.line) == null
 fun Program.isInLoop(programState:ProgramState) = getValue(programState.line).cannotExecute()
 fun Program.reset() = forEach { _, v -> v.reset()}
 
 fun Program.instructionsToSwap() = toList()
-    .sortedBy(::line)
-    .filter(::containsJmpOrNop)
-
-fun line(lineAndInstruction:Pair<Int, Instruction>) = lineAndInstruction.first
-fun containsJmpOrNop(lineAndInstruction:Pair<Int, Instruction>)= lineAndInstruction.second.operator is JMP || lineAndInstruction.second.operator is NOP
+    .sortedBy{it.first}
+    .filter{it.second.operator is JMP || it.second.operator is NOP}
 
 fun Program.partTwo():Pair<Int, Boolean> {
     val instructionsToSwap = instructionsToSwap()

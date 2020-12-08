@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-12-08T19:42:20" hostname="MacBook-Pro-2.local" time="0.071">
+<testsuite name="MainTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2020-12-08T19:54:13" hostname="MacBook-Pro-2.local" time="0.09">
   <properties/>
-  <testcase name="swapping jmp or nop using sample data()" classname="MainTest" time="0.042"/>
-  <testcase name="part one()" classname="MainTest" time="0.004"/>
-  <testcase name="part two()" classname="MainTest" time="0.022"/>
+  <testcase name="swapping jmp or nop using sample data()" classname="MainTest" time="0.055"/>
+  <testcase name="part one()" classname="MainTest" time="0.005"/>
+  <testcase name="part two()" classname="MainTest" time="0.026"/>
   <testcase name="process sample data until repeating instruction at same place()" classname="MainTest" time="0.001"/>
   <testcase name="parse sample data into a list of instructions()" classname="MainTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
