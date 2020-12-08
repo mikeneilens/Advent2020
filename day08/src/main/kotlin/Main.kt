@@ -37,7 +37,7 @@ fun Program.executeNextInstruction(programState: ProgramState) = getValue(progra
 fun Program.noMoreInstructions(programState:ProgramState) = get(programState.line) == null
 fun Program.isInLoop(programState:ProgramState) = getValue(programState.line).cannotExecute()
 
-fun part2b(data:String):Pair<Int, Boolean> {
+fun part2(data:String):Pair<Int, Boolean> {
     var n = 0
     while ( n < data.split("\n").size ) {
         val program = data.replaceNthJmpOrNop(n++).parseIntoProgram()
