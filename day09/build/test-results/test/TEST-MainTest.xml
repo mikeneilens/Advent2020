@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-11-28T17:34:09" hostname="MacBook-Pro-2" time="0.013">
+<testsuite name="MainTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-12-09T11:40:04" hostname="MacBook-Pro-2.local" time="0.111">
   <properties/>
-  <testcase name="a test()" classname="MainTest" time="0.013"/>
+  <testcase name="converting a string of ints into a list of Ints()" classname="MainTest" time="0.024"/>
+  <testcase name="26 and 49 is valid and 100 and 50  is not valud number at end of sample data()" classname="MainTest" time="0.003"/>
+  <testcase name="finding continguous block that sums up to target in sample 3()" classname="MainTest" time="0.001"/>
+  <testcase name="contiguous block starting at position 2 in sample3 sums to target of 127()" classname="MainTest" time="0.0"/>
+  <testcase name="finding error in sample data3()" classname="MainTest" time="0.003"/>
+  <testcase name="part one()" classname="MainTest" time="0.014"/>
+  <testcase name="part two()" classname="MainTest" time="0.062"/>
+  <testcase name="26,64,66 is valid and 65 is not valud number at end of sample data2()" classname="MainTest" time="0.001"/>
+  <testcase name="combining (1,2,3,4) to find numbers that match 4 is (1,3) ()" classname="MainTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
