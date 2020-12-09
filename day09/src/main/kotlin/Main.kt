@@ -1,41 +1,40 @@
 
 fun String.toListOfLongs():List<Long> = split("\n").map{it.toLong()}
 
-fun combinedValuesEqualToLast(l:List<Long>):List<Pair<Long,Long>> {
+fun combinedValuesEqualToLast(numbers:List<Long>):List<Pair<Long,Long>> {
     val results= mutableListOf<Pair<Long,Long>>()
-    l.forEachIndexed { index1,v ->
+    numbers.forEachIndexed { index1, number ->
         var index2 = index1 + 1
-        while (index2 < l.size) {
-            if (v + l[index2] == l.last()) results.add(Pair(v, l[index2]))
+        while (index2 < numbers.size) {
+            if (number + numbers[index2] == numbers.last()) results.add(Pair(number, numbers[index2]))
             index2++
         }
     }
     return results
 }
 
-fun blockContainsError(l:List<Long>):Boolean = combinedValuesEqualToLast(l).isEmpty()
+fun blockContainsError(numbers:List<Long>):Boolean = combinedValuesEqualToLast(numbers).isEmpty()
 
-fun checkForError(l:List<Long>,size:Int):Long? = l.windowed(size,1).first(::blockContainsError).last()
+fun findFirstErrorIn(numbers:List<Long>, size:Int):Long? = numbers.windowed(size,1).first(::blockContainsError).last()
 
 //Part two
-fun sumUntilGreaterOrEqual(l:List<Long>, target:Long, start:Int = 0):Pair<Int, Int>? {
+fun sumUntilGreaterOrEqual(numbers:List<Long>, target:Long, start:Int = 0):Pair<Int, Int>? {
     var total = 0L
     var ndx = start
     while (total < target) {
-        total += l[ndx]
-        l.subList(start,ndx).minOrNull()
+        total += numbers[ndx]
         if (total == target) return Pair(start , ndx)
         ndx++
     }
     return null
 }
-fun minAndMaxInRange(l:List<Long>, min:Int, max:Int):Pair<Long, Long> =
-    Pair(l.subList(min,max).minOrNull() ?: 0 , l.subList(min,max).maxOrNull() ?:0)
+fun minAndMaxInRange(numbers:List<Long>, start:Int, end:Int):Pair<Long, Long> =
+    Pair(numbers.subList(start,end).minOrNull() ?: 0 , numbers.subList(start,end).maxOrNull() ?:0)
 
 
-fun findContiguousItemsMatching(l:List<Long>, target:Long):Pair<Long, Long> {
-    val (firstIndex,_) = l.mapIndexed{i,v -> Pair(i,v)}
-        .first { sumUntilGreaterOrEqual(l, target, it.first) != null}
-    val (minNdx,maxNdx) = sumUntilGreaterOrEqual(l, target, firstIndex) ?: Pair(-1,-1)
-    return minAndMaxInRange(l, minNdx,maxNdx)
+fun findContiguousItemsMatching(numbers:List<Long>, target:Long):Pair<Long, Long> {
+    val (firstIndex,_) = numbers.mapIndexed{ i, v -> Pair(i,v)}
+        .first { sumUntilGreaterOrEqual(numbers, target, it.first) != null}
+    val (start,end) = sumUntilGreaterOrEqual(numbers, target, firstIndex) ?: Pair(-1,-1)
+    return minAndMaxInRange(numbers, start,end)
 }

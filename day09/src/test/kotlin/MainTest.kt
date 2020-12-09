@@ -47,7 +47,7 @@ class MainTest {
     }
     @Test
     fun `finding error in sample data3`() {
-        assertEquals(127, checkForError(sampleData3,6))
+        assertEquals(127, findFirstErrorIn(sampleData3,6))
     }
     @Test
     fun `converting a string of ints into a list of Ints`() {
@@ -62,7 +62,7 @@ class MainTest {
     }
     @Test
     fun `part one`() {
-        assertEquals(1639024365L, checkForError(day09Data.toListOfLongs(),26))
+        assertEquals(1639024365L, findFirstErrorIn(day09Data.toListOfLongs(),26))
     }
 
     @Test
