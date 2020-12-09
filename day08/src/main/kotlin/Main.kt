@@ -49,11 +49,11 @@ fun part2(data:String):Pair<Int, Boolean> {
 
 fun String.replaceNthJmpOrNop(n:Int):String {
     var count = 0
-    return split("\n").map { s:String ->
-        if ( s.startsWith("jmp") || s.startsWith("nop")) {
+    return split("\n").map { s: String ->
+        if (s.startsWith("jmp") || s.startsWith("nop")) {
             if (++count == n) {
                 if (s.startsWith("jmp")) "nop${s.drop(3)}" else "jmp${s.drop(3)}"
-                } else  s
+            } else s
         } else s
     }.joinToString("\n")
 }

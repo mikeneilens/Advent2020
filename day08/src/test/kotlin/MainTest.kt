@@ -64,4 +64,16 @@ class MainTest {
         val (acc, finishedOK) = part2(day08Data)
         assertEquals(631, acc)
     }
+
+    @Test
+    fun `part1 using simple version`() {
+        val (acc, finishedOK) = day08Data.split("\n").toMutableList().compute()
+        assertEquals(1818, acc)
+        assertEquals(false, finishedOK)
+    }
+    @Test
+    fun `part2 using simple version`() {
+        val (acc, finishedOK) = part2b(day08Data)
+        assertEquals(631, acc)
+    }
 }

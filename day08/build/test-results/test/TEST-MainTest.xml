@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-12-08T21:42:48" hostname="MacBook-Pro-2.local" time="0.135">
+<testsuite name="MainTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2020-12-09T21:30:53" hostname="MacBook-Pro-2.local" time="0.214">
   <properties/>
-  <testcase name="replacing 2nd jmp or nop in the sample data()" classname="MainTest" time="0.029"/>
-  <testcase name="swapping jmp or nop and finding result using sample data()" classname="MainTest" time="0.006"/>
+  <testcase name="replacing 2nd jmp or nop in the sample data()" classname="MainTest" time="0.039"/>
+  <testcase name="swapping jmp or nop and finding result using sample data()" classname="MainTest" time="0.008"/>
   <testcase name="replacing first jmp or nop in the sample data()" classname="MainTest" time="0.001"/>
-  <testcase name="part2()" classname="MainTest" time="0.094"/>
-  <testcase name="replacing 4th jmp or nop in the sample data()" classname="MainTest" time="0.001"/>
-  <testcase name="replacing 3rd jmp or nop in the sample data()" classname="MainTest" time="0.001"/>
-  <testcase name="part one()" classname="MainTest" time="0.001"/>
+  <testcase name="part1 using simple version()" classname="MainTest" time="0.004"/>
+  <testcase name="part2()" classname="MainTest" time="0.121"/>
+  <testcase name="replacing 4th jmp or nop in the sample data()" classname="MainTest" time="0.0"/>
+  <testcase name="replacing 3rd jmp or nop in the sample data()" classname="MainTest" time="0.0"/>
+  <testcase name="part one()" classname="MainTest" time="0.0"/>
   <testcase name="process sample data until repeating instruction at same place()" classname="MainTest" time="0.0"/>
+  <testcase name="part2 using simple version()" classname="MainTest" time="0.034"/>
   <testcase name="parse sample data into a list of instructions()" classname="MainTest" time="0.0"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
