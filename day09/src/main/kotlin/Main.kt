@@ -18,13 +18,13 @@ fun blockContainsError(numbers:List<Long>):Boolean = combinedValuesEqualToLast(n
 fun findFirstErrorIn(numbers:List<Long>, size:Int):Long? = numbers.windowed(size,1).first(::blockContainsError).last()
 
 //Part two
-fun sumUntilGreaterOrEqual(numbers:List<Long>, target:Long, start:Int = 0):Pair<Int, Int>? {
+fun sumUntilGreaterOrEqual(numbers:List<Long>, target:Long, startNdx:Int = 0):Pair<Int, Int>? {
     var total = 0L
-    var ndx = start
-    while (total < target) {
-        total += numbers[ndx]
-        if (total == target) return Pair(start , ndx)
-        ndx++
+    var endNdx = startNdx
+    while (total < target && endNdx < numbers.size) {
+        total += numbers[endNdx]
+        if (total == target) return Pair(startNdx, endNdx)
+        endNdx++
     }
     return null
 }
