@@ -18,17 +18,15 @@ fun List<Int>.combos(listSoFar:List<Int> = listOf()):List<List<Int>> {
     }
 }
 
+//I got some help with this algorithm :!
 fun List<Int>.part2(): Long {
     val jolts = sorted() + builtInJolt()
-    val pathsToJolt = mutableMapOf(0 to 1L)
-    jolts.forEach { jolt ->
-        pathsToJolt[jolt] = precedingPaths(pathsToJolt, jolt)
-    }
-    return pathsToJolt[builtInJolt()] ?: 0
+    val pathsToAJolt = mutableMapOf(0 to 1L)
+    jolts.forEach(pathsToAJolt::setPrecedingPaths)
+    return pathsToAJolt[builtInJolt()] ?: 0
 }
-fun precedingPaths(pathsToJolt:MutableMap<Int,Long>, jolt:Int)
-        = (pathsToJolt[jolt - 1] ?: 0) + (pathsToJolt[jolt - 2] ?: 0) + (pathsToJolt[jolt - 3] ?: 0)
 
+fun MutableMap<Int,Long>.setPrecedingPaths(jolt:Int) = set(jolt,  (get(jolt - 1) ?: 0) + (get(jolt - 2) ?: 0) + (get(jolt - 3) ?: 0))
 
 
 
