@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import kotlin.math.pow
+import kotlin.time.seconds
 
 class MainTest {
     val sample1 = listOf(16,
@@ -70,17 +72,21 @@ class MainTest {
     }
 
     @Test
-    fun`joltComobs for sample1 `() {
-        assertEquals(8,partTwo(sample1).size)
-    }
-    @Test
-    fun`joltComobs for sample2 `() {
-        assertEquals(8,partTwo(sample2).size)
-    }
-    @Test
-    fun`part two `() {
-        assertEquals(8,partTwo(day10Data).size)
+    fun `part 2 using sample1`() {
+        val result = sample1.part2()
+        assertEquals(8 , result)
     }
 
-}
+    @Test
+    fun `part 2 using sample2`() {
+        val result = sample2.part2()
+        assertEquals(19208 , result)
+    }
+
+    @Test
+    fun `part two`() {
+        val result = day10Data.part2()
+        assertEquals(259172170858496 , result)
+    }
+ }
 

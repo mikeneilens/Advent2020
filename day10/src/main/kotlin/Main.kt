@@ -17,14 +17,17 @@ fun List<Int>.combos(listSoFar:List<Int> = listOf()):List<List<Int>> {
         if (next - last <= 3 && next != last ) filter{it > next  }.combos(listSoFar + next ) else listOf()
     }
 }
-fun partTwo(list:List<Int>):List<List<Int>> {
-    val result = list.allJolts().combos()
-    result.filter{it.size > 0 && it.last() == list.allJolts().last() }.take(10).forEach { println(it)  }
-    return result.filter{it.size > 0 && it.last() == list.allJolts().last() }
+
+fun List<Int>.part2(): Long {
+    val jolts = sorted() + builtInJolt()
+    val pathsToJolt = mutableMapOf(0 to 1L)
+    jolts.forEach { jolt ->
+        pathsToJolt[jolt] = precedingPaths(pathsToJolt, jolt)
+    }
+    return pathsToJolt[builtInJolt()] ?: 0
 }
-fun List<Int>.combos2() {
-     
-}
+fun precedingPaths(pathsToJolt:MutableMap<Int,Long>, jolt:Int)
+        = (pathsToJolt[jolt - 1] ?: 0) + (pathsToJolt[jolt - 2] ?: 0) + (pathsToJolt[jolt - 3] ?: 0)
 
 
 
