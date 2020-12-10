@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-11-28T17:36:00" hostname="MacBook-Pro-2" time="0.018">
+<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-10T09:13:25" hostname="MacBook-Pro-2" time="0.023">
   <properties/>
-  <testcase name="a test()" classname="MainTest" time="0.018"/>
-  <system-out><![CDATA[]]></system-out>
+  <testcase name="joltComobs for sample1 ()" classname="MainTest" time="0.023"/>
+  <system-out><![CDATA[[1, 4, 5, 6, 7, 10, 11, 12, 15, 16, 19, 22]
+[1, 4, 5, 6, 7, 10, 12, 15, 16, 19, 22]
+[1, 4, 5, 7, 10, 11, 12, 15, 16, 19, 22]
+[1, 4, 5, 7, 10, 12, 15, 16, 19, 22]
+[1, 4, 6, 7, 10, 11, 12, 15, 16, 19, 22]
+[1, 4, 6, 7, 10, 12, 15, 16, 19, 22]
+[1, 4, 7, 10, 11, 12, 15, 16, 19, 22]
+[1, 4, 7, 10, 12, 15, 16, 19, 22]
+]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
