@@ -10,6 +10,7 @@ fun List<Pair<Int,Int>>.findDifferencesOfOneAndThree():Pair<Int, Int>  {
 }
 fun dayOne(jolts:List<Int>) = jolts.createPairs().findDifferencesOfOneAndThree()
 
+//This kind of algorithm fails for part two as list or stack runs out of space :(
 fun List<Int>.combos(listSoFar:List<Int> = listOf()):List<List<Int>> {
     if (isEmpty()) return listOf(listSoFar)
     val last = if (listSoFar.isEmpty())  0 else listSoFar.last()
