@@ -23,26 +23,31 @@ fun Grid.line(col:Int, row:Int, direction:Pair<Int,Int>):String {
     }
     return line
 }
-fun Grid.newStateOfSeat(col:Int,row:Int, maxAdjacentSeats:Int, calcAdjacentOccupiedSeats:Grid.(Int,Int)->Int):Char {
-    val noOfOccupiedSeats = calcAdjacentOccupiedSeats(col, row)
+fun Grid.newStateOfSeat(col:Int,row:Int, rule:Rule):Char {
+    val noOfOccupiedSeats = rule.adjacentOccupiedSeatCalculator(this, col, row)
     if (seatAt(col,row) == unOccupiedSeat && noOfOccupiedSeats == 0) return occupiedSeat
-    if (seatAt(col,row) == occupiedSeat && noOfOccupiedSeats > maxAdjacentSeats) return unOccupiedSeat
+    if (seatAt(col,row) == occupiedSeat && noOfOccupiedSeats > rule.maxAdjacentSeats) return unOccupiedSeat
     return seatAt(col,row)
 }
 
-fun Grid.transformSeats(maxAdjacentSeats:Int, calcAdjacentOccupiedSeats:Grid.(Int,Int)->Int):Grid = mapIndexed{row, line ->
+data class Rule(val maxAdjacentSeats: Int, val adjacentOccupiedSeatCalculator:Grid.(Int,Int)->Int)
+val partOneRule = Rule(3,Grid::noOfOccupiedAdjacentSeats)
+
+fun Grid.transformSeats(rule:Rule):Grid = mapIndexed{row, line ->
                                                 line.mapIndexed{col, _ ->
-                                                        newStateOfSeat(col,row,maxAdjacentSeats,calcAdjacentOccupiedSeats)
+                                                        newStateOfSeat(col,row,rule)
                                                 }
                                             }.map{it.joinToString("")}
 
 tailrec fun Grid.transformUntilStable():Grid {
-    val transformed = transformSeats(3,Grid::noOfOccupiedAdjacentSeats)
+    val transformed = transformSeats(partOneRule)
     return if (transformed == this) this else transformed.transformUntilStable()
 }
 fun Grid.noOfOccupiedSeats() = sumBy { it.count { char ->  char==occupiedSeat } }
 
+
 //part two
+val partTwoRule = Rule(4, Grid::noOfVisibleOccupiedAdjacentSeats)
 
 fun Grid.noOfVisibleOccupiedAdjacentSeats(col:Int, row:Int) = adjacentSeats(col,row).count(::firstVisibleSeatIsOccupied)
 fun firstVisibleSeatIsOccupied(s:String):Boolean {
@@ -56,6 +61,6 @@ fun firstVisibleSeatIsOccupied(s:String):Boolean {
 }
 
 tailrec fun Grid.transformUntilStable2():Grid {
-    val transformed = transformSeats(4, Grid::noOfVisibleOccupiedAdjacentSeats)
+    val transformed = transformSeats(partTwoRule)
     return if (transformed == this) this else transformed.transformUntilStable2()
 }

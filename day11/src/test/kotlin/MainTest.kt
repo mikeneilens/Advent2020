@@ -53,7 +53,7 @@ class MainTest {
             #.######.#
             #.#####.##
         """.trimIndent().split("\n")
-        val result = sampleData.transformSeats(3, Grid::noOfOccupiedAdjacentSeats)
+        val result = sampleData.transformSeats(partOneRule)
         assertEquals(expectedResult, result)
     }
     @Test
@@ -117,7 +117,7 @@ class MainTest {
             #.######.#
             #.#####.##
         """.trimIndent().split("\n")
-        val result = sampleData.transformSeats(4,Grid::noOfVisibleOccupiedAdjacentSeats)
+        val result = sampleData.transformSeats(partTwoRule)
         assertEquals(expectedResult, result)
         assertEquals(71, result.noOfOccupiedSeats())
     }
