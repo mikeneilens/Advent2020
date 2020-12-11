@@ -24,7 +24,7 @@ class MainTest {
             "pqrst",
             "uvwxy"
         )
-        var seats = grid.adjacentSeats (2,2)
+        var seats = grid.linesOfSeats (2,2)
         assertEquals(listOf("rw", "hc", "no", "lk", "ga", "qu", "ie", "sy"),seats)
     }
     @Test
@@ -93,14 +93,14 @@ class MainTest {
             #........
             ...#.....
         """.trimIndent().split("\n")
-        assertEquals(8, sample1.noOfVisibleOccupiedAdjacentSeats(3,4))
+        assertEquals(8, sample1.noOfVisibleOccupiedSeats(3,4))
 
         val sample2 = """
             .............
             .L.L.#.#.#.#.
             .............
         """.trimIndent().split("\n")
-        assertEquals(0, sample2.noOfVisibleOccupiedAdjacentSeats(1,1))
+        assertEquals(0, sample2.noOfVisibleOccupiedSeats(1,1))
     }
 
     @Test

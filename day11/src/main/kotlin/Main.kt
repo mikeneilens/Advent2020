@@ -6,11 +6,11 @@ fun Grid.seatAt(col:Int,row:Int) = get(row)[col]
 val Grid.maxCol get() = first().length - 1
 val Grid.maxRow get() = size - 1
 
-fun Grid.adjacentSeats(col:Int, row:Int):List<String> {
+fun Grid.linesOfSeats(col:Int, row:Int):List<String> {
     val directions = listOf(Pair(0,1),Pair(0,-1),Pair(1,0),Pair(-1,0),Pair(-1,-1),Pair(-1,1),Pair(1,-1),Pair(1,1))
     return directions.map{line(col,row,it)}
 }
-fun Grid.noOfOccupiedAdjacentSeats(col:Int, row:Int) = adjacentSeats(col,row).count{it.startsWith(occupiedSeat)}
+fun Grid.noOfOccupiedAdjacentSeats(col:Int, row:Int) = linesOfSeats(col,row).count{it.startsWith(occupiedSeat)}
 
 fun Grid.line(col:Int, row:Int, direction:Pair<Int,Int>):String {
     var line = ""
@@ -47,9 +47,9 @@ fun Grid.noOfOccupiedSeats() = sumBy { it.count { char ->  char==occupiedSeat } 
 
 
 //part two
-val partTwoRule = Rule(4, Grid::noOfVisibleOccupiedAdjacentSeats)
+val partTwoRule = Rule(4, Grid::noOfVisibleOccupiedSeats)
 
-fun Grid.noOfVisibleOccupiedAdjacentSeats(col:Int, row:Int) = adjacentSeats(col,row).count(::firstVisibleSeatIsOccupied)
+fun Grid.noOfVisibleOccupiedSeats(col:Int, row:Int) = linesOfSeats(col,row).count(::firstVisibleSeatIsOccupied)
 fun firstVisibleSeatIsOccupied(s:String):Boolean {
     var i = 0
     while (i < s.length) {
