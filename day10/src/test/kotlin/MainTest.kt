@@ -1,5 +1,6 @@
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.lang.Math.pow
 import kotlin.math.pow
 import kotlin.time.seconds
 
@@ -87,6 +88,7 @@ class MainTest {
     fun `part two`() {
         val result = day10Data.part2()
         assertEquals(259172170858496 , result)
+        println(259172170858496/pow(5.0,20.0).toLong())
     }
  }
 

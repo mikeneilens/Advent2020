@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-12-10T19:38:24" hostname="MacBook-Pro-2" time="0.039">
+<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-10T20:22:58" hostname="MacBook-Pro-2" time="0.034">
   <properties/>
-  <testcase name="list of differnces of 1 is 22 and difference of 3 is 10 for sample2()" classname="MainTest" time="0.017"/>
-  <testcase name="list of differnces of 1 is 7 and difference of 3 is 5 for sample1()" classname="MainTest" time="0.001"/>
-  <testcase name="part 2 using sample1()" classname="MainTest" time="0.003"/>
-  <testcase name="part 2 using sample2()" classname="MainTest" time="0.0"/>
-  <testcase name="built in jolt is 22()" classname="MainTest" time="0.001"/>
-  <testcase name="part one()" classname="MainTest" time="0.013"/>
-  <testcase name="part two()" classname="MainTest" time="0.001"/>
-  <system-out><![CDATA[3034
+  <testcase name="part two()" classname="MainTest" time="0.034"/>
+  <system-out><![CDATA[2
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
