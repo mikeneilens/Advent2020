@@ -1,5 +1,6 @@
 const val unOccupiedSeat = 'L'
 const val occupiedSeat = '#'
+const val floor = '.'
 
 typealias Grid = List<String>
 fun Grid.seatAt(col:Int,row:Int) = get(row)[col]
@@ -12,14 +13,15 @@ fun Grid.linesOfSeats(col:Int, row:Int):List<String> {
 }
 fun Grid.noOfOccupiedAdjacentSeats(col:Int, row:Int) = linesOfSeats(col,row).count{it.startsWith(occupiedSeat)}
 
-fun Grid.line(col:Int, row:Int, direction:Pair<Int,Int>):String {
+fun Grid.line(currentCol:Int, currentRow:Int, direction:Pair<Int,Int>):String {
     var line = ""
-    var c = col + direction.first
-    var r = row + direction.second
-    while ( c in 0..maxCol && r in 0..maxRow) {
-        line += seatAt(c,r)
-        c += direction.first
-        r += direction.second
+    var col = currentCol + direction.first
+    var row = currentRow + direction.second
+    while ( col in 0..maxCol && row in 0..maxRow) {
+        line += seatAt(col,row)
+        if (seatAt(col,row) != floor ) return line
+        col += direction.first
+        row += direction.second
     }
     return line
 }
