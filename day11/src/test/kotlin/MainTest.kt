@@ -24,8 +24,8 @@ class MainTest {
             "pqrst",
             "uvwxy"
         )
-        var seats = grid.linesOfSeats (2,2)
-        assertEquals(listOf("rw", "hc", "no", "lk", "ga", "qu", "ie", "sy"),seats)
+        var seats = grid.linesOfSeats (Position(2,2), allDirections)
+        assertEquals(listOf("g", "h", "i", "l", "n", "q", "r", "s"),seats)
     }
     @Test
     fun `occupied seats at position 2,2 is 3`() {
@@ -36,7 +36,7 @@ class MainTest {
             "pqr#t",
             "uvwxy"
         )
-        var noOccupied = grid.noOfOccupiedAdjacentSeats (2,2)
+        var noOccupied = grid.noOfOccupiedAdjacentSeats (Position(2,2))
         assertEquals(3,noOccupied)
     }
     @Test
@@ -70,13 +70,13 @@ class MainTest {
             #.LLLLLL.L
             #.#L#L#.##
         """.trimIndent().split("\n")
-        val result = sampleData.transformUntilStable()
+        val result = sampleData.transformUntilStable(partOneRule)
         assertEquals(expectedResult, result)
         assertEquals(37, result.noOfOccupiedSeats())
     }
     @Test
     fun `part one`() {
-        val result = day11Data.transformUntilStable()
+        val result = day11Data.transformUntilStable(partOneRule)
         assertEquals(2424, result.noOfOccupiedSeats())
     }
 
@@ -93,14 +93,14 @@ class MainTest {
             #........
             ...#.....
         """.trimIndent().split("\n")
-        assertEquals(8, sample1.noOfVisibleOccupiedSeats(3,4))
+        assertEquals(8, sample1.noOfVisibleOccupiedSeats(Position(3,4)))
 
         val sample2 = """
             .............
             .L.L.#.#.#.#.
             .............
         """.trimIndent().split("\n")
-        assertEquals(0, sample2.noOfVisibleOccupiedSeats(1,1))
+        assertEquals(0, sample2.noOfVisibleOccupiedSeats(Position(1,1)))
     }
 
     @Test
@@ -135,13 +135,13 @@ class MainTest {
             #.LLLLL#.L
             #.L#LL#.L#
         """.trimIndent().split("\n")
-        val result = sampleData.transformUntilStable2()
+        val result = sampleData.transformUntilStable(partTwoRule)
         assertEquals(expectedResult, result)
         assertEquals(26, result.noOfOccupiedSeats())
     }
     @Test
     fun `part two`() {
-        val result = day11Data.transformUntilStable2()
+        val result = day11Data.transformUntilStable(partTwoRule)
         assertEquals(2208, result.noOfOccupiedSeats())
     }
 }

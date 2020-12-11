@@ -3,55 +3,60 @@ const val occupiedSeat = '#'
 const val floor = '.'
 
 typealias Grid = List<String>
-fun Grid.seatAt(col:Int,row:Int) = get(row)[col]
 val Grid.maxCol get() = first().length - 1
 val Grid.maxRow get() = size - 1
 
-fun Grid.linesOfSeats(col:Int, row:Int):List<String> {
-    val directions = listOf(Pair(0,1),Pair(0,-1),Pair(1,0),Pair(-1,0),Pair(-1,-1),Pair(-1,1),Pair(1,-1),Pair(1,1))
-    return directions.map{line(col,row,it)}
+data class Position(val col:Int, val row:Int ) {
+    fun offset(d:Position, n:Int) = Position(col + d.col * n , row + d.row * n)
+    fun onGrid(grid:Grid) = col in 0..grid.maxCol && row in 0..grid.maxRow
 }
-fun Grid.noOfOccupiedAdjacentSeats(col:Int, row:Int) = linesOfSeats(col,row).count{it.startsWith(occupiedSeat)}
+val allDirections = (-1..1).flatMap{ row -> (-1..1).map{ col -> Position(col,row)}}.filter{it != Position(0,0)}
 
-fun Grid.line(currentCol:Int, currentRow:Int, direction:Pair<Int,Int>):String {
+fun Grid.seatAt(p:Position) = get(p.row)[p.col]
+
+fun Grid.line(position:Position, d:Position):String {
     var line = ""
-    var col = currentCol + direction.first
-    var row = currentRow + direction.second
-    while ( col in 0..maxCol && row in 0..maxRow) {
-        line += seatAt(col,row)
-        if (seatAt(col,row) != floor ) return line
-        col += direction.first
-        row += direction.second
+    var n = 1
+    while ( position.offset(d,n).onGrid(this)) {
+        line += seatAt(position.offset(d,n))
+        if (seatAt(position.offset(d,n)) != floor ) return line else n++
     }
     return line
 }
-fun Grid.newStateOfSeat(col:Int,row:Int, rule:Rule):Char {
-    val noOfOccupiedSeats = rule.adjacentOccupiedSeatCalculator(this, col, row)
-    if (seatAt(col,row) == unOccupiedSeat && noOfOccupiedSeats == 0) return occupiedSeat
-    if (seatAt(col,row) == occupiedSeat && noOfOccupiedSeats > rule.maxAdjacentSeats) return unOccupiedSeat
-    return seatAt(col,row)
+
+fun Grid.linesOfSeats(position:Position, directions:List<Position>):List<String> =directions.map{ direction -> line(position,direction)}
+
+fun Grid.noOfOccupiedAdjacentSeats(position: Position) = linesOfSeats(position,allDirections).count{it.startsWith(occupiedSeat)}
+
+fun Grid.newStateOfSeat(position:Position, rule:Rule):Char {
+    val noOfOccupiedSeats = rule.adjacentOccupiedSeatCalculator(this, position)
+    if (seatAt(position) == unOccupiedSeat && noOfOccupiedSeats == 0) return occupiedSeat
+    if (seatAt(position) == occupiedSeat && noOfOccupiedSeats > rule.maxAdjacentSeats) return unOccupiedSeat
+    return seatAt(position)
 }
 
-data class Rule(val maxAdjacentSeats: Int, val adjacentOccupiedSeatCalculator:Grid.(Int,Int)->Int)
+data class Rule(val maxAdjacentSeats: Int, val adjacentOccupiedSeatCalculator:Grid.(Position)->Int)
+
 val partOneRule = Rule(3,Grid::noOfOccupiedAdjacentSeats)
 
 fun Grid.transformSeats(rule:Rule):Grid = mapIndexed{row, line ->
                                                 line.mapIndexed{col, _ ->
-                                                        newStateOfSeat(col,row,rule)
+                                                        newStateOfSeat(Position(col,row),rule)
                                                 }
                                             }.map{it.joinToString("")}
 
-tailrec fun Grid.transformUntilStable():Grid {
-    val transformed = transformSeats(partOneRule)
-    return if (transformed == this) this else transformed.transformUntilStable()
+tailrec fun Grid.transformUntilStable(rule:Rule):Grid {
+    val transformed = transformSeats(rule)
+    return if (transformed == this) this else transformed.transformUntilStable(rule)
 }
+
 fun Grid.noOfOccupiedSeats() = sumBy { it.count { char ->  char==occupiedSeat } }
 
 
 //part two
 val partTwoRule = Rule(4, Grid::noOfVisibleOccupiedSeats)
 
-fun Grid.noOfVisibleOccupiedSeats(col:Int, row:Int) = linesOfSeats(col,row).count(::firstVisibleSeatIsOccupied)
+fun Grid.noOfVisibleOccupiedSeats(position:Position) = linesOfSeats(position,allDirections).count(::firstVisibleSeatIsOccupied)
 fun firstVisibleSeatIsOccupied(s:String):Boolean {
     var i = 0
     while (i < s.length) {
@@ -62,7 +67,3 @@ fun firstVisibleSeatIsOccupied(s:String):Boolean {
     return false
 }
 
-tailrec fun Grid.transformUntilStable2():Grid {
-    val transformed = transformSeats(partTwoRule)
-    return if (transformed == this) this else transformed.transformUntilStable2()
-}
