@@ -32,14 +32,14 @@ class MainTest {
     }
     @Test
     fun `final position of sampleData`() {
-        val (position,orientiation) = finalPosition(sampleData1)
+        val (position,orientiation) = partOne(sampleData1)
         assertEquals(Position(17,8), position)
         assertEquals(Orientation.South, orientiation)
         assertEquals(25, abs(position.x) + abs(position.y))
     }
     @Test
     fun `part one`() {
-        val (position,orientiation) = finalPosition(day12Data)
+        val (position,orientiation) = partOne(day12Data)
         assertEquals(Position(426,478), position)
         assertEquals(Orientation.North, orientiation)
         assertEquals(904, abs(position.x) + abs(position.y))
@@ -59,14 +59,14 @@ class MainTest {
     }
     @Test
     fun `final position part 2 of sampleData`() {
-        val (position,orientiation, wayPoint) = finalPosition2(sampleData1)
+        val (position,orientiation, wayPoint) = partTwo(sampleData1)
         assertEquals(Position(214,72), position)
         assertEquals(Orientation.East, orientiation)
         assertEquals(286, abs(position.x) + abs(position.y))
     }
     @Test
     fun `part two`() {
-        val (position,orientiation, wayPoint) = finalPosition2(day12Data)
+        val (position,orientiation, wayPoint) = partTwo(day12Data)
         assertEquals(Position(-10766,7981), position)
         assertEquals(Orientation.East, orientiation)
         assertEquals(18747, abs(position.x) + abs(position.y))
