@@ -2,9 +2,8 @@ data class Position(val x:Int, val y:Int) {
     operator fun plus(other:Position):Position = Position(x + other.x, y + other.y)
     operator fun times(other:Int):Position = Position(x * other, y * other)
 
-    fun rotateRightOnce():Position =  Position(y * -1, x)
-    fun rotateRight(d:Int):Position = if (d == 0)  this else rotateRightOnce().rotateRight(d - 90)
-    fun rotateLeft(d:Int):Position = rotateRight(360 - d)
+    private fun rotateRightOnce():Position =  Position(y * -1, x)
+    infix fun rotate(d:Int):Position = if (d == 0)  this else rotateRightOnce().rotate(d - 90)
 }
 enum class Orientation(val step:Position) {
     North(Position(0,-1)),
@@ -12,20 +11,13 @@ enum class Orientation(val step:Position) {
     East(Position(1,0)),
     West(Position(-1,0));
 
-    fun rotateRightOnce() = when(this) {
+    private fun rotateRightOnce() = when(this) {
         North -> East
         South -> West
         East -> South
         West -> North
     }
-    fun rotateRight(d:Int):Orientation = if (d == 0)  this else rotateRightOnce().rotateRight(d - 90)
-    fun rotateLeftOnce() = when(this) {
-        North -> West
-        South -> East
-        East -> North
-        West -> South
-    }
-    fun rotateLeft(d:Int):Orientation = rotateRight(360 - d)
+   infix fun rotate(d:Int):Orientation = if (d == 0)  this else rotateRightOnce().rotate(d - 90)
 }
 
 data class ShipType1 (val position:Position, val orientation:Orientation)
@@ -37,8 +29,8 @@ val shipType1Instructions = mapOf(
     'S' to {s:ShipType1, n:Int -> ShipType1(s.position + Orientation.South.step * n, s.orientation)},
     'E' to {s:ShipType1, n:Int -> ShipType1(s.position + Orientation.East.step * n, s.orientation)},
     'W' to {s:ShipType1, n:Int -> ShipType1(s.position + Orientation.West.step * n, s.orientation)},
-    'R' to {s:ShipType1, n:Int -> ShipType1(s.position, s.orientation.rotateRight(n))},
-    'L' to {s:ShipType1, n:Int -> ShipType1(s.position, s.orientation.rotateLeft(n))},
+    'R' to {s:ShipType1, n:Int -> ShipType1(s.position, s.orientation rotate n )},
+    'L' to {s:ShipType1, n:Int -> ShipType1(s.position, s.orientation rotate(360 - n) )},
     'F' to {s:ShipType1, n:Int -> ShipType1(s.position + s.orientation.step * n, s.orientation)}
 )
 
@@ -55,8 +47,8 @@ val shipType2Instructions = mapOf(
     'S' to {s:ShipType2, n:Int -> ShipType2(s.position, s.wayPoint + Orientation.South.step * n)},
     'E' to {s:ShipType2, n:Int -> ShipType2(s.position, s.wayPoint + Orientation.East.step * n)},
     'W' to {s:ShipType2, n:Int -> ShipType2(s.position, s.wayPoint + Orientation.West.step * n)},
-    'R' to {s:ShipType2, n:Int -> ShipType2(s.position, s.wayPoint.rotateRight(n))},
-    'L' to {s:ShipType2, n:Int -> ShipType2(s.position, s.wayPoint.rotateLeft(n))},
+    'R' to {s:ShipType2, n:Int -> ShipType2(s.position, s.wayPoint rotate n)},
+    'L' to {s:ShipType2, n:Int -> ShipType2(s.position, s.wayPoint rotate (360 - n))},
     'F' to {s:ShipType2, n:Int -> ShipType2(s.position + s.wayPoint * n, s.wayPoint)}
 )
 
