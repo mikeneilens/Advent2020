@@ -64,7 +64,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.MainTest.part two">
+  <component name="RunManager" selected="JUnit.MainTest">
     <configuration default="true" type="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -158,11 +158,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.MainTest" />
         <item itemvalue="JUnit.MainTest.part two" />
         <item itemvalue="JUnit.MainTest.final position part 2 of sampleData" />
         <item itemvalue="JUnit.MainTest.rotating  wayPoint 360 degrees" />
         <item itemvalue="JUnit.MainTest.rotating  wayPoint 270 degrees" />
-        <item itemvalue="JUnit.MainTest" />
       </list>
     </recent_temporary>
   </component>
@@ -178,22 +178,22 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1878" height="305" key="GridCell.Tab.0.bottom" timestamp="1607778356844">
+    <state width="1878" height="305" key="GridCell.Tab.0.bottom" timestamp="1607784770214">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="305" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1607778356844" />
-    <state width="1878" height="305" key="GridCell.Tab.0.center" timestamp="1607778356843">
+    <state width="1878" height="305" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1607784770214" />
+    <state width="1878" height="305" key="GridCell.Tab.0.center" timestamp="1607784770213">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="305" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1607778356843" />
-    <state width="1878" height="305" key="GridCell.Tab.0.left" timestamp="1607778356842">
+    <state width="1878" height="305" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1607784770213" />
+    <state width="1878" height="305" key="GridCell.Tab.0.left" timestamp="1607784770210">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="305" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1607778356842" />
-    <state width="1878" height="305" key="GridCell.Tab.0.right" timestamp="1607778356843">
+    <state width="1878" height="305" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1607784770210" />
+    <state width="1878" height="305" key="GridCell.Tab.0.right" timestamp="1607784770214">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
-    <state width="1878" height="305" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1607778356843" />
+    <state width="1878" height="305" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1607784770214" />
     <state width="1878" height="376" key="GridCell.Tab.1.bottom" timestamp="1607776918387">
       <screen x="0" y="0" width="1920" height="1080" />
     </state>
