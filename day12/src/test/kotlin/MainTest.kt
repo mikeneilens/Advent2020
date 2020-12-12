@@ -62,4 +62,25 @@ class MainTest {
         assertEquals(Position(-1,65), wayPoint)
         assertEquals(18747, abs(position.x) + abs(position.y))
     }
+    @Test
+    fun `dsl version`() {
+        val (position, wayPoint) = DSL().execute {
+            ship = ShipType2(Position(0,0),Position(10,-1))
+            F(10)
+            N(3)
+            F(7)
+            R(90)
+            F(11)
+        }
+        assertEquals(Position(214,72), position)
+        assertEquals(Position(4,10), wayPoint)
+        assertEquals(286, abs(position.x) + abs(position.y))
+    }
+    @Test
+    fun `dsl using PartTwo data`() {
+        val (position, wayPoint) = dslResult
+        assertEquals(Position(-10766,7981), position)
+        assertEquals(Position(-1,65), wayPoint)
+        assertEquals(18747, abs(position.x) + abs(position.y))
+    }
 }

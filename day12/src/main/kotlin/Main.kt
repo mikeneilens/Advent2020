@@ -56,3 +56,16 @@ fun ShipType2.transform(instruction: String):ShipType2 = shipType2Instructions.g
 
 fun partTwo(instructions:List<String>)
         =  instructions.fold(ShipType2(Position(0,0),Position(10,-1)),ShipType2::transform)
+
+class DSL(var ship:ShipType2 = ShipType2(Position(0,0),Position(0,0)) ) {
+    fun N(n:Int):ShipType2 { ship = shipType2Instructions.getValue('N')(ship,n);return ship }
+    fun S(n:Int):ShipType2 { ship = shipType2Instructions.getValue('S')(ship,n);return ship }
+    fun E(n:Int):ShipType2 { ship = shipType2Instructions.getValue('E')(ship,n);return ship }
+    fun W(n:Int):ShipType2 { ship = shipType2Instructions.getValue('W')(ship,n);return ship }
+    fun R(n:Int):ShipType2 { ship = shipType2Instructions.getValue('R')(ship,n);return ship }
+    fun L(n:Int):ShipType2 { ship = shipType2Instructions.getValue('L')(ship,n);return ship }
+    fun F(n:Int):ShipType2 { ship = shipType2Instructions.getValue('F')(ship,n);return ship }
+
+    fun execute(input:DSL.()->ShipType2):ShipType2 = input()
+}
+
