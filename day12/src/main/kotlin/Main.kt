@@ -29,46 +29,39 @@ enum class Orientation(val step:Position) {
     fun rotateLeft(d:Int):Orientation = if (d == 0)  this else rotateLeftOnce().rotateLeft(d - 90)
 }
 
-data class ShipStatus (val position:Position, val orientation:Orientation)
+data class ShipType1 (val position:Position, val orientation:Orientation)
 val String.op get() = get(0)
 val String.n get() = drop(1).toInt()
 
-fun ShipStatus.transform(instruction:String):ShipStatus = when (instruction.op) {
-    'N' -> ShipStatus(position + Orientation.North.step * instruction.n, orientation)
-    'S' -> ShipStatus(position + Orientation.South.step * instruction.n, orientation)
-    'E' -> ShipStatus(position + Orientation.East.step * instruction.n, orientation)
-    'W' -> ShipStatus(position + Orientation.West.step * instruction.n, orientation)
-    'R' -> ShipStatus(position, orientation.rotateRight(instruction.n))
-    'L' -> ShipStatus(position, orientation.rotateLeft(instruction.n))
-    'F' -> ShipStatus(position + orientation.step * instruction.n, orientation)
-    else -> ShipStatus(position, orientation)
+fun ShipType1.transform(instruction:String):ShipType1 = when (instruction.op) {
+    'N' -> ShipType1(position + Orientation.North.step * instruction.n, orientation)
+    'S' -> ShipType1(position + Orientation.South.step * instruction.n, orientation)
+    'E' -> ShipType1(position + Orientation.East.step * instruction.n, orientation)
+    'W' -> ShipType1(position + Orientation.West.step * instruction.n, orientation)
+    'R' -> ShipType1(position, orientation.rotateRight(instruction.n))
+    'L' -> ShipType1(position, orientation.rotateLeft(instruction.n))
+    'F' -> ShipType1(position + orientation.step * instruction.n, orientation)
+    else -> ShipType1(position, orientation)
 }
 
-fun <ShipType>finalPosition(shipStatus:ShipType, sampleData1: List<String>, transformer:(ShipType, String)->ShipType): ShipType {
-    var newStatus = shipStatus
-    sampleData1.forEach{ instruction ->
-        newStatus =  transformer(newStatus,instruction)
-    }
-    return newStatus
-}
-fun partOne(sampleData1: List<String>): ShipStatus =
-    finalPosition(ShipStatus(Position(0,0),Orientation.East), sampleData1, ShipStatus::transform )
+fun partOne(sampleData: List<String>): ShipType1 =
+    sampleData.fold(ShipType1(Position(0,0),Orientation.East), ShipType1::transform )
 
 //part two
-data class ShipStatus2 (val position:Position, val orientation:Orientation, val wayPoint:Position)
+data class ShipType2 (val position:Position, val orientation:Orientation, val wayPoint:Position)
 
-fun ShipStatus2.transform(instruction:String):ShipStatus2 {
+fun ShipType2.transform(instruction:String):ShipType2 {
     return when (instruction.op) {
-        'N' -> ShipStatus2(position, orientation, wayPoint + Orientation.North.step * instruction.n)
-        'S' -> ShipStatus2(position, orientation, wayPoint + Orientation.South.step * instruction.n)
-        'E' -> ShipStatus2(position, orientation, wayPoint + Orientation.East.step * instruction.n)
-        'W' -> ShipStatus2(position, orientation, wayPoint + Orientation.West.step * instruction.n)
-        'R' -> ShipStatus2(position, orientation, wayPoint.rotateRight(instruction.n))
-        'L' -> ShipStatus2(position, orientation, wayPoint.rotateLeft(instruction.n))
-        'F' -> ShipStatus2(position + wayPoint * instruction.n, orientation, wayPoint )
-        else -> ShipStatus2(position, orientation, wayPoint)
+        'N' -> ShipType2(position, orientation, wayPoint + Orientation.North.step * instruction.n)
+        'S' -> ShipType2(position, orientation, wayPoint + Orientation.South.step * instruction.n)
+        'E' -> ShipType2(position, orientation, wayPoint + Orientation.East.step * instruction.n)
+        'W' -> ShipType2(position, orientation, wayPoint + Orientation.West.step * instruction.n)
+        'R' -> ShipType2(position, orientation, wayPoint.rotateRight(instruction.n))
+        'L' -> ShipType2(position, orientation, wayPoint.rotateLeft(instruction.n))
+        'F' -> ShipType2(position + wayPoint * instruction.n, orientation, wayPoint )
+        else -> ShipType2(position, orientation, wayPoint)
     }
 }
 
 fun partTwo(sampleData:List<String>)
-        = finalPosition(ShipStatus2(Position(0,0),Orientation.East, Position(10,-1)), sampleData, ShipStatus2::transform)
+        =  sampleData.fold(ShipType2(Position(0,0),Orientation.East, Position(10,-1)),ShipType2::transform)
