@@ -30,15 +30,16 @@ fun parseData2(data:List<String>):Pair<List<BusInfo>,Int> {
 
 fun partTwo(data:List<String>): Long {
     val (listOfBusInfo, _) = parseData2(data)
-
-    var totalTime =  listOfBusInfo[0].busId.toLong()
-    var minTimeincrement = 1L
-    for (busInfo in listOfBusInfo) {
-        totalTime = nextValidtimeForBus(busInfo, totalTime, minTimeincrement)
-        minTimeincrement *= busInfo.busId //this is the tricky thing to work out!
-    }
-    return totalTime
+    return totalTime(listOfBusInfo)
 }
+
+tailrec fun totalTime(listOfBusInfo:List<BusInfo>, timeSoFar:Long = 0L, increment:Long = 1L):Long {
+    if (listOfBusInfo.isEmpty()) return timeSoFar
+    val bus = listOfBusInfo.first()
+    val timeForBus = nextValidtimeForBus(bus, timeSoFar,increment)
+    return totalTime(listOfBusInfo.drop(1), timeForBus, increment * bus.busId ) //the increment is the tricky bit to work out
+}
+
 fun timeIsValidForBus(busInfo:BusInfo, time:Long ):Boolean = ( (time + busInfo.interval) % busInfo.busId == 0L)
 
 fun nextValidtimeForBus(busInfo:BusInfo, startingTime:Long, timeIncrement:Long ):Long {
