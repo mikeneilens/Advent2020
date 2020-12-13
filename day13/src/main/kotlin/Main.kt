@@ -18,15 +18,11 @@ fun partOne(data:List<String>):Pair<Int, Int> = findBestBus(parseData(data).firs
 
 data class BusInfo(val busId:Int, val interval:Int)
 
-fun transform(p:Pair<List<BusInfo>, Int>, data:String):Pair<List<BusInfo>,Int> {
-    val (listOfBusInfo, busCount) = p
-    return if (data == "x") Pair(listOfBusInfo, busCount + 1)
-    else Pair(listOfBusInfo + BusInfo(data.toInt(), busCount + 1), busCount + 1)
-}
-fun parseData2(data:List<String>):List<BusInfo>{
-    val initial = Pair(listOf(BusInfo(data[1].split(",")[0].toInt(),0)),0)
-    return data[1].split(",").drop(1).fold(initial, ::transform).first
-}
+fun parseData2(data:List<String>):List<BusInfo> = data[1]
+    .split(",")
+    .mapIndexed{i,v -> Pair(i,v)}
+    .filter { it.second != "x"}
+    .map{BusInfo(it.second.toInt(), it.first)}
 
 fun partTwo(data:List<String>): Long {
     val listOfBusInfo  = parseData2(data)
