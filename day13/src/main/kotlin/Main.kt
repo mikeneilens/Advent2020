@@ -35,7 +35,7 @@ fun partTwo(data:List<String>): Long {
     var minTimeincrement = 1L
     for (busInfo in listOfBusInfo) {
         totalTime = nextValidtimeForBus(busInfo, totalTime, minTimeincrement)
-        minTimeincrement *= busInfo.busId
+        minTimeincrement *= busInfo.busId //this is the tricky thing to work out!
     }
     return totalTime
 }
