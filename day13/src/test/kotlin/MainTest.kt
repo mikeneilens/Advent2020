@@ -1,9 +1,8 @@
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class MainTest {
-    val sampleData = """
+    private val sampleData = """
         939
         7,13,x,x,59,x,31,19
     """.trimIndent().split("\n")
@@ -31,14 +30,14 @@ class MainTest {
     }
     //part two
     @Test
-    fun `parse data into a list of busids and intervals`() {
+    fun `parse data into a list of busIds and intervals`() {
         val expectedResult = listOf(
             BusInfo(7,0),
             BusInfo(13,1),
             BusInfo(59,4),
             BusInfo(31,6),
             BusInfo(19,7))
-        val (listOfBusInfo,_)  = parseData2(sampleData)
+        val listOfBusInfo = parseData2(sampleData)
         assertEquals( expectedResult, listOfBusInfo)
     }
 

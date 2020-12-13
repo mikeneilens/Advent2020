@@ -23,29 +23,29 @@ fun transform(p:Pair<List<BusInfo>, Int>, data:String):Pair<List<BusInfo>,Int> {
     return if (data == "x") Pair(listOfBusInfo, busCount + 1)
     else Pair(listOfBusInfo + BusInfo(data.toInt(), busCount + 1), busCount + 1)
 }
-fun parseData2(data:List<String>):Pair<List<BusInfo>,Int> {
+fun parseData2(data:List<String>):List<BusInfo>{
     val initial = Pair(listOf(BusInfo(data[1].split(",")[0].toInt(),0)),0)
-    return data[1].split(",").drop(1).fold(initial, ::transform)
+    return data[1].split(",").drop(1).fold(initial, ::transform).first
 }
 
 fun partTwo(data:List<String>): Long {
-    val (listOfBusInfo, _) = parseData2(data)
+    val listOfBusInfo  = parseData2(data)
     return totalTime(listOfBusInfo)
 }
 
 tailrec fun totalTime(listOfBusInfo:List<BusInfo>, timeSoFar:Long = 0L, increment:Long = 1L):Long {
     if (listOfBusInfo.isEmpty()) return timeSoFar
     val bus = listOfBusInfo.first()
-    val timeForBus = nextValidtimeForBus(bus, timeSoFar,increment)
+    val timeForBus = nextValidTimeForBus(bus, timeSoFar,increment)
     return totalTime(listOfBusInfo.drop(1), timeForBus, increment * bus.busId ) //the increment is the tricky bit to work out
 }
 
 fun timeIsValidForBus(busInfo:BusInfo, time:Long ):Boolean = ( (time + busInfo.interval) % busInfo.busId == 0L)
 
-fun nextValidtimeForBus(busInfo:BusInfo, startingTime:Long, timeIncrement:Long ):Long {
+fun nextValidTimeForBus(busInfo:BusInfo, startingTime:Long, timeIncrement:Long ):Long {
     var time = startingTime + timeIncrement
     while (true) {
         if ( timeIsValidForBus(busInfo, time))  return time
-        time = time + timeIncrement
+        time += timeIncrement
     }
 }
