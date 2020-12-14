@@ -1,89 +1,65 @@
-import kotlin.math.pow
+typealias Mask = String
 
 data class Instruction(val address:Long, val value:Long) {
-    fun applyMaskToValue(mask:String):Instruction = Instruction(address, value.applyMask(mask))
 
-    fun updateMemory(memory:MutableMap<Long,Long>, mask:String) {
-        memory[address] = applyMaskToValue(mask).value.toLong()
+    fun updateMemoryUsingValueMask(memory:MutableMap<Long,Long>, mask:Mask) {
+        memory[address] = applyMaskToValue(mask).value
     }
-    fun applyMaskToAddress(mask:String) =
-        convertMask(mask).map{m ->
-            Instruction(address.applyMask(m), value)
-        }
-    fun updateMemory2(memory:MutableMap<Long,Long>, mask:String) {
-        val instructions = applyMaskToAddress(mask)
-        instructions.forEach { memory[it.address] = it.value }
-    }
+
+    fun applyMaskToValue(mask:Mask):Instruction = Instruction(address, value.applyMask(mask))
+
+    fun updateMemoryUsingAddressMask(memory:MutableMap<Long,Long>, mask:Mask) =
+        applyMaskToAddress(mask).forEach { memory[it.address] = it.value }
+
+    fun applyMaskToAddress(mask:Mask) = mask.convert().map(::transformAddress)
+
+    private fun transformAddress(m:Mask) = Instruction(address.applyMask(m), value)
 }
 
 fun Long.applyMask(mask: String): Long {
-    val binary = toBinary()
-    val zipped = mask.zip(binary)
-    val maskedValue = zipped.map { p -> if (p.first != 'X') p.first else p.second }.joinToString("").binaryToLong()
-    return maskedValue
+    val input = toBinary()
+    val zipped = mask.zip(input)
+    return zipped.map (::applyMaskToDigit).joinToString("").bToLong()
 }
 
-data class Program(val mask:String, val instructions:List<Instruction> ) {
-    fun process(memory:MutableMap<Long, Long>) {
-        instructions.forEach { it.updateMemory(memory, mask) }
-    }
-    fun process2(memory:MutableMap<Long, Long>) {
-        instructions.forEach { it.updateMemory2(memory, mask) }
-    }
+fun applyMaskToDigit(p:Pair<Char, Char>) = if (p.first != 'X') p.first  else p.second
 
+data class Program(val mask:Mask, val instructions:List<Instruction> ) {
+
+    fun processUsingValueMask(memory:MutableMap<Long, Long>) = instructions.forEach { it.updateMemoryUsingValueMask(memory, mask) }
+
+    fun processUsingAddressMask(memory:MutableMap<Long, Long>) = instructions.forEach { it.updateMemoryUsingAddressMask(memory, mask) }
 }
 
-//This is horrible!
 fun List<String>.parse():List<Program> {
-    val chunks = mutableListOf<List<String>>()
-    var chunk = mutableListOf<String>()
-    forEach { line ->
-        if (line.startsWith("mask")) {
-            if (!chunk.isEmpty()) {
-                chunks.add(chunk)
-            }
-            chunk = mutableListOf<String>(line)
-        } else {
-            chunk.add(line)
-        }
-    }
-    if (!chunk.isEmpty()) {
-        chunks.add(chunk)
-        chunk = mutableListOf<String>()
-    }
-    val programs = chunks.map{
-        val mask = it.first().split(" = ")[1]
-        val instructions = it.drop(1).map{ line ->
-                val splitLine = line.split(" = ")
-                val value = splitLine[1].toLong()
-                val address = splitLine[0].removePrefix("mem[").removeSuffix("]").toLong()
-                Instruction(address, value)
-        }
-        Program(mask, instructions)
-    }
-
-    return programs
+    val listOfProgramData = joinToString("\n")
+        .split("mask").drop(1)
+        .map{it.removeSuffix("\n").split("\n")}
+    return  listOfProgramData.map(::transformProgramData)
 }
 
-//binary conversion. This is horrible!
+fun transformProgramData(programData:List<String>):Program {
+    val mask = programData.first().toMask()
+    val instructions = programData.drop(1).map (String::toInstruction)
+    return Program(mask, instructions)
+}
 
-fun String.binaryToLong(chars:String = "1") :Long =
-    reversed().mapIndexed{index, digit -> if ( chars.contains(digit)) pow(2, index) else 0 }.sum()
-fun pow(a:Int, b:Int) = a.toDouble().pow(b.toDouble()).toLong()
+fun String.toMask() = split(" = ")[1]
 
-fun Long.toBinary():String =
-    (0..35).reversed().fold(Pair(this,"")){ (total, result), ndx ->
-        val bin = 2.toDouble().pow(ndx).toLong()
-        if ( (total / bin) >= 1L) Pair(total - bin, result + "1")
-        else Pair(total, result + "0")
-    }.second
+fun String.toInstruction():Instruction {
+    val splitLine = split(" = ")
+    val value = splitLine[1].toLong()
+    val address = splitLine[0].removePrefix("mem[").removeSuffix("]").toLong()
+    return Instruction(address, value)
+}
 
 //part two
-fun formatMask(mask:String) = mask.replace('X','?').replace('0','X')
-fun convertMask(mask:String) = convertQuestionMark( formatMask(mask))
-fun convertQuestionMark(mask: String): List<String> {
-    if (!mask.contains('?')) return listOf(mask)
-    return listOf(mask.replaceFirst('?','0'),mask.replaceFirst('?','1'))
-        .flatMap{convertQuestionMark(it)}
+fun Mask.convert() =  replace('X','?')
+                                .replace('0','X')
+                                .floatingMasks()
+
+fun Mask.floatingMasks(): List<String> {
+    if (!contains('?')) return listOf(this)
+    return listOf(replaceFirst('?','0'),replaceFirst('?','1')).flatMap{it.floatingMasks()}
 }
 
