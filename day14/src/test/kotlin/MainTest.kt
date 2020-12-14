@@ -11,9 +11,9 @@ class MainTest {
     @Test
     fun `parsing input`() {
         val expectedResult = listOf(
-            Program("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X",
+            Program(Mask("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X"),
             listOf(Instruction(8,11), Instruction(7,101),Instruction(8,0))),
-            Program("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X",
+            Program(Mask("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X"),
                 listOf(Instruction(8,11), Instruction(7,101),Instruction(8,0))),
             )
         assertEquals(expectedResult, (sampleData + sampleData).parse() )
@@ -30,7 +30,7 @@ class MainTest {
     }
     @Test
     fun `applying masks`() {
-        val mask = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X"
+        val mask = Mask("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X")
         val result1 = Instruction(8,11).applyMaskToValue(mask)
         assertEquals(Instruction(8,73), result1)
         val result2 = Instruction(7,101).applyMaskToValue(mask)
@@ -52,20 +52,20 @@ class MainTest {
     //part two
     @Test
     fun `a mask containing one X is converted to a list of maps containing two masks`() {
-        val result:List<String> = "00000X11111".toFloatingMasks()
-        val expectedResult:List<String> = listOf("XXXXX011111","XXXXX111111")
+        val result:List<Mask> = Mask("00000X11111").floatingMasks
+        val expectedResult:List<Mask> = listOf(Mask("XXXXX011111"),Mask("XXXXX111111"))
         assertEquals(expectedResult, result)
     }
     @Test
     fun `a mask containing two X is converted to a list of maps containing four masks`() {
-        val result:List<String> = "00000X11X11".toFloatingMasks()
-        val expectedResult:List<String> = listOf("XXXXX011011","XXXXX011111","XXXXX111011","XXXXX111111")
+        val result:List<Mask> = Mask("00000X11X11").floatingMasks
+        val expectedResult:List<Mask> = listOf(Mask("XXXXX011011"),Mask("XXXXX011111"),Mask("XXXXX111011"),Mask("XXXXX111111"))
         assertEquals(expectedResult, result)
     }
     @Test
     fun `applying a mask to an address`() {
         val instruction = Instruction(42,100)
-        val results = instruction.applyMaskToAddress("000000000000000000000000000000X1001X")
+        val results = instruction.applyMaskToAddress(Mask("000000000000000000000000000000X1001X"))
         val expectedResults = listOf(
             Instruction(26, 100), Instruction(27, 100), Instruction(58, 100), Instruction(59, 100)
         )

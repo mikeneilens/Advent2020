@@ -1,4 +1,15 @@
-typealias Mask = String
+
+data class Mask(val pattern:String) {
+    val floatingMasks by lazy {                   //Make this lazy so that it isn't created for Part One data as that has too many Xs.
+        pattern.replace('X','?') //This converts X into ? and 0 into X so mask can be applied in same way as part one.
+        .replace('0','X')
+        .floatingMasks()} //Then creates two masks that substitute a ? for a 1 and 0
+
+    fun String.floatingMasks(): List<Mask> {
+        if (!contains('?')) return listOf(Mask(this))
+        return listOf(replaceFirst('?','0'),replaceFirst('?','1')).flatMap{it.floatingMasks()}
+    }
+}
 
 data class Instruction(val address:Long, val value:Long) {
 
@@ -11,13 +22,13 @@ data class Instruction(val address:Long, val value:Long) {
     fun updateMemoryUsingAddressMask(memory:MutableMap<Long,Long>, mask:Mask) =
         applyMaskToAddress(mask).forEach { memory[it.address] = it.value }
 
-    fun applyMaskToAddress(mask:Mask) = mask.toFloatingMasks().map(::transformAddress)
+    fun applyMaskToAddress(mask:Mask) = mask.floatingMasks.map(::transformAddress)
 
     private fun transformAddress(m:Mask) = Instruction(address.applyMask(m), value)
 }
 
-fun Long.applyMask(mask: String): Long {
-    val zipped = mask.zip(toBinary()) //each digit in the mask is paired with each digit in the binary number
+fun Long.applyMask(mask: Mask): Long {
+    val zipped = mask.pattern.zip(toBinary()) //each digit in the mask is paired with each digit in the binary number
     return zipped.map (::applyMaskToADigit).joinToString("").bToLong()
 }
 
@@ -43,7 +54,7 @@ fun transformProgramData(programData:List<String>):Program {
     return Program(mask, instructions)
 }
 
-fun String.toMask() = split(" = ")[1]
+fun String.toMask() = Mask(split(" = ")[1])
 
 fun String.toInstruction():Instruction {
     val splitLine = split(" = ")
@@ -59,14 +70,6 @@ fun partOne(data:List<String>):Map<Long, Long> {
 }
 
 //part two
-fun Mask.toFloatingMasks() =  replace('X','?') //This converts X into ? and 0 into X so mask can be applied in same way as part one.
-                                .replace('0','X')
-                                .floatingMasks() //Then creates two masks that substitute a ? for a 1 and 0
-
-fun Mask.floatingMasks(): List<String> {
-    if (!contains('?')) return listOf(this)
-    return listOf(replaceFirst('?','0'),replaceFirst('?','1')).flatMap{it.floatingMasks()}
-}
 
 fun partTwo(data:List<String>):Map<Long, Long> {
     val memory = mutableMapOf<Long, Long>()
