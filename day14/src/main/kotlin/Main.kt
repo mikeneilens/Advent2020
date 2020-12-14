@@ -60,7 +60,7 @@ fun partOne(data:List<String>):Map<Long, Long> {
 }
 
 //part two
-fun Mask.convert() =  replace('X','?')
+fun Mask.convert() =  replace('X','?') //This converts X into ? and 0 into X so mask can be applied in same way as part one.
                                 .replace('0','X')
                                 .floatingMasks()
 
