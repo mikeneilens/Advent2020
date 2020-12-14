@@ -11,7 +11,7 @@ data class Instruction(val address:Long, val value:Long) {
     fun updateMemoryUsingAddressMask(memory:MutableMap<Long,Long>, mask:Mask) =
         applyMaskToAddress(mask).forEach { memory[it.address] = it.value }
 
-    fun applyMaskToAddress(mask:Mask) = mask.convert().map(::transformAddress)
+    fun applyMaskToAddress(mask:Mask) = mask.toFloatingMasks().map(::transformAddress)
 
     private fun transformAddress(m:Mask) = Instruction(address.applyMask(m), value)
 }
@@ -60,9 +60,9 @@ fun partOne(data:List<String>):Map<Long, Long> {
 }
 
 //part two
-fun Mask.convert() =  replace('X','?') //This converts X into ? and 0 into X so mask can be applied in same way as part one.
+fun Mask.toFloatingMasks() =  replace('X','?') //This converts X into ? and 0 into X so mask can be applied in same way as part one.
                                 .replace('0','X')
-                                .floatingMasks()
+                                .floatingMasks() //Then creates two masks that substitute a ? for a 1 and 0
 
 fun Mask.floatingMasks(): List<String> {
     if (!contains('?')) return listOf(this)

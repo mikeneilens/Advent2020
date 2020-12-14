@@ -52,13 +52,13 @@ class MainTest {
     //part two
     @Test
     fun `a mask containing one X is converted to a list of maps containing two masks`() {
-        val result:List<String> = "00000X11111".convert()
+        val result:List<String> = "00000X11111".toFloatingMasks()
         val expectedResult:List<String> = listOf("XXXXX011111","XXXXX111111")
         assertEquals(expectedResult, result)
     }
     @Test
     fun `a mask containing two X is converted to a list of maps containing four masks`() {
-        val result:List<String> = "00000X11X11".convert()
+        val result:List<String> = "00000X11X11".toFloatingMasks()
         val expectedResult:List<String> = listOf("XXXXX011011","XXXXX011111","XXXXX111011","XXXXX111111")
         assertEquals(expectedResult, result)
     }
