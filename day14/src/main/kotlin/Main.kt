@@ -17,12 +17,11 @@ data class Instruction(val address:Long, val value:Long) {
 }
 
 fun Long.applyMask(mask: String): Long {
-    val input = toBinary()
-    val zipped = mask.zip(input)
-    return zipped.map (::applyMaskToDigit).joinToString("").bToLong()
+    val zipped = mask.zip(toBinary()) //each digit in the mask is paired with each digit in the binary number
+    return zipped.map (::applyMaskToADigit).joinToString("").bToLong()
 }
 
-fun applyMaskToDigit(p:Pair<Char, Char>) = if (p.first != 'X') p.first  else p.second
+fun applyMaskToADigit(p:Pair<Char, Char>) = if (p.first != 'X') p.first  else p.second
 
 data class Program(val mask:Mask, val instructions:List<Instruction> ) {
 
