@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2020-12-14T19:11:56" hostname="MacBook-Pro-2.local" time="0.703">
+<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-14T19:22:01" hostname="MacBook-Pro-2.local" time="0.669">
   <properties/>
-  <testcase name="applying masks()" classname="MainTest" time="0.024"/>
-  <testcase name="processing sample data program()" classname="MainTest" time="0.001"/>
-  <testcase name="processing sample data program for part two()" classname="MainTest" time="0.011"/>
-  <testcase name="processing sample full program for part two()" classname="MainTest" time="0.002"/>
-  <testcase name="applying a mask to an address()" classname="MainTest" time="0.001"/>
-  <testcase name="integer to binary()" classname="MainTest" time="0.001"/>
-  <testcase name="a mask containing one X is converted to a list of maps containing two masks()" classname="MainTest" time="0.0"/>
-  <testcase name="parsing input()" classname="MainTest" time="0.001"/>
-  <testcase name="part one()" classname="MainTest" time="0.017"/>
-  <testcase name="part two()" classname="MainTest" time="0.64"/>
-  <testcase name="a mask containing two X is converted to a list of maps containing four masks()" classname="MainTest" time="0.0"/>
-  <testcase name="binary to integer()" classname="MainTest" time="0.0"/>
+  <testcase name="part two ()" classname="MainTest" time="0.669"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

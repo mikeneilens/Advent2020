@@ -53,6 +53,12 @@ fun String.toInstruction():Instruction {
     return Instruction(address, value)
 }
 
+fun partOne(data:List<String>):Map<Long, Long> {
+    val memory = mutableMapOf<Long, Long>()
+    data.parse().forEach{program ->  program.processUsingValueMask(memory)}
+    return memory
+}
+
 //part two
 fun Mask.convert() =  replace('X','?')
                                 .replace('0','X')
@@ -62,4 +68,12 @@ fun Mask.floatingMasks(): List<String> {
     if (!contains('?')) return listOf(this)
     return listOf(replaceFirst('?','0'),replaceFirst('?','1')).flatMap{it.floatingMasks()}
 }
+
+fun partTwo(data:List<String>):Map<Long, Long> {
+    val memory = mutableMapOf<Long, Long>()
+    data.parse().forEach{program ->  program.processUsingAddressMask(memory)}
+    return memory
+}
+
+
 

@@ -40,14 +40,12 @@ class MainTest {
     }
     @Test
     fun `processing sample data program`() {
-        val memory = mutableMapOf<Long, Long>()
-        sampleData.parse().forEach{program ->  program.processUsingValueMask(memory)}
+        val memory = partOne(sampleData)
         assertEquals(165, memory.values.sum())
     }
     @Test
     fun `part one`() {
-        val memory = mutableMapOf<Long, Long>()
-        day14Data.parse().forEach{program ->  program.processUsingValueMask(memory)}
+        val memory = partOne(day14Data)
         assertEquals(7817357407588, memory.values.sum())
     }
 
@@ -98,9 +96,8 @@ class MainTest {
         assertEquals(208, memory.values.sum())
     }
     @Test
-    fun `part two`() {
-        val memory = mutableMapOf<Long, Long>()
-        day14Data.parse().forEach{program ->  program.processUsingAddressMask(memory)}
+    fun `part two `() {
+        val memory = partTwo(day14Data)
         assertEquals(4335927555692, memory.values.sum())
     }
 
