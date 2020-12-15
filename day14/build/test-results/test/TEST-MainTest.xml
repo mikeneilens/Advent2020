@@ -1,107 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-14T21:47:25" hostname="MacBook-Pro-2.local" time="0.71">
+<testsuite name="MainTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2020-12-15T00:22:13" hostname="MacBook-Pro-2.local" time="0.752">
   <properties/>
-  <testcase name="part two ()" classname="MainTest" time="0.71"/>
-  <system-out><![CDATA[lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-lazy
-]]></system-out>
+  <testcase name="applying masks()" classname="MainTest" time="0.038"/>
+  <testcase name="part two ()" classname="MainTest" time="0.697"/>
+  <testcase name="processing sample data program()" classname="MainTest" time="0.001"/>
+  <testcase name="processing sample data program for part two()" classname="MainTest" time="0.001"/>
+  <testcase name="processing sample full program for part two()" classname="MainTest" time="0.001"/>
+  <testcase name="applying a mask to an address()" classname="MainTest" time="0.001"/>
+  <testcase name="integer to binary()" classname="MainTest" time="0.001"/>
+  <testcase name="a mask containing one X is converted to a list of maps containing two masks()" classname="MainTest" time="0.0"/>
+  <testcase name="parsing input()" classname="MainTest" time="0.0"/>
+  <testcase name="part one()" classname="MainTest" time="0.005"/>
+  <testcase name="a mask containing two X is converted to a list of maps containing four masks()" classname="MainTest" time="0.001"/>
+  <testcase name="binary to integer()" classname="MainTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

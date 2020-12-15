@@ -1,11 +1,13 @@
 
+typealias Memory = MutableMap<Long, Long>
+
 data class Mask(val pattern:String) {
     val floatingMasks by lazy {                   //Make this lazy so that it isn't created for Part One data as that has too many Xs.
         pattern.replace('X','?') //This converts X into ? and 0 into X so mask can be applied in same way as part one.
         .replace('0','X')
         .floatingMasks()} //Then creates two masks that substitute a ? for a 1 and 0
 
-    fun String.floatingMasks(): List<Mask> {
+    private fun String.floatingMasks(): List<Mask> {
         if (!contains('?')) return listOf(Mask(this))
         return listOf(replaceFirst('?','0'),replaceFirst('?','1')).flatMap{it.floatingMasks()}
     }
@@ -13,13 +15,13 @@ data class Mask(val pattern:String) {
 
 data class Instruction(val address:Long, val value:Long) {
 
-    fun updateMemoryUsingValueMask(memory:MutableMap<Long,Long>, mask:Mask) {
+    fun updateMemoryUsingValueMask(memory:Memory, mask:Mask) {
         memory[address] = applyMaskToValue(mask).value
     }
 
     fun applyMaskToValue(mask:Mask):Instruction = Instruction(address, value.applyMask(mask))
 
-    fun updateMemoryUsingAddressMask(memory:MutableMap<Long,Long>, mask:Mask) =
+    fun updateMemoryUsingAddressMask(memory:Memory, mask:Mask) =
         applyMaskToAddress(mask).forEach { memory[it.address] = it.value }
 
     fun applyMaskToAddress(mask:Mask) = mask.floatingMasks.map(::transformAddress)
@@ -36,9 +38,8 @@ fun applyMaskToADigit(p:Pair<Char, Char>) = if (p.first != 'X') p.first  else p.
 
 data class Program(val mask:Mask, val instructions:List<Instruction> ) {
 
-    fun processUsingValueMask(memory:MutableMap<Long, Long>) = instructions.forEach { it.updateMemoryUsingValueMask(memory, mask) }
-
-    fun processUsingAddressMask(memory:MutableMap<Long, Long>) = instructions.forEach { it.updateMemoryUsingAddressMask(memory, mask) }
+    fun process(memory:Memory, memoryUpdater:Instruction.(Memory, Mask)->Unit)
+            = instructions.forEach{it.memoryUpdater(memory, mask)}
 }
 
 fun List<String>.parse():List<Program> {
@@ -65,7 +66,7 @@ fun String.toInstruction():Instruction {
 
 fun partOne(data:List<String>):Map<Long, Long> {
     val memory = mutableMapOf<Long, Long>()
-    data.parse().forEach{program ->  program.processUsingValueMask(memory)}
+    data.parse().forEach{program ->  program.process(memory, Instruction::updateMemoryUsingValueMask)}
     return memory
 }
 
@@ -73,7 +74,7 @@ fun partOne(data:List<String>):Map<Long, Long> {
 
 fun partTwo(data:List<String>):Map<Long, Long> {
     val memory = mutableMapOf<Long, Long>()
-    data.parse().forEach{program ->  program.processUsingAddressMask(memory)}
+    data.parse().forEach{program ->  program.process(memory, Instruction::updateMemoryUsingAddressMask)}
     return memory
 }
 

@@ -78,7 +78,7 @@ class MainTest {
             mem[26] = 1
         """.trimIndent().split("\n")
         val memory = mutableMapOf<Long, Long>()
-        sampleData.parse().forEach{program ->  program.processUsingAddressMask(memory)}
+        sampleData.parse().forEach{program ->  program.process(memory, Instruction::updateMemoryUsingAddressMask)}
 
         assertEquals(listOf(16L,17L,18L,19L,24L,25L,26L,27L), memory.keys.toList())
     }
@@ -91,7 +91,7 @@ class MainTest {
             mem[26] = 1
         """.trimIndent().split("\n")
         val memory = mutableMapOf<Long, Long>()
-        sampleData.parse().forEach{program ->  program.processUsingAddressMask(memory)}
+        sampleData.parse().forEach{program ->  program.process(memory, Instruction::updateMemoryUsingAddressMask)}
 
         assertEquals(208, memory.values.sum())
     }
