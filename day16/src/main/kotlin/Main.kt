@@ -1,4 +1,4 @@
-
+import com.sun.org.apache.xpath.internal.operations.Bool
 
 fun List<String>.rulesLines() = takeWhile { it.isNotEmpty() }
 fun List<String>.yourTicketLine() = dropWhile { it != "your ticket:" }.drop(1).first()
@@ -18,7 +18,7 @@ fun getRangesOnALine(ruleLine:String):List<Int> {
 }
 fun makeRuleForARange(l:List<Int>) =  { value:Int -> checkRanges(value, l[0],l[1],l[2],l[3]) }
 
-fun List<String>.toRules() = rulesLines().map(::getRangesOnALine).map(::makeRuleForARange)
+fun List<String>.toRules():List<(Int)->Boolean> = rulesLines().map(::getRangesOnALine).map(::makeRuleForARange)
 
 fun List<String>.invalidValues():List<Int> {
     val allNearbyValues = nearbyTicketLines().flatMap{line -> line.split(",").map{ it.toInt() } }
@@ -30,12 +30,12 @@ fun List<String>.invalidValues():List<Int> {
     return invalidValues
 }
 //part two
-fun String.ticketLineToInt() = split(",").map{ it.toInt() }
+fun String.ticketLineToListOfInts() = split(",").map{ it.toInt() }
 
 fun List<String>.validTickets():List<List<Int>> {
     val rules = toRules()
     return  nearbyTicketLines()
-        .map(String::ticketLineToInt)
+        .map(String::ticketLineToListOfInts)
         .filter{values -> values.allValuesComplyWithRules(rules)}
 }
 fun List<Int>.allValuesComplyWithRules(rules:List<(Int)->Boolean>) =

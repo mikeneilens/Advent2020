@@ -99,13 +99,13 @@ class MainTest {
     @Test
     fun `part two`() {
         val decoded = rulesDecoded(day16Data)
-        val descriptionRules = decoded.filter{it.second.startsWith("depart")}
-        val myTicket = day16Data.yourTicketLine().ticketLineToInt()
-        val answer = descriptionRules.map{ (ndx, rule) ->
-            println("$rule ${myTicket[ndx]}")
+        val rulesStartingWithDepart = decoded.filter{it.second.startsWith("depart")}
+        val myTicket = day16Data.yourTicketLine().ticketLineToListOfInts()
+        val answer = rulesStartingWithDepart.map{ (ndx, ruleDescription) ->
             myTicket[ndx]
         }.fold(1L){acc, v -> acc * v}
         println(answer)
+        assertEquals(161926544831, answer)
     }
 
 }
