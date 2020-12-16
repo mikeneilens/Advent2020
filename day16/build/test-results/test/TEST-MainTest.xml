@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-16T16:36:46" hostname="MacBook-Pro-2" time="0.046">
+<testsuite name="MainTest" tests="12" skipped="0" failures="0" errors="0" timestamp="2020-12-16T16:51:56" hostname="MacBook-Pro-2" time="0.062">
   <properties/>
-  <testcase name="part two()" classname="MainTest" time="0.046"/>
-  <system-out><![CDATA[[53, 73, 97, 103, 59, 71]
+  <testcase name="potential rules for each column is (1), (0,1) and (0,1,2)()" classname="MainTest" time="0.035"/>
+  <testcase name="changing ranges into a rule()" classname="MainTest" time="0.002"/>
+  <testcase name="getting rulesLines, yourTicketLines and nearByTicketLines from sample data()" classname="MainTest" time="0.001"/>
+  <testcase name="invalid values on nearyby tickets in sample data is 4,55,12()" classname="MainTest" time="0.001"/>
+  <testcase name="all values for a ticket comply with rules()" classname="MainTest" time="0.0"/>
+  <testcase name="create rules for sample data()" classname="MainTest" time="0.0"/>
+  <testcase name="only tickets that comply with the rules()" classname="MainTest" time="0.0"/>
+  <testcase name="test transforming a rule to a list of ranges()" classname="MainTest" time="0.0"/>
+  <testcase name="decoding rules()" classname="MainTest" time="0.003"/>
+  <testcase name="part one()" classname="MainTest" time="0.007"/>
+  <testcase name="part two()" classname="MainTest" time="0.007"/>
+  <testcase name="rationalising rules for each col()" classname="MainTest" time="0.0"/>
+  <system-out><![CDATA[[(0, row: 0-5 or 8-19), (1, class: 0-1 or 4-19), (2, seat: 0-13 or 16-19)]
+[53, 73, 97, 103, 59, 71]
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

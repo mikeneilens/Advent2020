@@ -24,10 +24,12 @@ fun List<String>.invalidValues():List<Int> {
     val allNearbyValues = nearbyTicketLines().flatMap{line -> line.split(",").map{ it.toInt() } }
     val rules = getRules()
     return allNearbyValues.fold(listOf()) { result, value ->
-        if (rules.none {it(value)}) result + value
+        if (value.compliesWithNoneOf(rules)) result + value
         else result
     }
 }
+fun Int.compliesWithNoneOf(rules:List<(Int)->Boolean>) = rules.none {it(this)}
+
 //part two
 fun String.ticketLineToListOfInts() = split(",").map{ it.toInt() }
 
@@ -67,9 +69,11 @@ fun List<List<Int>>.rationalise():List<List<Int>>   {
     if (all{it.size == 1}) return this
     val columnsWithOneRule = filter{it.size == 1}.map{it.first()}
     return map{ruleIndexes -> if(ruleIndexes.size == 1) ruleIndexes
-                        else ruleIndexes.filter{ruleIndex ->
-        !columnsWithOneRule.contains(ruleIndex)} }.rationalise()
+                              else ruleIndexes.removeAnyValuesIn(columnsWithOneRule) }.rationalise()
 }
+
+fun <T>List<T>.removeAnyValuesIn(values:List<T>) = filter{!values.contains(it)}
+
 fun List<String>.ruleIndexAndNameForEachColumn() =
      potentialRulesForEachCol().rationalise().flatten().mapIndexed{ columnIndex, ruleNdx ->
          Pair(columnIndex, rulesLines()[ruleNdx])}
