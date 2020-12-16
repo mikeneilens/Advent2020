@@ -43,7 +43,7 @@ class MainTest {
     }
     @Test
     fun `create rules for sample data`() {
-        val rules = sampleData.toRules()
+        val rules = sampleData.getRules()
         assertTrue(rules[2](13))
     }
     @Test
@@ -72,7 +72,7 @@ class MainTest {
 
     @Test
     fun `all values for a ticket comply with rules`() {
-        val rules = sampleData.toRules()
+        val rules = sampleData.getRules()
         assertTrue(listOf(7,3,47).allValuesComplyWithRules(rules))
         assertFalse(listOf(40,4,50).allValuesComplyWithRules(rules))
         assertFalse(listOf(55,2,20).allValuesComplyWithRules(rules))
@@ -80,12 +80,12 @@ class MainTest {
     }
     @Test
     fun `only tickets that comply with the rules`() {
-        val rules = sampleData.toRules()
+        val rules = sampleData.getRules()
         assertEquals(listOf(listOf(7,3,47)), sampleData.validTickets())
     }
     @Test
     fun `potential rules for each column is (1), (0,1) and (0,1,2)`() {
-        assertEquals(listOf(listOf(1),listOf(0,1), listOf(0,1,2)) , potentialRulesForEachCol(partTwoData))
+        assertEquals(listOf(listOf(1),listOf(0,1), listOf(0,1,2)) , partTwoData.potentialRulesForEachCol())
     }
     @Test
     fun `rationalising rules for each col`(){
@@ -94,7 +94,7 @@ class MainTest {
     }
     @Test
     fun `decoding rules`() {
-        println(ruleForEachColumn(partTwoData) )
+        println(partTwoData.ruleIndexAndNameForEachColumn() )
     }
     @Test
     fun `part two`() {

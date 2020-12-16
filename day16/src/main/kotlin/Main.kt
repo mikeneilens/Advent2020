@@ -9,19 +9,20 @@ fun getRangesOnALine(ruleLine:String):List<Int> {
     val rightOfColon = ruleLine.split(": ")[1]
     val textR1 = rightOfColon.split(" or ")[0]
     val textR2 = rightOfColon.split(" or ")[1]
-    val s1 = textR1.split("-")[0].toInt()
-    val e1 = textR1.split("-")[1].toInt()
-    val s2 = textR2.split("-")[0].toInt()
-    val e2 = textR2.split("-")[1].toInt()
-    return listOf(s1,e1,s2,e2)
+    return listOf(
+        textR1.split("-")[0].toInt(),
+        textR1.split("-")[1].toInt(),
+        textR2.split("-")[0].toInt(),
+        textR2.split("-")[1].toInt(),
+    )
 }
 fun makeRuleForARange(l:List<Int>) =  { value:Int -> checkRanges(value, l[0],l[1],l[2],l[3]) }
 
-fun List<String>.toRules():List<(Int)->Boolean> = rulesLines().map(::getRangesOnALine).map(::makeRuleForARange)
+fun List<String>.getRules():List<(Int)->Boolean> = rulesLines().map(::getRangesOnALine).map(::makeRuleForARange)
 
 fun List<String>.invalidValues():List<Int> {
     val allNearbyValues = nearbyTicketLines().flatMap{line -> line.split(",").map{ it.toInt() } }
-    val rules = toRules()
+    val rules = getRules()
     return allNearbyValues.fold(listOf()) { result, value ->
         if (rules.none {it(value)}) result + value
         else result
@@ -31,20 +32,21 @@ fun List<String>.invalidValues():List<Int> {
 fun String.ticketLineToListOfInts() = split(",").map{ it.toInt() }
 
 fun List<String>.validTickets():List<List<Int>> {
-    val rules = toRules()
+    val rules = getRules()
     return  nearbyTicketLines()
         .map(String::ticketLineToListOfInts)
         .filter{values -> values.allValuesComplyWithRules(rules)}
 }
+
 fun List<Int>.allValuesComplyWithRules(rules:List<(Int)->Boolean>) =
     all{value -> rules.any{it(value)}}
 
 fun List<Int>.compliesWith(rule:(Int)->Boolean) = all{rule(it)}
 
-fun potentialRulesForEachCol(data:List<String>):List<List<Int>> {
-    val validTickets = data.validTickets()
+fun List<String>.potentialRulesForEachCol():List<List<Int>> {
+    val validTickets = validTickets()
     val maximumCol = validTickets.first().lastIndex
-    val rules = data.toRules()
+    val rules = getRules()
     val valuesInEachColumn = (0..maximumCol).map{ col-> validTickets.map{it[col]}}
     val result = mutableListOf<List<Int>>()
     valuesInEachColumn.forEach { values ->
@@ -68,15 +70,18 @@ fun List<List<Int>>.rationalise():List<List<Int>>   {
                         else ruleIndexes.filter{ruleIndex ->
         !columnsWithOneRule.contains(ruleIndex)} }.rationalise()
 }
-fun ruleForEachColumn(data:List<String>) =
-     potentialRulesForEachCol(data).rationalise().flatten().mapIndexed{ columnIndex, ruleNdx ->
-         Pair(columnIndex, data.rulesLines()[ruleNdx])}
+fun List<String>.ruleIndexAndNameForEachColumn() =
+     potentialRulesForEachCol().rationalise().flatten().mapIndexed{ columnIndex, ruleNdx ->
+         Pair(columnIndex, rulesLines()[ruleNdx])}
 
 fun partTwo(data:List<String>): List<Int> {
-    val ruleIndexesForEachColumn = ruleForEachColumn(data)
-    val columnsWithRuleNamesStartingWithDepart = ruleIndexesForEachColumn.filter { it.second.startsWith("depart") }.map { it.first }
+    val columnsWithRuleNamesStartingWithDepart
+            = data.ruleIndexAndNameForEachColumn()
+                  .filter (::nameStartsWithDepart)
+                  .map { it.first }
     val yourTicket = data.yourTicketLine().ticketLineToListOfInts()
     return columnsWithRuleNamesStartingWithDepart.map { columnIndex ->
         yourTicket[columnIndex]
     }
 }
+fun nameStartsWithDepart(p:Pair<Int, String>):Boolean = p.second.startsWith("depart")
