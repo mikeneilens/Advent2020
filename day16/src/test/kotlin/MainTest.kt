@@ -94,18 +94,13 @@ class MainTest {
     }
     @Test
     fun `decoding rules`() {
-        println(rulesDecoded(partTwoData) )
+        println(ruleForEachColumn(partTwoData) )
     }
     @Test
     fun `part two`() {
-        val decoded = rulesDecoded(day16Data)
-        val rulesStartingWithDepart = decoded.filter{it.second.startsWith("depart")}
-        val myTicket = day16Data.yourTicketLine().ticketLineToListOfInts()
-        val answer = rulesStartingWithDepart.map{ (ndx, ruleDescription) ->
-            myTicket[ndx]
-        }.fold(1L){acc, v -> acc * v}
+        val answer = partTwo(day16Data)
         println(answer)
-        assertEquals(161926544831, answer)
+        assertEquals(161926544831, answer.fold(1L) { acc, v -> acc * v })
     }
 
 }
