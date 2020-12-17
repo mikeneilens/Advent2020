@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-17T17:45:25" hostname="MacBook-Pro-2" time="0.049">
+<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-17T21:59:52" hostname="MacBook-Pro-2.local" time="1.56">
   <properties/>
-  <testcase name="part two, 2 dimensions()" classname="MainTest" time="0.049"/>
+  <testcase name="part two()" classname="MainTest" time="1.56"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
