@@ -1,4 +1,3 @@
-import jdk.nashorn.internal.ir.annotations.Ignore
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -36,7 +35,7 @@ class MainTest {
             ###
         """.trimIndent().split("\n")
         val conwayCubes  = createConwayCubes(data, dimensions = 3)
-        val newConwayCubes = conwayCubes.cycle(3)
+        val newConwayCubes = conwayCubes.surroundActiveCubesWithInactive(3).cycle(3)
         assertEquals(3, newConwayCubes.toList().filter{it.first.z == -1}.filter{it.second == State.Active }.count())
         assertEquals(5, newConwayCubes.toList().filter{it.first.z == 0}.filter{it.second == State.Active }.count())
         assertEquals(3, newConwayCubes.toList().filter{it.first.z == 1}.filter{it.second == State.Active }.count())
@@ -85,7 +84,7 @@ class MainTest {
         val newConwayCubes = day17Data.process(6, 4)
         assertEquals(1680, newConwayCubes.toList().filter{it.second == State.Active }.count())
     }
-    @Ignore
+    @Test
     fun `part two, 5 dimensions`() {
         val newConwayCubes = day17Data.process(6, 5)
         assertEquals(12440, newConwayCubes.toList().filter{it.second == State.Active }.count())

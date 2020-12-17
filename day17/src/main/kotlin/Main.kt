@@ -36,17 +36,27 @@ fun ConwayCubes.newState(position:Position, surroundingPositions:List<List<Int>>
 }
 
 fun ConwayCubes.repeatCycles(noOfCycles:Int, dimensions: Int):ConwayCubes =
-    if (noOfCycles <= 0) this else cycle(dimensions).repeatCycles(noOfCycles -1, dimensions)
+    if (noOfCycles <= 0) this else {
+        surroundActiveCubesWithInactive(dimensions).cycle(dimensions).repeatCycles(noOfCycles -1, dimensions)
+    }
 
 fun ConwayCubes.cycle(dimensions:Int):ConwayCubes {
     val surroundingPositions = surroundingPositions(dimensions)
-    val minAndMaxes = (0 until dimensions).map{d -> (keys.minOf { it[d] } -1)..(keys.maxOf { it[d] } +1)}.map{it.toList()}
-    val positions = getPositions(minAndMaxes)
     val newConwayCubes = toMutableMap()
-    positions.forEach { position ->
-        newConwayCubes [position] = newState(position, surroundingPositions)
+    keys.forEach{position -> newConwayCubes[position] = newState(position,surroundingPositions )
+
     }
     return newConwayCubes
+}
+
+fun ConwayCubes.surroundActiveCubesWithInactive(dimensions:Int):ConwayCubes {
+    val surroundingPositions = surroundingPositions(dimensions)
+    toList().filter{it.second == State.Active}.forEach { (position, state)->
+        surroundingPositions.forEach{offset ->
+            if (get(position + offset) == null) set(position + offset,State.Inactive)
+        }
+    }
+    return this
 }
 
 fun getPositions(minAndMaxes: List<List<Int>>): List<Position> =
