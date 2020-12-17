@@ -51,19 +51,14 @@ fun ConwayCubes.cycle(dimensions:Int):ConwayCubes {
 
 fun ConwayCubes.surroundActiveCubesWithInactive(dimensions:Int):ConwayCubes {
     val surroundingPositions = surroundingPositions(dimensions)
-    toList().filter{it.second == State.Active}.forEach { (position, state)->
-        surroundingPositions.forEach{offset ->
-            if (get(position + offset) == null) set(position + offset,State.Inactive)
-        }
+         toList()
+        .filter{it.second == State.Active}.forEach { (position, _)->
+            surroundingPositions
+                .filter{ get(position + it) == null}
+                .forEach{ set(position + it,State.Inactive) }
     }
     return this
 }
-
-fun getPositions(minAndMaxes: List<List<Int>>): List<Position> =
-    minAndMaxes.foldIndexed(listOf()){ index, result, minAndMax ->
-        if (index == 0) minAndMax.map { listOf(it) }
-        else result.flatMap { first -> minAndMax.map { second -> first + second } }
-    }
 
 fun List<String>.process(noOfCycles:Int,dimensions:Int) =
     createConwayCubes(this,dimensions).repeatCycles(noOfCycles, dimensions)
