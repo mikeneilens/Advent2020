@@ -1,120 +1,67 @@
-import javafx.geometry.Pos
+import kotlin.math.pow
+typealias PositionL = List<Int>
 
-data class Position(val x:Int, val y:Int, val z:Int) {
-    operator fun plus(other:Position)  = Position(x + other.x, y + other.y, z + other.z)
-}
+operator fun PositionL.plus(other:PositionL) = this.zip(other).map{it.first + it.second}
 
-val surroundingPositions:List<Position> = (-1..1).flatMap{ x-> (-1..1).flatMap{ y -> (-1..1).map{z -> Position(x,y,z)}} }.filter{it != Position(0,0,0)}
+val PositionL.x:Int get() = get(0)
+val PositionL.y:Int get() = get(1)
+val PositionL.z:Int get() = get(2)
+val PositionL.w:Int get() = get(3)
+
+fun surroundingPositions(dimensions:Int):List<PositionL> =
+    (0 until (3.0.pow(dimensions ).toInt())).map{
+        (0 until dimensions).map{ n ->
+            (it / 3.0.pow(n).toInt() % 3 - 1 )
+        }
+    }.filter{ d -> !d.all{it == 0}}
+
+fun updateCube(conwayCubes: ConwayCubes, data:List<String>, dimensions:Int) =
+    (data.first().indices).forEach{ x -> (0..data.lastIndex).forEach{ y->
+        conwayCubes[(0 until dimensions).map{ when (it) {0 -> x 1 -> y else ->0} }] = data[y][x].toState() } }
 
 enum class State(val text:Char) {
-    active('#'), inactive('.')
+    Active('#'), Inactive('.')
 }
-fun Char.toState() = if (this == '#') State.active else State.inactive
+fun Char.toState() = if (this == State.Active.text) State.Active else State.Inactive
 
-typealias ConwayCubes = MutableMap<Position, State>
+typealias ConwayCubes = MutableMap<PositionL, State>
 
-fun ConwayCubes.activeNeighbours(position:Position) =
-    surroundingPositions.count { surroundingPosition -> get(position + surroundingPosition) == State.active  }
+fun ConwayCubes.activeNeighbours(position:PositionL, surroundingPositions:List<List<Int>>) =
+    surroundingPositions.count { surroundingPosition -> get(position + surroundingPosition) == State.Active  }
 
-fun updateCube(conwayCubes: ConwayCubes, data:List<String>) =
-    (0..(data.first().length - 1)).forEach{x -> (0..data.lastIndex).forEach{ y-> conwayCubes[Position(x,y,0)] = data[y][x].toState() } }
-
-fun ConwayCubes.newState(position:Position):State {
-    val activeNeighbouts = activeNeighbours(position)
-    if (get(position) == State.active)
-        if (activeNeighbouts ==2 || activeNeighbouts == 3) return State.active else return State.inactive
+fun ConwayCubes.newState(position:PositionL,surroundingPositions:List<List<Int>>):State {
+    val activeNeighbours = activeNeighbours(position, surroundingPositions)
+    return if (get(position) == State.Active)
+        if (activeNeighbours ==2 || activeNeighbours == 3) State.Active else State.Inactive
     else
-        if (activeNeighbouts == 3) return State.active else return State.inactive
-
+        if (activeNeighbours == 3) State.Active else State.Inactive
 }
 
-fun ConwayCubes.cycle():ConwayCubes {
-    val newConwayCubes = toMutableMap()
-    val minZ = keys.minOf { it.z } - 1
-    val maxZ = keys.maxOf { it.z } + 1
-    val minX = keys.minOf { it.x } - 1
-    val maxX = keys.maxOf { it.x } + 1
-    val minY = keys.minOf { it.y } - 1
-    val maxY = keys.maxOf { it.y } + 1
-    (minZ..maxZ).forEach { z ->
-        (minY..maxY).forEach {y->
-            (minX..maxX).forEach { x ->
-                newConwayCubes [Position(x,y,z)] = newState(Position(x,y,z))
-            }
-        }
-    }
-    return newConwayCubes
-}
+fun ConwayCubes.repeatCycles(noOfCycles:Int, dimensions: Int):ConwayCubes =
+    if (noOfCycles <= 0) this else cycle(dimensions).repeatCycles(noOfCycles -1, dimensions)
 
-fun ConwayCubes.repeatCycles(noOfCylces:Int):ConwayCubes =
-    if (noOfCylces <= 0) this else cycle().repeatCycles(noOfCylces -1)
-
-
-fun ConwayCubes.print() {
-    val minZ = keys.minOf { it.z }
-    val maxZ = keys.maxOf { it.z }
-    val minX = keys.minOf { it.x }
-    val maxX = keys.maxOf { it.x }
-    val minY = keys.minOf { it.y }
-    val maxY = keys.maxOf { it.y }
-    (minZ..maxZ).forEach { z ->
-        println("z=$z")
-        (minY..maxY).forEach {y->
-            var line = ""
-            (minX..maxX).forEach { x ->
-                line += get(Position(x,y,z))?.let{it.text} ?: " "
-            }
-            println(line)
-        }
-    }
-}
 
 //part two
-data class PositionW(val x:Int, val y:Int, val z:Int, val w:Int) {
-    operator fun plus(other:PositionW)  = PositionW(x + other.x, y + other.y, z + other.z, w + other.w)
-}
 
-val surroundingPositionWs:List<PositionW> = (-1..1).flatMap{ x-> (-1..1).flatMap{ y -> (-1..1).flatMap{z -> (-1..1).map{ w -> PositionW(x,y,z,w)}}} }.filter{it != PositionW(0,0,0, 0)}
-
-typealias ConwayCubesW = MutableMap<PositionW, State>
-
-fun ConwayCubesW.activeNeighbours(position:PositionW) =
-    surroundingPositionWs.count { surroundingPosition -> get(position + surroundingPosition) == State.active  }
-
-fun updateCubeW(conwayCubesW: ConwayCubesW, data:List<String>) =
-    (0..(data.first().length - 1)).forEach{x -> (0..data.lastIndex).forEach{ y-> conwayCubesW[PositionW(x,y,0,0)] = data[y][x].toState() } }
-
-fun ConwayCubesW.newState(position:PositionW):State {
-    val activeNeighbouts = activeNeighbours(position)
-    if (get(position) == State.active)
-        if (activeNeighbouts ==2 || activeNeighbouts == 3) return State.active else return State.inactive
-    else
-        if (activeNeighbouts == 3) return State.active else return State.inactive
-
-}
-
-fun ConwayCubesW.cycle2():ConwayCubesW {
+fun ConwayCubes.cycle(dimensions:Int):ConwayCubes {
+    val surroundingPositions = surroundingPositions(dimensions)
+    val minAndMaxes = (0..(dimensions-1)).map{d -> (keys.minOf { it[d] } -1)..(keys.maxOf { it[d] } +1)}.map{it.toList()}
+    val positions = getPositions(minAndMaxes, dimensions)
     val newConwayCubes = toMutableMap()
-    val minZ = keys.minOf { it.z } - 1
-    val maxZ = keys.maxOf { it.z } + 1
-    val minX = keys.minOf { it.x } - 1
-    val maxX = keys.maxOf { it.x } + 1
-    val minY = keys.minOf { it.y } - 1
-    val maxY = keys.maxOf { it.y } + 1
-    val minW = keys.minOf { it.w } - 1
-    val maxW = keys.maxOf { it.w } + 1
-    (minW..maxW).forEach{ w ->
-        (minZ..maxZ).forEach { z ->
-            (minY..maxY).forEach {y->
-                (minX..maxX).forEach { x ->
-                    newConwayCubes [PositionW(x,y,z,w)] = newState(PositionW(x,y,z,w))
-                }
-            }
-        }
+    positions.forEach { position ->
+        newConwayCubes [position] = newState(position, surroundingPositions)
     }
     return newConwayCubes
 }
 
-fun ConwayCubesW.repeatCycles2(noOfCylces:Int):ConwayCubesW =
-    if (noOfCylces <= 0) this else cycle2().repeatCycles2(noOfCylces -1)
+fun getPositions(minAndMaxes: List<List<Int>>, dimensions: Int): List<PositionL> {
+    var n = 0
+    var combos = minAndMaxes[n++].map { listOf(it) }
+    while (n < dimensions) {
+        combos = combos.flatMap { first -> minAndMaxes[n].map { second -> first + second } }
+        n++
+    }
+    return combos
+}
+
 
