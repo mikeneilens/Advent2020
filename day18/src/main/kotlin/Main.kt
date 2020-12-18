@@ -1,7 +1,6 @@
-import kotlin.math.exp
 
-val partOneOperators = listOf(setOf("+","*"))
-val partTwoOperators = listOf(setOf("+"),setOf("*"))
+val partOneOperators = listOf(setOf("+","*")) //process + or * on first come first serve basis
+val partTwoOperators = listOf(setOf("+"),setOf("*")) // evaluates all + in an expression and then evaluates all *
 
 val operatorFunction:Map<String, (String, String)->Pair<String,String>> = mapOf(
     "+" to {a, b -> Pair((a.toLong() + b.toLong()).toString(), "$a + $b")},
@@ -10,16 +9,17 @@ val operatorFunction:Map<String, (String, String)->Pair<String,String>> = mapOf(
 
 typealias Expression = String
 
-fun evaluate(expression:Expression, operators:Set<String>):String {
-    if (expression.contains(operators)) return expression
-    val (number1, op, number2) = expression.operatorsAndOperands().firstOrNull(){operators.contains(it.second)} ?: return expression
+fun Expression.evaluate(operators:Set<String>):String {
+    if (contains(operators)) return this
+    val (number1, op, number2) = operatorsAndOperands().firstOrNull{operators.contains(it.second)} ?: return this
     val (result, expressionEvaluated) = operatorFunction.getValue(op)(number1, number2)
-    return evaluate(expression.replaceFirst(expressionEvaluated,result), operators)
+    return replaceFirst(expressionEvaluated,result).evaluate(operators)
 }
 
+fun Expression.operatorsAndOperands() = firstOperands().zip(operatorsAnd2ndOperands()).map{Triple(it.first,it.second.first, it.second.second)}
 fun Expression.firstOperands() = split(" ").windowed(1,2).flatten()
 fun Expression.operatorsAnd2ndOperands() = split(" ").drop(1).chunked(2).map{Pair(it[0],it[1])}
-fun Expression.operatorsAndOperands() = firstOperands().zip(operatorsAnd2ndOperands()).map{Triple(it.first,it.second.first, it.second.second)}
+
 fun Expression.contains(operators:Set<String>) = (toSet()  union operators).isEmpty()
 fun Expression.isCompletelyEvaluated() = !contains(' ')
 
@@ -37,7 +37,7 @@ fun findFirstExpression(expression:Expression):Expression { //the first expressi
 
 fun findFirstExpressionAndEvaluate(expression:Expression, operatorSets:List<Set<String>>):Expression {
     val firstExpression = findFirstExpression(expression)
-    val result = operatorSets.fold(firstExpression){exp, operatorSet -> evaluate(exp, operatorSet)}
+    val result = operatorSets.fold(firstExpression){exp, operatorSet -> exp.evaluate(operatorSet)}
     return if (firstExpression == expression) result
     else expression.replace("($firstExpression)",result)
 }

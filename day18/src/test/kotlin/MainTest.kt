@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test
 class MainTest {
     @Test
     fun `test evaluating a simple expression`() {
-        assertEquals("71", evaluate("1 + 2 * 3 + 4 * 5 + 6",partOneOperators[0]))
+        assertEquals("71", "1 + 2 * 3 + 4 * 5 + 6".evaluate(partOneOperators[0]))
     }
     @Test
     fun `finding first expression between braces`() {
@@ -33,7 +33,7 @@ class MainTest {
 
     @Test
     fun `evalaute plus in expression first`() {
-        assertEquals("3 * 7 * 11", evaluate("1 + 2 * 3 + 4 * 5 + 6", setOf("+")))
+        assertEquals("3 * 7 * 11", "1 + 2 * 3 + 4 * 5 + 6".evaluate(setOf("+")))
     }
     @Test
     fun `evaluating a simple expresion`() {
