@@ -1,28 +1,29 @@
+import kotlin.math.exp
+
 val partOneOperators = listOf(setOf("+","*"))
 val partTwoOperators = listOf(setOf("+"),setOf("*"))
 
-val operatorFunction:Map<String, (String, String)->String> = mapOf(
-    "+" to {a, b -> (a.toLong() + b.toLong()).toString()},
-    "*" to {a, b -> (a.toLong() * b.toLong()).toString()}
+val operatorFunction:Map<String, (String, String)->Pair<String,String>> = mapOf(
+    "+" to {a, b -> Pair((a.toLong() + b.toLong()).toString(), "$a + $b")},
+    "*" to {a, b -> Pair((a.toLong() * b.toLong()).toString(), "$a * $b")}
 )
 
-fun evaluate(expression:String, operators:Set<String>):String {
-    if ((expression.toSet() union operators).isEmpty()) return expression
-    val items = expression.split(" ")
-    var firstValue = items.first()
-    items.drop(1).chunked(2).forEach {
-        val operator = operators.firstOrNull{operator -> it[0] == operator}
-        if (operator != null ) {
-            val result = operatorFunction.getValue(operator)(firstValue, it[1])
-            return evaluate(expression.replaceFirst("$firstValue $operator ${it[1]}",result), operators)
-        } else {
-            firstValue = it[1]
-        }
-    }
-    return expression
+typealias Expression = String
+
+fun evaluate(expression:Expression, operators:Set<String>):String {
+    if (expression.contains(operators)) return expression
+    val (number1, op, number2) = expression.operatorsAndOperands().firstOrNull(){operators.contains(it.second)} ?: return expression
+    val (result, expressionEvaluated) = operatorFunction.getValue(op)(number1, number2)
+    return evaluate(expression.replaceFirst(expressionEvaluated,result), operators)
 }
 
-fun findFirstExpression(expression:String):String {
+fun Expression.firstOperands() = split(" ").windowed(1,2).flatten()
+fun Expression.operatorsAnd2ndOperands() = split(" ").drop(1).chunked(2).map{Pair(it[0],it[1])}
+fun Expression.operatorsAndOperands() = firstOperands().zip(operatorsAnd2ndOperands()).map{Triple(it.first,it.second.first, it.second.second)}
+fun Expression.contains(operators:Set<String>) = (toSet()  union operators).isEmpty()
+fun Expression.isCompletelyEvaluated() = !contains(' ')
+
+fun findFirstExpression(expression:Expression):Expression { //the first expression contains inside braces or the full expression if there are no braces.
     var value = ""
     expression.forEach { char ->
         when(char) {
@@ -34,15 +35,14 @@ fun findFirstExpression(expression:String):String {
     return value
 }
 
-fun findFirstExpressionAndEvaluate(expression:String, operators:List<Set<String>>):String {
+fun findFirstExpressionAndEvaluate(expression:Expression, operatorSets:List<Set<String>>):Expression {
     val firstExpression = findFirstExpression(expression)
-    var result = firstExpression
-    operators.forEach { operatorSet -> result = evaluate(result,operatorSet)   }
+    val result = operatorSets.fold(firstExpression){exp, operatorSet -> evaluate(exp, operatorSet)}
     return if (firstExpression == expression) result
     else expression.replace("($firstExpression)",result)
 }
 
-fun evaluateFull(expression:String, operatorSets:List<Set<String>> ):String = if (!expression.contains(' '))  expression
+fun evaluateFull(expression:Expression, operatorSets:List<Set<String>> ):Expression = if (expression.isCompletelyEvaluated())  expression
 else evaluateFull(findFirstExpressionAndEvaluate(expression,operatorSets),operatorSets)
 
 fun partOne(data:List<String>) =
