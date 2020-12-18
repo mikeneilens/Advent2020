@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-12-18T17:35:19" hostname="MacBook-Pro-2" time="0.173">
+<testsuite name="MainTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2020-12-18T17:49:56" hostname="MacBook-Pro-2" time="0.16">
   <properties/>
-  <testcase name="evaluating a simple expresion()" classname="MainTest" time="0.057"/>
-  <testcase name="evalaute plus in expression first()" classname="MainTest" time="0.0"/>
-  <testcase name="test evaluating a simple expression()" classname="MainTest" time="0.0"/>
-  <testcase name="evaluate the whole expression using part 2 rules()" classname="MainTest" time="0.01"/>
-  <testcase name="find first expression and evaluate it()" classname="MainTest" time="0.001"/>
-  <testcase name="finding first expression between braces()" classname="MainTest" time="0.001"/>
+  <testcase name="evaluating a simple expresion()" classname="MainTest" time="0.06"/>
+  <testcase name="evalaute plus in expression first()" classname="MainTest" time="0.001"/>
+  <testcase name="test evaluating a simple expression()" classname="MainTest" time="0.001"/>
+  <testcase name="evaluate the whole expression using part 2 rules()" classname="MainTest" time="0.009"/>
+  <testcase name="find first expression and evaluate it()" classname="MainTest" time="0.0"/>
+  <testcase name="finding first expression between braces()" classname="MainTest" time="0.0"/>
   <testcase name="evaluate the whole expression()" classname="MainTest" time="0.002"/>
-  <testcase name="part one()" classname="MainTest" time="0.06"/>
-  <testcase name="part two()" classname="MainTest" time="0.038"/>
+  <testcase name="part one()" classname="MainTest" time="0.051"/>
+  <testcase name="part two()" classname="MainTest" time="0.032"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

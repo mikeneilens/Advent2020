@@ -12,9 +12,11 @@ typealias Expression = String
 fun Expression.evaluate(operators:Set<String>):String {
     if (contains(operators)) return this
     val (number1, op, number2) = operatorsAndOperands().firstOrNull{operators.contains(it.second)} ?: return this
-    val (result, expressionEvaluated) = operatorFunction.getValue(op)(number1, number2)
+    val (result, expressionEvaluated) = performCalculation(number1, op, number2)
     return replaceFirst(expressionEvaluated,result).evaluate(operators)
 }
+
+fun performCalculation(number1:String, op:String, number2:String):Pair<String, String> =  operatorFunction.getValue(op)(number1, number2)
 
 fun Expression.operatorsAndOperands() = firstOperands().zip(operatorsAnd2ndOperands()).map{Triple(it.first,it.second.first, it.second.second)}
 fun Expression.firstOperands() = split(" ").windowed(1,2).flatten()
