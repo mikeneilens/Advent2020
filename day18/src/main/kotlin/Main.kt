@@ -1,3 +1,17 @@
+// To evaluate nested sub-expression:
+// For ((a + b) * c) + d
+// 1. Find first expression, in this case a + b.
+// 2. Evaluate a + b giving e.
+// 3. Replace (a + b) with e giving (e * c) + d.
+// 4. Repeat from 1 until there are no mure first expressions.
+//
+// To evaluate a + b * c:
+// For each type of operator (in priority sequence):
+//    Break into blocks of operations and operations, i.e. [(a, '+', b), (b, '*' c)]
+//    Evaluate the first block containin the operator. So if '+' is first then evaluate (a, '+', b) giving d.
+//    Replace the 'a + b' in the expression with d, giving d * c.
+//    Repeat until the expression doesn't contain the operator.
+// Repeat for the next operator.
 
 val partOneOperators = listOf(setOf("+","*")) //process + or * on first come first serve basis
 val partTwoOperators = listOf(setOf("+"),setOf("*")) // evaluates all + in an expression and then evaluates all *
