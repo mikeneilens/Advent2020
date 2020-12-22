@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-22T22:10:47" hostname="MacBook-Pro-2" time="1.797">
+<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-22T22:31:02" hostname="MacBook-Pro-2" time="0.215">
   <properties/>
-  <testcase name="part two rules()" classname="MainTest" time="1.797"/>
-  <system-out><![CDATA[Player 1 wins. Score is 34690
-]]></system-out>
+  <testcase name="Part two full data()" classname="MainTest" time="0.215"/>
+  <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
