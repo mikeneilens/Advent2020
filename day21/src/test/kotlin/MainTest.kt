@@ -19,25 +19,27 @@ class MainTest {
 
     @Test
     fun `updating allegen map using sample data`() {
-        val result = sampleData.parse().updateAllergenMap(mapOf())
+        val listOfIngredientsList = sampleData.parse()
+        val result = listOfIngredientsList.updateAllergenMap(mapOf())
         assertEquals("mxmxvkd", result["dairy"])
         assertEquals("sqjhc", result["fish"])
         assertEquals("fvjkl", result["soy"])
-        assertEquals(setOf("kfcds", "nhms", "trh", "sbzzf"), sampleData.parse().flatMap{it.ingredients}.toSet() - result.values.toSet() )
-        val ingredientsWithNoAllergies = sampleData.parse().flatMap{it.ingredients}.toSet() - result.values.toSet()
+        assertEquals(setOf("kfcds", "nhms", "trh", "sbzzf"), listOfIngredientsList.flatMap{it.ingredients}.toSet() - result.values.toSet() )
+        val ingredientsWithNoAllergies = listOfIngredientsList.ingredientsWithNoAllergies(result)
         println(sampleData.parse().flatMap{it.ingredients}.count{ingredientsWithNoAllergies.contains(it)} )
     }
     @Test
     fun `updating allegen map using full data`() {
-        val result = day21Data.parse().updateAllergenMap(mapOf())
+        val listOfIngredientsList = day21Data.parse()
+        val result = listOfIngredientsList.updateAllergenMap(mapOf())
         println(result)
-        val result2 = day21Data.parse().updateAllergenMap(result)
+        val result2 = listOfIngredientsList.updateAllergenMap(result)
         println(result2)
-        val result3 = day21Data.parse().updateAllergenMap(result2)
+        val result3 = listOfIngredientsList.updateAllergenMap(result2)
         println(result3)
 
-        val ingredientsWithNoAllergies = day21Data.parse().flatMap{it.ingredients}.toSet() - result3.values.toSet()
-        val numberOfTimesIngredientsAppear = day21Data.parse().flatMap{it.ingredients}.count{ingredientsWithNoAllergies.contains(it)}
+        val ingredientsWithNoAllergies = listOfIngredientsList.ingredientsWithNoAllergies(result3)
+        val numberOfTimesIngredientsAppear = listOfIngredientsList.flatMap{it.ingredients}.count{ingredientsWithNoAllergies.contains(it)}
         assertEquals(2517, numberOfTimesIngredientsAppear)
 
         //partTwo

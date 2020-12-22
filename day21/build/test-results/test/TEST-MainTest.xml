@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-21T20:52:51" hostname="MacBook-Pro-2.local" time="0.061">
+<testsuite name="MainTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-12-21T21:26:17" hostname="MacBook-Pro-2.local" time="0.06">
   <properties/>
-  <testcase name="updating allegen map using full data()" classname="MainTest" time="0.061"/>
+  <testcase name="updating allegen map using full data()" classname="MainTest" time="0.06"/>
   <system-out><![CDATA[{dairy=rhvbn}
 {dairy=rhvbn, nuts=fvk, wheat=zrb, fish=kjf, shellfish=jgtb, sesame=lbmt, eggs=mmcpg}
 {dairy=rhvbn, nuts=fvk, wheat=zrb, fish=kjf, shellfish=jgtb, sesame=lbmt, eggs=mmcpg, soy=hcbdb}

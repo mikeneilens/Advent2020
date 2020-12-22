@@ -28,3 +28,5 @@ fun List<IngredientsList>.updateAllergenMap(foundAllergens:Map<String, String>):
     }
     return allergenMap
 }
+
+fun List<IngredientsList>.ingredientsWithNoAllergies(foundAllergens:Map<String, String> ) = flatMap{it.ingredients}.toSet() - foundAllergens.values.toSet()
