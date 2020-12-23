@@ -134,6 +134,6 @@ class MainTest {
         val answer = (firstCup?.label ?: 0).toLong() * (secondCup?.label ?: 0).toLong()
         assertEquals(44541319250, answer)
     }
-    
+
 }
 
