@@ -23,8 +23,8 @@ class Cup(val label:Int, var next:Cup?=null ) {
     fun contains(otherLabel:Int, firstCup:Cup? = null):Boolean {
         if (label == otherLabel ) return true
         if (label == firstCup?.label) return false
-        if ( next == null) return false
-        return next!!.contains(otherLabel, firstCup ?: this )
+        val nextCup = next
+        return nextCup?.contains(otherLabel, firstCup ?: this ) == true
     }
 
     fun destinationCup(threeCups:Cup, maxSize:Int = 9):Cup {
@@ -51,13 +51,19 @@ class Cup(val label:Int, var next:Cup?=null ) {
     fun playRound(maxSize:Int = 9):Cup {
         val threeCups = pickupThreeCups()
         val destinationCup = destinationCup(threeCups, maxSize)
-        threeCups.next!!.next!!.next = destinationCup.next
+        threeCups.next?.next?.next = destinationCup.next
         destinationCup.next = threeCups
         return this.next!!
     }
 
     companion object {
         val cupsForLabels = mutableMapOf<Int, Cup>()
+
+        fun Int.labelMinus(value:Int, maxSize:Int):Int {
+            val newLabel = this - value
+            return if (newLabel > 0) newLabel else maxSize + newLabel
+        }
+
     }
 }
 
@@ -78,13 +84,9 @@ fun List<Int>.toCup():Cup {
 tailrec fun Cup.getCupForLabel(otherLabel:Int, firstCup:Cup? = null):Cup{
     if (label == otherLabel) return this
     if (this == firstCup) return this
-    return if ( next == null) this
-    else next!!.getCupForLabel(otherLabel, firstCup ?: this )
-}
-
-fun Int.labelMinus(value:Int, maxSize:Int):Int {
-    val newLabel = this - value
-    return if (newLabel > 0) newLabel else maxSize + newLabel
+    val nextCup = next
+    return if ( nextCup == null) this
+    else nextCup.getCupForLabel(otherLabel, firstCup ?: this )
 }
 
 fun process(data:List<Int>, times:Int = 10):Cup {

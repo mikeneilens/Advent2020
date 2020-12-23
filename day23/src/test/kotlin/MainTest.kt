@@ -1,3 +1,4 @@
+import Cup.Companion.labelMinus
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -53,6 +54,7 @@ class MainTest {
         assertEquals("25368479",result.compacted())
     }
 
+// Part two
     @Test
     fun `converting list to node and node to list`() {
         val node = listOf(4,8,3).toCup()
