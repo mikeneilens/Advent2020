@@ -56,21 +56,21 @@ class MainTest {
 
     @Test
     fun `converting list to node and node to list`() {
-        val node = listOf(4,8,3).toNode()
+        val node = listOf(4,8,3).toCup()
         val list = node.toListOfInts()
         assertEquals(listOf(4,8,3), list)
     }
 
     @Test
     fun `removing three cups from the list`() {
-        val list = sampleData.toNode()
+        val list = sampleData.toCup()
         val cups = list.pickupThreeCups()
         assertEquals(listOf(8,9,1), cups.toListOfInts())
         assertEquals(listOf(3,2,5,4,6,7), list.toListOfInts())
     }
     @Test
     fun `whether a list contains a value`() {
-        val list = listOf(8,9,1).toNode()
+        val list = listOf(8,9,1).toCup()
         assertTrue(list.contains(8))
         assertTrue(list.contains(9))
         assertTrue(list.contains(1))
@@ -85,26 +85,26 @@ class MainTest {
     }
     @Test
     fun `finding the destination label`() {
-        val list = sampleData.toNode()
+        val list = sampleData.toCup()
         val threeCups = list.pickupThreeCups()
         assertEquals(2, list.getDestinationLabel(threeCups,9))
     }
     @Test
     fun `finding the node for a label`() {
-        val list = sampleData.toNode()
-        assertEquals(3,list.getNodeForLabel(3).label)
-        assertEquals(7,list.getNodeForLabel(7).label)
-        assertEquals(2,list.getNodeForLabel(2).label)
+        val list = sampleData.toCup()
+        assertEquals(3,list.getCupForLabel(3).label)
+        assertEquals(7,list.getCupForLabel(7).label)
+        assertEquals(2,list.getCupForLabel(2).label)
     }
     @Test
     fun `finding the destination node`() {
-        val list = sampleData.toNode()
+        val list = sampleData.toCup()
         val threeCups = list.pickupThreeCups()
-        assertEquals(2, list.destinationNode(threeCups,9).label)
+        assertEquals(2, list.destinationCup(threeCups,9).label)
     }
     @Test
     fun `play round using list`() {
-        val list = sampleData.toNode()
+        val list = sampleData.toCup()
         val result = list.playRound()
         assertEquals(listOf(2,8,9,1,5,4,6,7,3), result.toListOfInts())
         val result2 = result.playRound()
@@ -129,10 +129,19 @@ class MainTest {
     fun `part two using list`() {
         val testData  = listOf(3,2,6,5,1,9,4,7,8) + (10..1000000).toList()
         process(testData,10000000)
-        val firstCup = mapOfNodesForLabels[1]!!.next
-        val secondCup = mapOfNodesForLabels[1]!!.next!!.next
+        val firstCup = mapOfCupsForLabels[1]!!.next
+        val secondCup = mapOfCupsForLabels[1]!!.next!!.next
         val answer = (firstCup?.label ?: 0).toLong() * (secondCup?.label ?: 0).toLong()
         assertEquals(44541319250, answer)
+    }
+ @Test
+    fun `part two PJ data using list`() {
+        val testData  = listOf( 1,5,7,6,2,3,9,8,4) + (10..1000000).toList()
+        process(testData,10000000)
+        val firstCup = mapOfCupsForLabels[1]!!.next
+        val secondCup = mapOfCupsForLabels[1]!!.next!!.next
+        val answer = (firstCup?.label ?: 0).toLong() * (secondCup?.label ?: 0).toLong()
+        assertEquals(111057672960, answer)
     }
 
 }

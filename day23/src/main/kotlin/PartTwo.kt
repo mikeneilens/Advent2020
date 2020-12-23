@@ -2,25 +2,25 @@
 
 class Cup(val label:Int, var next:Cup?=null )
 
-fun List<Int>.toNode():Cup {
-    val firstNode = Cup(first())
-    mapOfNodesForLabels[first()] = firstNode
-    var prevNode:Cup? = firstNode
+fun List<Int>.toCup():Cup {
+    val firstCup = Cup(first())
+    mapOfCupsForLabels[first()] = firstCup
+    var prevCup:Cup? = firstCup
     drop(1).forEach{
-        val nextNode = Cup(it)
-        mapOfNodesForLabels[it] = nextNode
-        prevNode?.next = nextNode
-        prevNode = nextNode
+        val nextCup = Cup(it)
+        mapOfCupsForLabels[it] = nextCup
+        prevCup?.next = nextCup
+        prevCup = nextCup
     }
-    prevNode?.next = firstNode
-    return firstNode
+    prevCup?.next = firstCup
+    return firstCup
 }
 fun Cup.toListOfInts():List<Int> {
     val list = mutableListOf(label)
-    var nextNode = next
-    while (nextNode != this && nextNode!= null) {
-        list.add(nextNode.label)
-        nextNode = nextNode.next
+    var nextCup = next
+    while (nextCup != this && nextCup!= null) {
+        list.add(nextCup.label)
+        nextCup = nextCup.next
     }
     return list
 }
@@ -32,31 +32,31 @@ fun Cup.pickupThreeCups():Cup {
     cup3?.next = null
     return cup1!!
 }
-tailrec fun Cup.contains(otherLabel:Int, firstNode:Cup? = null):Boolean {
+tailrec fun Cup.contains(otherLabel:Int, firstCup:Cup? = null):Boolean {
     if (label == otherLabel ) return true
-    if (label == firstNode?.label) return false
+    if (label == firstCup?.label) return false
     if ( next == null) return false
-    return next!!.contains(otherLabel, firstNode ?: this )
+    return next!!.contains(otherLabel, firstCup ?: this )
 }
 
-val mapOfNodesForLabels = mutableMapOf<Int, Cup>()
+val mapOfCupsForLabels = mutableMapOf<Int, Cup>()
 
-fun Cup.destinationNode(threeCups:Cup, maxSize:Int = 9):Cup {
+fun Cup.destinationCup(threeCups:Cup, maxSize:Int = 9):Cup {
     val destinationLabel = getDestinationLabel(threeCups, maxSize)
-    val nodeInMap = mapOfNodesForLabels[destinationLabel]
-    return if (nodeInMap != null) nodeInMap
+    val cupInMap = mapOfCupsForLabels[destinationLabel]
+    return if (cupInMap != null) cupInMap
     else {
-        val nodeInList = getNodeForLabel(destinationLabel)
-        mapOfNodesForLabels[destinationLabel] = nodeInList
-        nodeInList
+        val cupInList = getCupForLabel(destinationLabel)
+        mapOfCupsForLabels[destinationLabel] = cupInList
+        cupInList
     }
 }
 
-tailrec fun Cup.getNodeForLabel(otherLabel:Int, firstNode:Cup? = null):Cup{
+tailrec fun Cup.getCupForLabel(otherLabel:Int, firstCup:Cup? = null):Cup{
     if (label == otherLabel) return this
-    if (this == firstNode) return this
+    if (this == firstCup) return this
     return if ( next == null) this
-    else next!!.getNodeForLabel(otherLabel, firstNode ?: this )
+    else next!!.getCupForLabel(otherLabel, firstCup ?: this )
 }
 
 fun Cup.getDestinationLabel(threeCups: Cup, maxSize: Int) =
@@ -77,7 +77,7 @@ fun Int.labelMinus(value:Int, maxSize:Int):Int {
 
 fun Cup.playRound(maxSize:Int = 9):Cup {
     val threeCups = pickupThreeCups()
-    val destinationCup = destinationNode(threeCups, maxSize)
+    val destinationCup = destinationCup(threeCups, maxSize)
     threeCups.next!!.next!!.next = destinationCup.next
     destinationCup.next = threeCups
     return this.next!!
@@ -85,9 +85,9 @@ fun Cup.playRound(maxSize:Int = 9):Cup {
 
 fun process(data:List<Int>, times:Int = 10):Cup {
     val maxSize = data.maxByOrNull { it } ?: 9
-    var node = data.toNode()
+    var cup = data.toCup()
     (1..times).forEach { _ ->
-        node = node.playRound(maxSize)
+        cup = cup.playRound(maxSize)
     }
-    return node
+    return cup
 }
