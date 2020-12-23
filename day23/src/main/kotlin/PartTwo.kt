@@ -1,6 +1,4 @@
 
-val mapOfCupsForLabels = mutableMapOf<Int, Cup>()
-
 class Cup(val label:Int, var next:Cup?=null ) {
 
     fun toListOfInts():List<Int> {
@@ -31,11 +29,11 @@ class Cup(val label:Int, var next:Cup?=null ) {
 
     fun destinationCup(threeCups:Cup, maxSize:Int = 9):Cup {
         val destinationLabel = getDestinationLabel(threeCups, maxSize)
-        val cupInMap = mapOfCupsForLabels[destinationLabel]
+        val cupInMap = cupsForLabels[destinationLabel]
         return if (cupInMap != null) cupInMap
         else {
             val cupInList = getCupForLabel(destinationLabel)
-            mapOfCupsForLabels[destinationLabel] = cupInList
+            cupsForLabels[destinationLabel] = cupInList
             cupInList
         }
     }
@@ -57,15 +55,19 @@ class Cup(val label:Int, var next:Cup?=null ) {
         destinationCup.next = threeCups
         return this.next!!
     }
+
+    companion object {
+        val cupsForLabels = mutableMapOf<Int, Cup>()
+    }
 }
 
 fun List<Int>.toCup():Cup {
     val firstCup = Cup(first())
-    mapOfCupsForLabels[first()] = firstCup
+    Cup.cupsForLabels[first()] = firstCup
     var prevCup:Cup? = firstCup
     drop(1).forEach{
         val nextCup = Cup(it)
-        mapOfCupsForLabels[it] = nextCup
+        Cup.cupsForLabels[it] = nextCup
         prevCup?.next = nextCup
         prevCup = nextCup
     }

@@ -1,4 +1,3 @@
-import jdk.nashorn.internal.ir.annotations.Ignore
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -129,8 +128,8 @@ class MainTest {
     fun `part two using list`() {
         val testData  = listOf(3,2,6,5,1,9,4,7,8) + (10..1000000).toList()
         process(testData,10000000)
-        val firstCup = mapOfCupsForLabels[1]!!.next
-        val secondCup = mapOfCupsForLabels[1]!!.next!!.next
+        val firstCup = Cup.cupsForLabels[1]!!.next
+        val secondCup = Cup.cupsForLabels[1]!!.next!!.next
         val answer = (firstCup?.label ?: 0).toLong() * (secondCup?.label ?: 0).toLong()
         assertEquals(44541319250, answer)
     }
@@ -138,8 +137,8 @@ class MainTest {
     fun `part two PJ data using list`() {
         val testData  = listOf( 1,5,7,6,2,3,9,8,4) + (10..1000000).toList()
         process(testData,10000000)
-        val firstCup = mapOfCupsForLabels[1]!!.next
-        val secondCup = mapOfCupsForLabels[1]!!.next!!.next
+        val firstCup = Cup.cupsForLabels[1]!!.next
+        val secondCup = Cup.cupsForLabels[1]!!.next!!.next
         val answer = (firstCup?.label ?: 0).toLong() * (secondCup?.label ?: 0).toLong()
         assertEquals(111057672960, answer)
     }
