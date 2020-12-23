@@ -27,12 +27,12 @@ class MainTest {
 
     @Test
     fun `Part one sample data`() {
-        val (_, deck2) = sampleData.process()
+        val (_, deck2) = sampleData.playGame()
         println(deck2.score())
     }
     @Test
     fun `Part one`() {
-        val (deck1a, _) = day22Data.process()
+        val (deck1a, _) = day22Data.playGame()
         assertEquals(35818, deck1a.score())
     }
     @Test
@@ -48,24 +48,24 @@ class MainTest {
             14
         """.trimIndent().split("\n")
 
-        val (winner, _, _) = loopData.process2()
+        val (winner, _, _) = loopData.playGamePartTwo()
         assertEquals("P1", winner)
     }
     @Test
     fun `Part two sample data`() {
-        val (_, deck1, deck2) = sampleData.process2()
+        val (_, deck1, deck2) = sampleData.playGamePartTwo()
         assertEquals(0, deck1.score())
         assertEquals(291, deck2.score())
     }
     @Test
     fun `Part two full data`() {
-        val (_, deck1, deck2) = day22Data.process2()
+        val (_, deck1, deck2) = day22Data.playGamePartTwo()
         assertEquals(34771, deck1.score())
         assertEquals(0, deck2.score())
     }
     @Test
     fun `Part two pauls data`() {
-        val (_, deck1, deck2) = paulData.process2()
+        val (_, deck1, deck2) = paulData.playGamePartTwo()
         assertEquals(0, deck1.score())
         assertEquals(32665, deck2.score())
     }

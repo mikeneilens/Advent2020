@@ -16,7 +16,7 @@ fun List<String>.parse():List<List<Int>> {
     return cardDecks
 }
 
-fun List<String>.process():Pair<List<Int>,List<Int>> {
+fun List<String>.playGame():Pair<List<Int>,List<Int>> {
 
     val deck1 = parse()[0].toMutableList()
     val deck2 = parse()[1].toMutableList()
@@ -35,7 +35,7 @@ fun List<String>.process():Pair<List<Int>,List<Int>> {
     return Pair(deck1, deck2)
 }
 
-fun List<String>.process2():Triple<String,List<Int>,List<Int>> {
+fun List<String>.playGamePartTwo():Triple<String,List<Int>,List<Int>> {
 
     val initialDeck1 = parse()[0].toList()
     val initialDeck2 = parse()[1].toList()
