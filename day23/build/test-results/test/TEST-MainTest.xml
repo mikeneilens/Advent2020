@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2020-12-23T21:45:18" hostname="MacBook-Pro-2" time="5.309">
+<testsuite name="MainTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2020-12-24T13:33:49" hostname="MacBook-Pro-2.local" time="5.142">
   <properties/>
-  <testcase name="finding the destination label()" classname="MainTest" time="0.015"/>
-  <testcase name="part two PJ data using list()" classname="MainTest" time="2.579"/>
-  <testcase name="playing ten rounds using the list()" classname="MainTest" time="0.004"/>
-  <testcase name="converting list to node and node to list()" classname="MainTest" time="0.0"/>
-  <testcase name="doing one round()" classname="MainTest" time="0.001"/>
+  <testcase name="finding the destination label()" classname="MainTest" time="0.018"/>
+  <testcase name="part two PJ data using list()" classname="MainTest" time="2.522"/>
+  <testcase name="playing ten rounds using the list()" classname="MainTest" time="0.003"/>
+  <testcase name="converting list to node and node to list()" classname="MainTest" time="0.001"/>
+  <testcase name="doing one round()" classname="MainTest" time="0.002"/>
   <testcase name="processing data 10 times()" classname="MainTest" time="0.001"/>
   <testcase name="finding the node for a label()" classname="MainTest" time="0.001"/>
-  <testcase name="whether a list contains a value()" classname="MainTest" time="0.002"/>
+  <testcase name="whether a list contains a value()" classname="MainTest" time="0.001"/>
   <testcase name="converting list of ints to a string()" classname="MainTest" time="0.001"/>
   <testcase name="finding destination()" classname="MainTest" time="0.001"/>
   <testcase name="playing 100 rounds using the list()" classname="MainTest" time="0.001"/>
-  <testcase name="removing three cups from the list()" classname="MainTest" time="0.001"/>
+  <testcase name="removing three cups from the list()" classname="MainTest" time="0.0"/>
   <testcase name="processing data 100 times()" classname="MainTest" time="0.001"/>
-  <testcase name="getting first three cups()" classname="MainTest" time="0.0"/>
-  <testcase name="play round using list()" classname="MainTest" time="0.0"/>
+  <testcase name="getting first three cups()" classname="MainTest" time="0.001"/>
+  <testcase name="play round using list()" classname="MainTest" time="0.001"/>
   <testcase name="finding the destination node()" classname="MainTest" time="0.001"/>
   <testcase name="subtracting values from a label()" classname="MainTest" time="0.001"/>
-  <testcase name="part two using list()" classname="MainTest" time="2.69"/>
+  <testcase name="part two using list()" classname="MainTest" time="2.573"/>
   <testcase name="part one()" classname="MainTest" time="0.001"/>
-  <testcase name="cycling through indices()" classname="MainTest" time="0.0"/>
-  <testcase name="part one using the list()" classname="MainTest" time="0.0"/>
+  <testcase name="cycling through indices()" classname="MainTest" time="0.001"/>
+  <testcase name="part one using the list()" classname="MainTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

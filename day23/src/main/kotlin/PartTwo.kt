@@ -23,8 +23,7 @@ class Cup(val label:Int, var next:Cup?=null ) {
     fun contains(otherLabel:Int, firstCup:Cup? = null):Boolean {
         if (label == otherLabel ) return true
         if (label == firstCup?.label) return false
-        val nextCup = next
-        return nextCup?.contains(otherLabel, firstCup ?: this ) == true
+        return next?.contains(otherLabel, firstCup ?: this ) == true
     }
 
     fun destinationCup(threeCups:Cup, maxSize:Int = 9):Cup {
