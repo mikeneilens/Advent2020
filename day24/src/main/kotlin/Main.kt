@@ -61,8 +61,9 @@ fun MutableFloor.flipTilesUsingPartTwoRules() {
 fun MutableFloor.makeEmptyTilesAdjacentToBlackOnesIntoWhite() =
     filter{(_,tileColor)-> tileColor == TileColor.Black }.keys.toList()
         .forEach { tilePosition ->
-            tilePosition.adjacentPositions().forEach { adjacentPosition ->
-                if (get(adjacentPosition) == null) set(adjacentPosition, TileColor.White)
+            tilePosition.adjacentPositions()
+                .filter{ adjacentPosition -> get(adjacentPosition) == null}
+                .forEach{ adjacentPosition -> set(adjacentPosition, TileColor.White)
             }
         }
 
