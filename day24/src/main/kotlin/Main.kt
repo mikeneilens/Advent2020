@@ -1,4 +1,4 @@
-enum class TileColor {Black, White}
+enum class TileColor {Black, White, Empty}
 
 data class Vector(val x:Int, val y:Int) {
     operator fun plus(other:Vector) = Vector(this.x + other.x, this.y + other.y)
@@ -6,6 +6,7 @@ data class Vector(val x:Int, val y:Int) {
 
 typealias Floor = Map<Vector, TileColor>
 typealias MutableFloor = MutableMap<Vector, TileColor>
+fun Floor.tileColorAt(vector:Vector) = get(vector) ?: TileColor.Empty
 
 enum class Step(val move:Vector) {
     East  (Vector(2,0)),
@@ -37,11 +38,11 @@ fun String.toStep(i:Int) = when(get(i)) {
 fun List<Step>.positionAfterLastStep():Vector = fold(Vector(0,0)){ result, step -> result + step.move}
 
 fun MutableFloor.flipTileAt(vector:Vector):MutableFloor {
-    set(vector , get(vector).flippedColor())
+    set(vector , tileColorAt(vector).flippedColor())
     return this
 }
 
-fun TileColor?.flippedColor():TileColor = if ( this == null || this == TileColor.White) TileColor.Black else TileColor.White
+fun TileColor?.flippedColor():TileColor = if ( this == TileColor.Empty || this == TileColor.White) TileColor.Black else TileColor.White
 
 fun List<String>.flipTiles():MutableFloor =
      fold(mutableMapOf()){ mutableFloor, line ->
@@ -62,7 +63,7 @@ fun MutableFloor.makeEmptyTilesAdjacentToBlackOnesIntoWhite() =
     filter{(_,tileColor)-> tileColor == TileColor.Black }.keys.toList()
         .forEach { tilePosition ->
             tilePosition.adjacentPositions()
-                .filter{ adjacentPosition -> get(adjacentPosition) == null}
+                .filter{ adjacentPosition -> tileColorAt(adjacentPosition) == TileColor.Empty}
                 .forEach{ adjacentPosition -> set(adjacentPosition, TileColor.White)
             }
         }
@@ -78,13 +79,13 @@ fun Floor.newTileStateForAPositionOrNull(tilePosition:Vector):Pair<Vector, TileC
     }
 }
 
-fun Vector.noOfAdjacentBlackTiles(floor:Floor) = adjacentPositions().count { floor[it] == TileColor.Black   }
+fun Vector.noOfAdjacentBlackTiles(floor:Floor) = adjacentPositions().count { floor.tileColorAt(it) == TileColor.Black   }
 
 fun Floor.shouldTurnWhiteToBlack(tilePosition: Vector, noOfAdjacentBlackTiles: Int) =
-    get(tilePosition) == TileColor.White && noOfAdjacentBlackTiles == 2
+    tileColorAt(tilePosition) == TileColor.White && noOfAdjacentBlackTiles == 2
 
 fun Floor.shouldTurnBlackToWhite(tilePosition: Vector, noOfAdjacentBlackTiles: Int) =
-    get(tilePosition) == TileColor.Black && noOfAdjacentBlackTiles == 0 || noOfAdjacentBlackTiles > 2
+    tileColorAt(tilePosition) == TileColor.Black && noOfAdjacentBlackTiles == 0 || noOfAdjacentBlackTiles > 2
 
 fun MutableFloor.updateTiles(tilesToChange:List<Pair<Vector, TileColor>>) =
     tilesToChange.forEach{(vector,color) -> set(vector, color) }

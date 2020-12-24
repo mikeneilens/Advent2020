@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-12-24T17:46:37" hostname="MacBook-Pro-2.local" time="0.353">
+<testsuite name="MainTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-12-24T17:55:24" hostname="MacBook-Pro-2.local" time="0.357">
   <properties/>
   <testcase name="flipping tiles using part two rules()" classname="MainTest" time="0.023"/>
   <testcase name="nwwswee returns to self()" classname="MainTest" time="0.001"/>
-  <testcase name="flipping tiles from sample data()" classname="MainTest" time="0.001"/>
-  <testcase name="test parsing a string into a list of steps()" classname="MainTest" time="0.01"/>
-  <testcase name="flipping tiles 100 times using part two rules()" classname="MainTest" time="0.114"/>
-  <testcase name="part one()" classname="MainTest" time="0.003"/>
-  <testcase name="part two()" classname="MainTest" time="0.186"/>
+  <testcase name="flipping tiles from sample data()" classname="MainTest" time="0.0"/>
+  <testcase name="test parsing a string into a list of steps()" classname="MainTest" time="0.011"/>
+  <testcase name="flipping tiles 100 times using part two rules()" classname="MainTest" time="0.121"/>
+  <testcase name="part one()" classname="MainTest" time="0.004"/>
+  <testcase name="part two()" classname="MainTest" time="0.182"/>
   <testcase name="set any adjacent tiles to tiles in a map to white()" classname="MainTest" time="0.011"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
