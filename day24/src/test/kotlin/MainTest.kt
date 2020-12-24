@@ -50,7 +50,7 @@ class MainTest {
     @Test
     fun `set any adjacent tiles to tiles in a map to white`() {
         val map = mutableMapOf( Vector(1,1) to TileColor.Black, Vector(7,8) to TileColor.Black )
-        map.makeEmptyAdjacentTilesWhite()
+        map.makeEmptyTilesAdjacentToBlackOnesIntoWhite()
 
         val result = map.keys.toSet()
         val expectedResult = setOf(
