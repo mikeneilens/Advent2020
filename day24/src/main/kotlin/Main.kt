@@ -52,23 +52,21 @@ fun Map<Vector,TileColor>.noOfBlackTiles() = values.filter{ it == TileColor.Blac
 
 //part two
 
-fun Vector.adjacentPositions() = Step.values().map{ this + it.move}
-
-fun MutableFloor.makeEmptyTilesAdjacentToBlackOnesIntoWhite() =
-    filter{(_,tileColor)-> tileColor == TileColor.Black }.keys.toList()
-        .forEach { tilePosition ->
-            tilePosition.adjacentPositions().forEach { adjacentPosition ->
-            if (get(adjacentPosition) == null) set(adjacentPosition, TileColor.White)
-        }
-    }
-
-fun Vector.noOfAdjacentBlackTiles(floor:Floor) = adjacentPositions().count { floor[it] == TileColor.Black   }
-
 fun MutableFloor.flipTilesUsingPartTwoRules() {
     makeEmptyTilesAdjacentToBlackOnesIntoWhite()
     val tilesToChange = keys.mapNotNull (this::newTileStateForAPositionOrNull)
     updateTiles(tilesToChange)
 }
+
+fun MutableFloor.makeEmptyTilesAdjacentToBlackOnesIntoWhite() =
+    filter{(_,tileColor)-> tileColor == TileColor.Black }.keys.toList()
+        .forEach { tilePosition ->
+            tilePosition.adjacentPositions().forEach { adjacentPosition ->
+                if (get(adjacentPosition) == null) set(adjacentPosition, TileColor.White)
+            }
+        }
+
+fun Vector.adjacentPositions() = Step.values().map{ this + it.move}
 
 fun Floor.newTileStateForAPositionOrNull(tilePosition:Vector):Pair<Vector, TileColor>? {
     val noOfAdjacentBlackTiles = tilePosition.noOfAdjacentBlackTiles(this)
@@ -78,6 +76,8 @@ fun Floor.newTileStateForAPositionOrNull(tilePosition:Vector):Pair<Vector, TileC
         else -> null
     }
 }
+
+fun Vector.noOfAdjacentBlackTiles(floor:Floor) = adjacentPositions().count { floor[it] == TileColor.Black   }
 
 fun Floor.shouldTurnWhiteToBlack(tilePosition: Vector, noOfAdjacentBlackTiles: Int) =
     get(tilePosition) == TileColor.White && noOfAdjacentBlackTiles == 2
