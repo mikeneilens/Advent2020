@@ -37,10 +37,11 @@ fun String.toStep(i:Int) = when(get(i)) {
 fun List<Step>.positionAfterLastStep():Vector = fold(Vector(0,0)){ result, step -> result + step.move}
 
 fun MutableFloor.flipTileAt(vector:Vector):MutableFloor {
-    val tileColor = get(vector) ?: TileColor.White
-    set(vector , if (tileColor == TileColor.White) TileColor.Black else TileColor.White)
+    set(vector , get(vector).flippedColor())
     return this
 }
+
+fun TileColor?.flippedColor():TileColor = if ( this == null || this == TileColor.White) TileColor.Black else TileColor.White
 
 fun List<String>.flipTiles():MutableFloor =
      fold(mutableMapOf()){ mutableFloor, line ->
