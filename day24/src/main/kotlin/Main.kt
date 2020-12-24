@@ -15,24 +15,23 @@ enum class Step(val move:Vector) {
     NorthWest (Vector(-1,-1)),
     NorthEast (Vector(1,-1))
 }
-fun String.toStep() = when(true) {
-    startsWith("e") -> Pair(Step.East,removePrefix("e"))
-    startsWith("se") -> Pair(Step.SouthEast,removePrefix("se"))
-    startsWith("sw") -> Pair(Step.SouthWest,removePrefix("sw"))
-    startsWith("w") -> Pair(Step.West,removePrefix("w"))
-    startsWith("nw") -> Pair(Step.NorthWest,removePrefix("nw"))
-    startsWith("ne") -> Pair(Step.NorthEast,removePrefix("ne"))
-    else -> Pair(Step.East,removePrefix("e"))
-}
-fun String.toSteps():List<Step> {
-    var string = this
+
+fun String.toSteps():List<Step>{
+    var i = 0
     val result = mutableListOf<Step>()
-    while (string.isNotEmpty()) {
-        val (step, newString) = string.toStep()
-        string = newString
-        result.add(step)
+    while (i < length) {
+        result.add(toStep(i))
+        i += if ("sn".contains(get(i))) 2 else 1
     }
     return result
+}
+
+fun String.toStep(i:Int) = when(get(i)) {
+        'e' -> Step.East
+        'w' -> Step.West
+        's' -> if (get(i+1) == 'e') Step.SouthEast else Step.SouthWest
+        'n' -> if (get(i+1) == 'e') Step.NorthEast else Step.NorthWest
+        else -> Step.East
 }
 
 fun List<Step>.findTilePosition():Vector = fold(Vector(0,0)){result, step -> result + step.move}
@@ -51,7 +50,7 @@ fun List<String>.flipTiles():Map<Vector,TileColor> {
     return mutableFloor
 }
 
-fun Map<Vector,TileColor>.blackTiles() = values.filter{ it == TileColor.Black}.size
+fun Map<Vector,TileColor>.noOfBlackTiles() = values.filter{ it == TileColor.Black}.size
 
 //part two
 
@@ -65,7 +64,7 @@ fun MutableFloor.makeEmptyAdjacentTilesWhite() {
     }
 }
 
-fun Vector.noOfadjacentBlackTiles(floor:Floor) = adjacentPositions().count { floor[it] == TileColor.Black   }
+fun Vector.noOfAdjacentBlackTiles(floor:Floor) = adjacentPositions().count { floor[it] == TileColor.Black   }
 
 fun MutableFloor.flipTilesUsingPartTwoRules() {
     makeEmptyAdjacentTilesWhite()
@@ -74,7 +73,7 @@ fun MutableFloor.flipTilesUsingPartTwoRules() {
 }
 
 fun Floor.newTileStateForAPositionOrNull(tilePosition:Vector):Pair<Vector, TileColor>? {
-    val noOfAdjacentBlackTiles = tilePosition.noOfadjacentBlackTiles(this)
+    val noOfAdjacentBlackTiles = tilePosition.noOfAdjacentBlackTiles(this)
     if (get(tilePosition) == TileColor.Black && noOfAdjacentBlackTiles == 0 || noOfAdjacentBlackTiles > 2) return Pair(tilePosition, TileColor.White)
     if (get(tilePosition) == TileColor.White && noOfAdjacentBlackTiles == 2) return Pair(tilePosition, TileColor.Black)
     return  null

@@ -38,12 +38,12 @@ class MainTest {
     }
     @Test
     fun `flipping tiles from sample data`() {
-        val noOfBlackTiles = sampleData.flipTiles().blackTiles()
+        val noOfBlackTiles = sampleData.flipTiles().noOfBlackTiles()
         assertEquals(10, noOfBlackTiles)
     }
     @Test
     fun `part one`() {
-        val noOfBlackTiles = day24Data.flipTiles().blackTiles()
+        val noOfBlackTiles = day24Data.flipTiles().noOfBlackTiles()
         assertEquals(521, noOfBlackTiles)
     }
     //Part two
@@ -63,20 +63,20 @@ class MainTest {
     fun `flipping tiles using part two rules`() {
         val tiles = sampleData.flipTiles().toMutableMap()
         tiles.flipTilesUsingPartTwoRules()
-        assertEquals(15, tiles.blackTiles())
+        assertEquals(15, tiles.noOfBlackTiles())
         tiles.flipTilesUsingPartTwoRules()
-        assertEquals(12, tiles.blackTiles())
+        assertEquals(12, tiles.noOfBlackTiles())
     }
     @Test
     fun `flipping tiles 100 times using part two rules`() {
         val tiles = sampleData.flipTiles().toMutableMap()
         tiles.repeatFlips(100)
-        assertEquals(2208, tiles.blackTiles())
+        assertEquals(2208, tiles.noOfBlackTiles())
     }
     @Test
     fun `part two`() {
         val tiles = day24Data.flipTiles().toMutableMap()
         tiles.repeatFlips(100)
-        assertEquals(4242, tiles.blackTiles())
+        assertEquals(4242, tiles.noOfBlackTiles())
     }
 }
