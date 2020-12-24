@@ -32,20 +32,18 @@ fun String.toSteps():List<Step> {
     }
     return result
 }
-fun List<Step>.findTilePosition():Vector {
-    var position = Vector(0,0)
-    forEach { step ->
-        position += step.move
-    }
-    return position
+fun List<Step>.findTilePosition():Vector = fold(Vector(0,0)){result, step -> result + step.move}
+
+fun MutableMap<Vector, String>.flipTileAt(vector:Vector) {
+    val tileColor = get(vector) ?: white
+    set(vector , if (tileColor == white) black else white)
 }
 
 fun List<String>.flipTiles():Map<Vector,String> {
     val map = mutableMapOf<Vector, String>()
     forEach { line ->
         val tilePosition = line.toSteps().findTilePosition()
-        val tileColor = map[tilePosition] ?: white
-        map[tilePosition] = if (tileColor == white) black else white
+        map.flipTileAt(tilePosition)
     }
     return map
 }
