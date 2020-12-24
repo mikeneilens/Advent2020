@@ -46,4 +46,37 @@ class MainTest {
         val noOfBlackTiles = day24Data.flipTiles().blackTiles()
         assertEquals(521, noOfBlackTiles)
     }
+    //Part two
+    @Test
+    fun `set any adjacent tiles to tiles in a map to white`() {
+        val map = mutableMapOf( Vector(1,1) to black, Vector(7,8) to black )
+        map.makeEmptyAdjacentTilesWhite()
+
+        val result = map.keys.toSet()
+        val expectedResult = setOf(
+            Vector(x=1, y=1), Vector(x=7, y=8), Vector(x=3, y=1), Vector(x=2, y=2), Vector(x=0, y=2), Vector(x=-1, y=1), Vector(x=0, y=0), Vector(x=2, y=0), Vector(x=9, y=8), Vector(x=8, y=9), Vector(x=6, y=9), Vector(x=5, y=8), Vector(x=6, y=7), Vector(x=8, y=7)
+        )
+        assertEquals(14, result.size)
+        assertEquals(expectedResult, result)
+    }
+    @Test
+    fun `flipping tiles using part two rules`() {
+        val tiles = sampleData.flipTiles().toMutableMap()
+        tiles.flipTilesUsingPartTwoRules()
+        assertEquals(15, tiles.blackTiles())
+        tiles.flipTilesUsingPartTwoRules()
+        assertEquals(12, tiles.blackTiles())
+    }
+    @Test
+    fun `flipping tiles 100 times using part two rules`() {
+        val tiles = sampleData.flipTiles().toMutableMap()
+        tiles.repeatFlips(100)
+        assertEquals(2208, tiles.blackTiles())
+    }
+    @Test
+    fun `part two`() {
+        val tiles = day24Data.flipTiles().toMutableMap()
+        tiles.repeatFlips(100)
+        assertEquals(4242, tiles.blackTiles())
+    }
 }

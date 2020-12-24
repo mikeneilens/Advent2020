@@ -49,3 +49,38 @@ fun List<String>.flipTiles():Map<Vector,String> {
 }
 
 fun Map<Vector,String>.blackTiles() = values.filter{ it == black}.size
+
+fun Vector.adjacentPositions() = Step.values().map{ this + it.move}
+
+fun MutableMap<Vector, String>.makeEmptyAdjacentTilesWhite() {
+    keys.toList().forEach { tilePosition ->
+        tilePosition.adjacentPositions().forEach { adjacentPosition ->
+            if (get(adjacentPosition) == null) set(adjacentPosition, white)
+        }
+    }
+}
+
+fun Vector.adjacentBlackTiles(map:Map<Vector, String>) = adjacentPositions().count { map[it] == black   }
+
+fun MutableMap<Vector, String>.flipTilesUsingPartTwoRules() {
+    makeEmptyAdjacentTilesWhite()
+    val tilesToChange:List<Pair<Vector, String>> = keys.mapNotNull { tilePosition ->
+        val noOfAdjacentBlackTiles = tilePosition.adjacentBlackTiles(this)
+        if (get(tilePosition) == black && noOfAdjacentBlackTiles == 0 || noOfAdjacentBlackTiles > 2) Pair(tilePosition, white)
+        else
+        if (get(tilePosition) == white && noOfAdjacentBlackTiles == 2) Pair(tilePosition, black)
+        else null
+    }
+    updateTiles(tilesToChange)
+}
+
+
+
+fun MutableMap<Vector, String>.updateTiles(tilesToChange:List<Pair<Vector, String>>) {
+    tilesToChange.forEach{(vector,color) -> set(vector, color) }
+}
+fun MutableMap<Vector, String>.repeatFlips(qty:Int) {
+    (1..qty).forEach { _ ->
+        flipTilesUsingPartTwoRules()
+    }
+}
