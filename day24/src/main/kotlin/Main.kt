@@ -34,21 +34,18 @@ fun String.toStep(i:Int) = when(get(i)) {
         else -> Step.East
 }
 
-fun List<Step>.findTilePosition():Vector = fold(Vector(0,0)){result, step -> result + step.move}
+fun List<Step>.positionAfterLastStep():Vector = fold(Vector(0,0)){ result, step -> result + step.move}
 
-fun MutableFloor.flipTileAt(vector:Vector) {
+fun MutableFloor.flipTileAt(vector:Vector):MutableFloor {
     val tileColor = get(vector) ?: TileColor.White
     set(vector , if (tileColor == TileColor.White) TileColor.Black else TileColor.White)
+    return this
 }
 
-fun List<String>.flipTiles():Map<Vector,TileColor> {
-    val mutableFloor = mutableMapOf<Vector, TileColor>()
-    forEach { line ->
-        val tilePosition = line.toSteps().findTilePosition()
-        mutableFloor.flipTileAt(tilePosition)
+fun List<String>.flipTiles():MutableFloor =
+     fold(mutableMapOf()){ mutableFloor, line ->
+        mutableFloor.flipTileAt(line.toSteps().positionAfterLastStep())
     }
-    return mutableFloor
-}
 
 fun Map<Vector,TileColor>.noOfBlackTiles() = values.filter{ it == TileColor.Black}.size
 

@@ -33,7 +33,7 @@ class MainTest {
     }
     @Test
     fun `nwwswee returns to self`() {
-        val endingPosition = "nwwswee".toSteps().findTilePosition()
+        val endingPosition = "nwwswee".toSteps().positionAfterLastStep()
         assertEquals(Vector(0,0), endingPosition)
     }
     @Test
