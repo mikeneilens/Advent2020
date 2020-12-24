@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-12-24T17:28:35" hostname="MacBook-Pro-2.local" time="0.355">
+<testsuite name="MainTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2020-12-24T17:35:50" hostname="MacBook-Pro-2.local" time="0.347">
   <properties/>
-  <testcase name="flipping tiles using part two rules()" classname="MainTest" time="0.023"/>
+  <testcase name="flipping tiles using part two rules()" classname="MainTest" time="0.022"/>
   <testcase name="nwwswee returns to self()" classname="MainTest" time="0.002"/>
   <testcase name="flipping tiles from sample data()" classname="MainTest" time="0.001"/>
   <testcase name="test parsing a string into a list of steps()" classname="MainTest" time="0.011"/>
-  <testcase name="flipping tiles 100 times using part two rules()" classname="MainTest" time="0.109"/>
+  <testcase name="flipping tiles 100 times using part two rules()" classname="MainTest" time="0.113"/>
   <testcase name="part one()" classname="MainTest" time="0.003"/>
-  <testcase name="part two()" classname="MainTest" time="0.189"/>
-  <testcase name="set any adjacent tiles to tiles in a map to white()" classname="MainTest" time="0.015"/>
+  <testcase name="part two()" classname="MainTest" time="0.182"/>
+  <testcase name="set any adjacent tiles to tiles in a map to white()" classname="MainTest" time="0.011"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

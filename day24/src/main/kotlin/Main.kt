@@ -72,10 +72,18 @@ fun MutableFloor.flipTilesUsingPartTwoRules() {
 
 fun Floor.newTileStateForAPositionOrNull(tilePosition:Vector):Pair<Vector, TileColor>? {
     val noOfAdjacentBlackTiles = tilePosition.noOfAdjacentBlackTiles(this)
-    if (get(tilePosition) == TileColor.Black && noOfAdjacentBlackTiles == 0 || noOfAdjacentBlackTiles > 2) return Pair(tilePosition, TileColor.White)
-    if (get(tilePosition) == TileColor.White && noOfAdjacentBlackTiles == 2) return Pair(tilePosition, TileColor.Black)
-    return  null
+    return when {
+        shouldTurnBlackToWhite(tilePosition, noOfAdjacentBlackTiles) -> Pair(tilePosition, TileColor.White)
+        shouldTurnWhiteToBlack(tilePosition, noOfAdjacentBlackTiles) -> Pair(tilePosition, TileColor.Black)
+        else -> null
+    }
 }
+
+fun Floor.shouldTurnWhiteToBlack(tilePosition: Vector, noOfAdjacentBlackTiles: Int) =
+    get(tilePosition) == TileColor.White && noOfAdjacentBlackTiles == 2
+
+fun Floor.shouldTurnBlackToWhite(tilePosition: Vector, noOfAdjacentBlackTiles: Int) =
+    get(tilePosition) == TileColor.Black && noOfAdjacentBlackTiles == 0 || noOfAdjacentBlackTiles > 2
 
 fun MutableFloor.updateTiles(tilesToChange:List<Pair<Vector, TileColor>>) =
     tilesToChange.forEach{(vector,color) -> set(vector, color) }
