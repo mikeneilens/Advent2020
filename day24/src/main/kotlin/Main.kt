@@ -1,9 +1,11 @@
-const val white = "white"
-const val black = "black"
+enum class TileColor {Black, White}
 
 data class Vector(val x:Int, val y:Int) {
     operator fun plus(other:Vector) = Vector(this.x + other.x, this.y + other.y)
 }
+
+typealias Floor = Map<Vector, TileColor>
+typealias MutableFloor = MutableMap<Vector, TileColor>
 
 enum class Step(val move:Vector) {
     East  (Vector(2,0)),
@@ -32,52 +34,55 @@ fun String.toSteps():List<Step> {
     }
     return result
 }
+
 fun List<Step>.findTilePosition():Vector = fold(Vector(0,0)){result, step -> result + step.move}
 
-fun MutableMap<Vector, String>.flipTileAt(vector:Vector) {
-    val tileColor = get(vector) ?: white
-    set(vector , if (tileColor == white) black else white)
+fun MutableFloor.flipTileAt(vector:Vector) {
+    val tileColor = get(vector) ?: TileColor.White
+    set(vector , if (tileColor == TileColor.White) TileColor.Black else TileColor.White)
 }
 
-fun List<String>.flipTiles():Map<Vector,String> {
-    val map = mutableMapOf<Vector, String>()
+fun List<String>.flipTiles():Map<Vector,TileColor> {
+    val mutableFloor = mutableMapOf<Vector, TileColor>()
     forEach { line ->
         val tilePosition = line.toSteps().findTilePosition()
-        map.flipTileAt(tilePosition)
+        mutableFloor.flipTileAt(tilePosition)
     }
-    return map
+    return mutableFloor
 }
 
-fun Map<Vector,String>.blackTiles() = values.filter{ it == black}.size
+fun Map<Vector,TileColor>.blackTiles() = values.filter{ it == TileColor.Black}.size
+
+//part two
 
 fun Vector.adjacentPositions() = Step.values().map{ this + it.move}
 
-fun MutableMap<Vector, String>.makeEmptyAdjacentTilesWhite() {
+fun MutableFloor.makeEmptyAdjacentTilesWhite() {
     keys.toList().forEach { tilePosition ->
         tilePosition.adjacentPositions().forEach { adjacentPosition ->
-            if (get(adjacentPosition) == null) set(adjacentPosition, white)
+            if (get(adjacentPosition) == null) set(adjacentPosition, TileColor.White)
         }
     }
 }
 
-fun Vector.adjacentBlackTiles(map:Map<Vector, String>) = adjacentPositions().count { map[it] == black   }
+fun Vector.noOfadjacentBlackTiles(floor:Floor) = adjacentPositions().count { floor[it] == TileColor.Black   }
 
-fun MutableMap<Vector, String>.flipTilesUsingPartTwoRules() {
+fun MutableFloor.flipTilesUsingPartTwoRules() {
     makeEmptyAdjacentTilesWhite()
-    val tilesToChange = keys.mapNotNull (this::newTileStateOrNull)
+    val tilesToChange = keys.mapNotNull (this::newTileStateForAPositionOrNull)
     updateTiles(tilesToChange)
 }
 
-fun Map<Vector, String>.newTileStateOrNull(tilePosition:Vector):Pair<Vector, String>? {
-    val noOfAdjacentBlackTiles = tilePosition.adjacentBlackTiles(this)
-    if (get(tilePosition) == black && noOfAdjacentBlackTiles == 0 || noOfAdjacentBlackTiles > 2) return Pair(tilePosition, white)
-    if (get(tilePosition) == white && noOfAdjacentBlackTiles == 2) return Pair(tilePosition, black)
+fun Floor.newTileStateForAPositionOrNull(tilePosition:Vector):Pair<Vector, TileColor>? {
+    val noOfAdjacentBlackTiles = tilePosition.noOfadjacentBlackTiles(this)
+    if (get(tilePosition) == TileColor.Black && noOfAdjacentBlackTiles == 0 || noOfAdjacentBlackTiles > 2) return Pair(tilePosition, TileColor.White)
+    if (get(tilePosition) == TileColor.White && noOfAdjacentBlackTiles == 2) return Pair(tilePosition, TileColor.Black)
     return  null
 }
 
-fun MutableMap<Vector, String>.updateTiles(tilesToChange:List<Pair<Vector, String>>) =
+fun MutableFloor.updateTiles(tilesToChange:List<Pair<Vector, TileColor>>) =
     tilesToChange.forEach{(vector,color) -> set(vector, color) }
 
-fun MutableMap<Vector, String>.repeatFlips(qty:Int) {
+fun MutableFloor.repeatFlips(qty:Int) {
     (1..qty).forEach { _ -> flipTilesUsingPartTwoRules() }
 }
