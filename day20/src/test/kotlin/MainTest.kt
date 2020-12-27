@@ -11,61 +11,55 @@ class MainTest {
         assertEquals("..###..###", tiles[0].lines[9])
     }
     @Test
-    fun `tile rotated right`() {
-        val tile = listOf("abcd","efgh","ijkl","mnop")
-        val expected = listOf(
-            "miea",
-            "njfb",
-            "okgc",
-            "plhd")
-        assertEquals(expected, tile.rotate())
-    }
-    @Test
-    fun `tile flipped`() {
-        val tile = listOf("abcd","efgh","ijkl","mnop")
-        val expectedV = listOf("mnop","ijkl","efgh","abcd")
-        assertEquals(expectedV, tile.flipV())
-        val expectedH = listOf("dcba","hgfe","lkji","ponm")
-        assertEquals(expectedH, tile.flipH())
-    }
-    @Test
-    fun `top bottom left and right lines`() {
-        val tile = listOf("abcd","efgh","ijkl","mnop")
-        assertEquals("abcd", tile.topLine())
-        assertEquals("mnop", tile.bottomLine())
-        assertEquals("aeim", tile.leftLine())
-        assertEquals("dhlp", tile.rightLine())
-    }
-    @Test
-    fun `row is valid`() {
-        val validRow = listOf(
-            listOf("ab","cd"),listOf("be","df"),listOf("eg","fh")
+    fun `edges`() {
+        val tileData = listOf(
+            "abcd", "lxxe", "kxxf", "jihg",
         )
-        assertTrue(validRow.rowIsValid())
-    }
-    @Test
-    fun `col is valid`() {
-        val validCol = listOf(
-            listOf("ab","cd"),listOf("cd","ef"),listOf("ef","gh")
+        val expectedResult = listOf(
+            "abcd","defg","ghij","jkla"
         )
-        assertTrue(validCol.columIsValid())
+        val expectedResultFlipped = listOf(
+            "dcba","gfed","jihg","alkj"
+        )
+        assertEquals(expectedResult, Tile("1234", tileData).edges())
+        assertEquals(expectedResultFlipped, Tile("1234", tileData).flippedEdges())
     }
     @Test
-    fun `grid is valid`() {
-        val tile1 = Tile("1", listOf("ab","cd"))
-        val tile2 = Tile("2", listOf("bd","df"))
-        val tile3 = Tile("3", listOf("cd","gh"))
-        val tile4 = Tile("3", listOf("df","hj"))
-        assertTrue(listOf(tile1,tile2,tile3,tile4).validGrid())
+    fun `edges that match between two tiles`() {
+        val tileData1 = listOf(
+            "abcd", "lxxe", "kxxf", "jihg",
+        )
+        val tileData2 = listOf(
+            "abcd", "lxxe", "kxxf", "jihg",
+        )
+        val fourMatches = Tile("tile1",lines = tileData1).edgesMatching(Tile("tile1",tileData1))
+        assertEquals(4, fourMatches.size)
     }
     @Test
-    fun `all border values for a tile`() {
-        val tile = Tile("1", listOf("abcd","efgh","ijkl","mnop"))
-        assertEquals(listOf("abcd", "mnop", "aeim", "dhlp", "miea", "plhd", "ponm", "dcba"), tile.allBoarders())
-    }
-    @Test
-    fun `border tiles in the sample data`() {
+    fun `all matches between all tiles`() {
         val tiles = sampleData.parse()
-        tiles.borderTiles()
+        val result = allMatchesBetweenAllTiles(tiles)
+        println(result)
     }
+    @Test
+    fun `find corner tiles`() {
+        val tiles = sampleData.parse()
+        val cornerTiles: List<Match> = cornerTiles(allMatchesBetweenAllTiles(tiles))
+        assertTrue(cornerTiles.map{it.tile.ref}.contains("1951"))
+        assertTrue(cornerTiles.map{it.tile.ref}.contains("3079"))
+        assertTrue(cornerTiles.map{it.tile.ref}.contains("2971"))
+        assertTrue(cornerTiles.map{it.tile.ref}.contains("1171"))
+        assertEquals(4, cornerTiles.map{it.tile.ref}.distinct().size)
+        val result = cornerTiles.map{it.tile.ref.toInt()}.distinct().fold(1L){total, value -> total * value.toLong()}
+        assertEquals(20899048083289L, result)
+    }
+    @Test
+    fun `part one`() {
+        val tiles = day20Data.parse()
+        val cornerTiles: List<Match> = cornerTiles(allMatchesBetweenAllTiles(tiles))
+        assertEquals(4, cornerTiles.map{it.tile.ref}.distinct().size)
+        val result = cornerTiles.map{it.tile.ref.toInt()}.distinct().fold(1L){total, value -> total * value.toLong()}
+        assertEquals(16937516456219L, result)
+    }
+
 }
