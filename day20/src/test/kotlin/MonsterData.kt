@@ -1,0 +1,5 @@
+val monsterData = listOf(
+    "                  # ",
+    "#    ##    ##    ###",
+    " #  #  #  #  #  #   "
+)
