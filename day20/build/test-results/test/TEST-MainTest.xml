@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="MainTest" tests="20" skipped="0" failures="0" errors="0" timestamp="2020-12-29T19:00:45" hostname="MacBook-Pro-2" time="1.19">
+<testsuite name="MainTest" tests="20" skipped="0" failures="0" errors="0" timestamp="2020-12-29T21:48:18" hostname="MacBook-Pro-2" time="0.481">
   <properties/>
-  <testcase name="assemble tiles into a picture using full data()" classname="MainTest" time="0.349"/>
-  <testcase name="tiles is rotated so left edge matches the right edge of the tile before it()" classname="MainTest" time="0.001"/>
+  <testcase name="assemble tiles into a picture using full data()" classname="MainTest" time="0.218"/>
+  <testcase name="tiles is rotated so left edge matches the right edge of the tile before it()" classname="MainTest" time="0.002"/>
   <testcase name="parse data into tiles()" classname="MainTest" time="0.001"/>
   <testcase name="find top left corner tile()" classname="MainTest" time="0.001"/>
   <testcase name="find tile to the right of a tile()" classname="MainTest" time="0.001"/>
@@ -10,17 +10,17 @@
   <testcase name="positions of monsters in the test datat()" classname="MainTest" time="0.005"/>
   <testcase name="find edges of a tile()" classname="MainTest" time="0.001"/>
   <testcase name="creating a picture from list of tiles()" classname="MainTest" time="0.002"/>
-  <testcase name="number of hashes that are not monsters in the test data()" classname="MainTest" time="0.002"/>
+  <testcase name="number of hashes that are not monsters in the test data()" classname="MainTest" time="0.003"/>
   <testcase name="converting monster into a list of positions()" classname="MainTest" time="0.0"/>
-  <testcase name="creating a picture from list of tiles using real data()" classname="MainTest" time="0.237"/>
+  <testcase name="creating a picture from list of tiles using real data()" classname="MainTest" time="0.084"/>
   <testcase name="find corner tiles()" classname="MainTest" time="0.001"/>
   <testcase name="edges that match between two tiles()" classname="MainTest" time="0.0"/>
-  <testcase name="removing the border from the lines for a tile()" classname="MainTest" time="0.0"/>
-  <testcase name="part one()" classname="MainTest" time="0.335"/>
-  <testcase name="part two()" classname="MainTest" time="0.239"/>
+  <testcase name="removing the border from the lines for a tile()" classname="MainTest" time="0.001"/>
+  <testcase name="part one()" classname="MainTest" time="0.067"/>
+  <testcase name="part two()" classname="MainTest" time="0.083"/>
   <testcase name="positions of monsters in a picture()" classname="MainTest" time="0.0"/>
-  <testcase name="rotating a tile()" classname="MainTest" time="0.001"/>
-  <testcase name="assemble tiles into a picture()" classname="MainTest" time="0.002"/>
+  <testcase name="rotating a tile()" classname="MainTest" time="0.0"/>
+  <testcase name="assemble tiles into a picture()" classname="MainTest" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

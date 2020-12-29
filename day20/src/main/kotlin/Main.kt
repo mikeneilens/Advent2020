@@ -21,26 +21,18 @@ data class Tile(val ref:String, var lines:List<String>) {
     )
     fun flippedEdges() = edges().map{it.reversed()}
 
-    fun edgesMatching(otherTile:Tile): List<Match> =
-
-        edges().flatMapIndexed{thisIndex, edge ->
-            otherTile.edges().mapIndexedNotNull { otherIndex, otherEdge ->
+    fun edgesMatching(otherTile:Tile): List<Match> {
+        val otherTileAllEdges = (otherTile.edges() + otherTile.flippedEdges())
+        return edges().flatMapIndexed{thisIndex, edge ->
+            otherTileAllEdges.mapNotNull { otherEdge ->
                 if (otherEdge == edge) {
-                    Match(this, thisIndex, otherTile, otherIndex)
-                } else {
-                    null
-                }
-            }
-        } +
-        edges().flatMapIndexed{thisIndex, edge ->
-            otherTile.flippedEdges().mapIndexedNotNull { otherIndex, otherEdge ->
-                if (otherEdge == edge) {
-                    Match(this, thisIndex, otherTile, otherIndex + 4)
+                    Match(this, thisIndex, otherTile)
                 } else {
                     null
                 }
             }
         }
+    }
 
     private fun flip():Tile {
         lines = lines.flip()
@@ -57,15 +49,12 @@ data class Tile(val ref:String, var lines:List<String>) {
     fun below(matches:List<Match>) =
         matches.first{ it.tile == this && (it.otherTile.edges().contains(edges()[2]) || it.otherTile.edges().contains(edges()[2].reversed())) }.otherTile
 
-    fun setEdge(edge:Int, edgeToMatch:String) {
-        (1..4).forEach { _ ->
-            if (this.edges()[edge] == edgeToMatch.reversed()) return
+    fun rotateToMatchEdge(edge:Int, edgeToMatch:String) {
+        var count = 0
+        while (this.edges()[edge] != edgeToMatch.reversed()) {
+            if (count==3) flip()
             rotate()
-        }
-        flip()
-        (1..4).forEach { _ ->
-            if (this.edges()[edge] == edgeToMatch.reversed()) return
-            rotate()
+            count++
         }
     }
 }
@@ -97,7 +86,7 @@ fun List<String>.rotate():List<String> {
 
 fun List<String>.flip() = this.reversed()
 
-data class Match(val tile:Tile, val edge:Int, val otherTile:Tile, val otherEdge:Int)
+data class Match(val tile:Tile, val edge:Int, val otherTile:Tile)
 
 fun allMatchesBetweenAllTiles(tiles:List<Tile>):List<Match> =
     tiles.flatMap { tile ->
@@ -121,7 +110,7 @@ fun assemble(tiles:List<Tile>, width:Int):List<Tile> {
         } else {
             val startOfPreviousLine = assembledTiles[assembledTiles.size - width]
             val firstTileOnLine = startOfPreviousLine.below(allMatches)
-            firstTileOnLine.setEdge(0, startOfPreviousLine.edges()[2])
+            firstTileOnLine.rotateToMatchEdge(0, startOfPreviousLine.edges()[2])
             assembledTiles.add(firstTileOnLine)
         }
         assembledTiles.completeLine(allMatches, width - 1)
@@ -132,7 +121,7 @@ fun assemble(tiles:List<Tile>, width:Int):List<Tile> {
 fun MutableList<Tile>.completeLine(matches:List<Match>, qty:Int ) {
     (1..qty).forEach { _ ->
         val nextTile = last().toRight(matches)
-        nextTile.setEdge(3, last().edges()[1])
+        nextTile.rotateToMatchEdge(3, last().edges()[1])
         add(nextTile)
     }
 }
@@ -150,7 +139,6 @@ fun List<Tile>.createPicture(width:Int):List<String>{
     return lines
 }
 
-//fun List<String>.print() = forEach { println(it) }
 fun removeBorder(tile:Tile) = Tile(tile.ref, removeBorderFrom(tile.lines))
 
 fun removeBorderFrom(lines:List<String>) =

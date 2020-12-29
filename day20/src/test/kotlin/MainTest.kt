@@ -98,7 +98,7 @@ class MainTest {
         val topLeft = cornerTiles.topLeftCorner()
         val topLeftRightEdge = topLeft.edges()[1]
         val tileToRight = topLeft.toRight(matches)
-        tileToRight.setEdge(3, topLeftRightEdge)
+        tileToRight.rotateToMatchEdge(3, topLeftRightEdge)
         assertEquals("#.#.##...#", tileToRight.edges()[3])
     }
     @Test
